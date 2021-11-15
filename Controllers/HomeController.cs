@@ -102,7 +102,7 @@ namespace VPWebSolutions.Controllers
 
         [HttpGet("Cart")]
         public IActionResult Cart(){
-
+            return View();
         }
         
         [HttpGet("Register")]
