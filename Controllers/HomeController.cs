@@ -61,28 +61,6 @@ namespace VPWebSolutions.Controllers
             return View();
         }
 
-        //https://www.c-sharpcorner.com/article/integration-of-google-recaptcha-in-websites/
-        public bool IsReCaptchValid()
-        {
-            var result = false;
-            var captchaResponse = Request.Form["g-recaptcha-response"];
-            var secretKey = _configuration["ExternalProviders:GoogleReCaptcha:SecretKey"];
-            var apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
-            var requestUri = string.Format(apiUrl, secretKey, captchaResponse);
-            var request = (HttpWebRequest)WebRequest.Create(requestUri);
-
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
-                {
-                    JObject jResponse = JObject.Parse(stream.ReadToEnd());
-                    var isSuccess = jResponse.Value<bool>("success");
-                    result = (isSuccess) ? true : false;
-                }
-            }
-            return result;
-        }
-
         [HttpGet("About")]
         public IActionResult About()
         {
@@ -114,8 +92,11 @@ namespace VPWebSolutions.Controllers
         [HttpPost("Register")]
         public IActionResult Register(RegisterModel register)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsReCaptchValid())
             {
+                _db.Database.EnsureCreated();
+
+                _db.CustomerAccounts.Add();
                 return View("Success", register);
             }
             return View();
@@ -125,6 +106,28 @@ namespace VPWebSolutions.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public bool IsReCaptchValid()
+        {
+        //https://www.c-sharpcorner.com/article/integration-of-google-recaptcha-in-websites/
+            var result = false;
+            var captchaResponse = Request.Form["g-recaptcha-response"];
+            var secretKey = _configuration["ExternalProviders:GoogleReCaptcha:SecretKey"];
+            var apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
+            var requestUri = string.Format(apiUrl, secretKey, captchaResponse);
+            var request = (HttpWebRequest)WebRequest.Create(requestUri);
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                {
+                    JObject jResponse = JObject.Parse(stream.ReadToEnd());
+                    var isSuccess = jResponse.Value<bool>("success");
+                    result = (isSuccess) ? true : false;
+                }
+            }
+            return result;
         }
     }
 }
