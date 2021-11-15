@@ -101,8 +101,23 @@ namespace VPWebSolutions.Controllers
         }
 
         [HttpGet("Cart")]
-        public IActionResult Cart()
+        public IActionResult Cart(){
+
+        }
+        
+        [HttpGet("Register")]
+        public IActionResult Register()
         {
+            return View();
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register(RegisterModel register)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("Success", register);
+            }
             return View();
         }
 
