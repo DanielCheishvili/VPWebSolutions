@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
@@ -12,5 +13,6 @@ namespace VPWebSolutions.Data
             : base(options)
         {
         }
+        public DbSet<VPWebSolutions.Models.RegisterModel> RegisterModel { get; set; }
     }
 }
