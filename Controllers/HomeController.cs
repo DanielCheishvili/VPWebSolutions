@@ -50,6 +50,16 @@ namespace VPWebSolutions.Controllers
             return View();
         }
 
+        [HttpPost("Register")]
+        public IActionResult Register(RegisterModel register)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("Success", register);
+            }
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
