@@ -15,5 +15,6 @@ namespace VPWebSolutions.Data
         }
 
         public DbSet<ContactModel> Contacts { get; set; }
+        public DbSet<RegisterModel> CustomerAccounts { get; set; }
     }
 }
