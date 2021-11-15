@@ -34,6 +34,14 @@ namespace VPWebSolutions.Models
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Required]
+        [Display(Name = "Province")]
+        public string Province { get; set; }
+
+        [Required]
         //Taken from https://blog.platformular.com/2012/03/03/how-to-validate-canada-postal-code-in-c/
         [RegularExpression("^[ABCEGHJ-NPRSTVXYabceghj-nprstvxy]{1}[0-9]{1}[ABCEGHJ-NPRSTV-Zabceghj-nprstv-z]{1}[ ]?[0-9]{1}[ABCEGHJ-NPRSTV-Zabceghj-nprstv-z]{1}[0-9]{1}$", ErrorMessage ="Must be in proper format with capital letters (X2X 2X2)")]
         [Display(Name = "Postal Code")]
