@@ -1,0 +1,102 @@
+﻿@model VPWebSolutions.Models.ContactModel
+
+@{
+    ViewData["Title"] = "Contact";
+}
+<script src="https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit" async defer></script>
+
+<script type="text/javascript">
+    var your_site_key = '6LfWLwodAAAAAM4geLlqDsGV5RhB6pPVb8QobaAC';
+    var renderRecaptcha = function () {
+        grecaptcha.render('ReCaptchContainer', {
+            'sitekey': your_site_key,
+            'callback': reCaptchaCallback,
+            theme: 'light',
+            type: 'image',
+            size: 'normal'
+        });
+    };
+
+    var reCaptchaCallback = function (response) {
+        if (response !== '') {
+            document.getElementById("submit-form").disabled = false;
+        }
+        if (document.getElementById("recapctcha-error").innerText != null) {
+            document.getElementById("recapctcha-error").innerText = null;
+        }
+    };
+</script>
+
+<h1>Contact</h1>
+
+<h4>ContactModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Contact">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic" class="control-label"></label>
+                <select name="Topic" id="Topic">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    <option value="My order">My order</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Product questions">Product questions</option>
+                    <option value="Customer Service and feedback">Customer Service and feedback</option>
+                    <option value="Technical questions, specifications, geometry, sizing and historical information">Technical questions, specifications, geometry, sizing and historical information</option>
+                    <option value="Warranty">Warranty</option>
+                    <option value="Registration">Registration</option>
+                    <option value="Catalogue requests">Catalogue requests</option>
+                    <option value="Owner's manuals">Owner's manuals</option>
+                    <option value="Media enquiries">Media enquiries</option>
+                    <option value="Sponsorship and donations">Sponsorships and donations</option>
+                </select>                <span asp-validation-for="Topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <textarea asp-for="Message" class="form-control"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div id="ReCaptchContainer"></div>
+            <p id="recapctcha-error" style="color:#dc3545;">@ViewData["ErrorMessage"]</p>
+            <div class="form-group">
+                <input id="submit-form" type="submit" value="Create" class="btn btn-primary" disabled />
+                <input type="reset" value="Reset" class="btn btn-primary" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
