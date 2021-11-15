@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model VPWebSolutions.Models.ContactModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+<h1>Success</h1>
+
+<div>
+    <h3>Thank you @Model.FirstName @Model.LastName</h3>
+    <hr />
+    <p>A copy has been sent to @Model.Email</p>
+</div>
