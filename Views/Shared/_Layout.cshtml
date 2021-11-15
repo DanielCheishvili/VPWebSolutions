@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body style="margin-top: 4%">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -33,8 +33,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
+                                Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
+                            </a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
+                    <a>FR</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img src="https://cdn-icons.flaticon.com/png/512/2838/premium/2838895.png?token=exp=1636904281~hmac=364a5c347311e77d4c8d970939cc9e17" height="20px"/></a>
                 </div>
             </div>
         </nav>
