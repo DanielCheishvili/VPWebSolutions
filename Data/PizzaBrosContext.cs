@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
@@ -15,6 +16,6 @@ namespace VPWebSolutions.Data
         }
 
         public DbSet<ContactModel> Contacts { get; set; }
-        public DbSet<RegisterModel> CustomerAccounts { get; set; }
+        public DbSet<CustomerAccount> CustomerAccounts { get; set; }
     }
 }

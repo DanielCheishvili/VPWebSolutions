@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Controllers
@@ -96,7 +97,20 @@ namespace VPWebSolutions.Controllers
             {
                 _db.Database.EnsureCreated();
 
-                _db.CustomerAccounts.Add();
+                _db.CustomerAccounts.Add(
+                    new CustomerAccount()
+                    {
+                        FirstName = register.FirstName,
+                        LastName = register.LastName,
+                        Email = register.Email,
+                        Password = register.Password,
+                        Address = register.Address,
+                        City = register.City,
+                        Province = register.Province,
+                        PostalCode = register.PostalCode,
+                        Phone = register.Phone
+                    });
+                _db.SaveChanges();
                 return View("Success", register);
             }
             return View();
