@@ -111,7 +111,7 @@ namespace VPWebSolutions.Controllers
                         Phone = register.Phone
                     });
                 _db.SaveChanges();
-                return View("Success", register);
+                return View("RegisterSuccess");
             }
             return View();
         }
