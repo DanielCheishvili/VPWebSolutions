@@ -41,7 +41,7 @@
                     </ul>
                     <partial name="_LoginPartial" />
                     <a>FR</a>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img src="https://cdn-icons.flaticon.com/png/512/2838/premium/2838895.png?token=exp=1636904281~hmac=364a5c347311e77d4c8d970939cc9e17" height="20px"/></a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img src="https://cdn-icons.flaticon.com/png/512/2838/premium/2838895.png?token=exp=1636904281~hmac=364a5c347311e77d4c8d970939cc9e17" height="20px" /></a>
                 </div>
             </div>
         </nav>
@@ -51,10 +51,49 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - VPWebSolutions - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- https://mdbootstrap.com/docs/standard/navigation/footer/#indigocolor -->
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
+            </div>
+            <div>
+                <!--Bhavik put social media stuff here -->
+            </div>
+        </section>
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>Pizza Bros Pizzeria
+                        </h6>
+                        <p>
+                            We are family business who pride ourselves on delivering the highest quality pizza. We have been in business since 1961.
+                            To be a PizzaBro franchisee is a privilege in itself.
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">Pages</h6>
+                        <p><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
+                        <p><a class="text-reset" asp-area="" asp-controller="Home" asp-action="About">About Us</a></p>
+                        <p><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></p>
+                        <p><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                        <p><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Career">Careers</a></p>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Contact
+                        </h6>
+                        <p><i class="fas fa-home me-3"></i>21 275 Rue Lakeshore Road, Sainte-Anne-de-Bellevue, QC H9X 3L9</p>
+                        <p>pizzabros@gmail.com</p>
+                        <p><i class="fas fa-phone me-3"></i>514-233-5442</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2021 Copyright: VPWebSolutions
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
