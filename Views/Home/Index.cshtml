@@ -19,7 +19,7 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
                     <!--https://images.unsplash.com/photo-1564128442383-9201fcc740eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=931&q=80-->
-                    <img class="fav-items-image" src="~/images/PepperoniImage.jpg" class="d-block w-100" alt="Pepperoni">
+                    <img class="fav-items-image d-block w-100" src="~/images/PepperoniImage.jpg" alt="Pepperoni">
                 </div>
                 <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Pepperoni</h4>
@@ -34,7 +34,7 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2" >
                     <!--https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80-->
-                    <img class="fav-items-image" src="~/images/AllDressedImage.jpg" class="d-block w-100" alt="AllDressed">
+                    <img class="fav-items-image d-block w-100" src="~/images/AllDressedImage.jpg" alt="AllDressed">
                 </div>
                 <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>All Dressed</h4>
@@ -47,7 +47,7 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
                     <!--https://kirbiecravings.com/flourless-cheese-crust-pizza/-->
-                    <img class="fav-items-image" src="~/images/CheeseImage.jpg" class="d-block w-100" alt="Cheese">
+                    <img class="fav-items-image d-block w-100" src="~/images/CheeseImage.jpg" alt="Cheese">
                 </div>
                 <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Cheese</h4>
@@ -60,7 +60,7 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
                     <!--https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80-->
-                    <img class="fav-items-image" src="~/images/VegetarianImage.jpg" class="d-block w-100" alt="Vegetarian">
+                    <img class="fav-items-image d-block w-100" src="~/images/VegetarianImage.jpg" alt="Vegetarian">
                 </div>
                 <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Vegetarian</h4>
@@ -82,6 +82,18 @@
     </a>
 </div>
 
+<div class="offers-deals">
+    <!--https://cdn.restomenu.com/web/img/section/1534/ffc928f085699816f261d5a88f14e2e3.jpg-->
+    <a class="deal-item" href="#DoubleDeal" style="text-decoration: none; color:black;">
+        <img src="~/images/2P2D1F.jpg" style="height:300px; width:400px"/>
+        <p>2 Medium Pizzas, 2 Cans of your choice and Large fries for $35.99</p>
+    </a>
+    <a class="deal-item" href="#SingleDeal" style="text-decoration: none; color: black;">
+        <img src="~/images/1P1D1F.jpg" style="height:300px; width:400px"/>
+        <p>1 Medium Pizzas, 1 Can of your choice and Medium fries for $15.99</p>
+    </a>
+</div>
+
 <style>
     .fav-items-image{
         display: block;
@@ -94,5 +106,12 @@
     .carousel-control-next,
     .carousel-control-prev{
         filter: invert(100%);
+    }
+    .deal-item{
+        display:flex;
+        max-width: 100%;
+        max-height: 300px;
+        width: auto;
+        height: auto;
     }
 </style>
