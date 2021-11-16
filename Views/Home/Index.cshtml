@@ -11,7 +11,7 @@
         <img src="~/images/CovidProtocol.jpg" style="margin:15px" class="text-center" alt="Covid Protocol"/>
     </center>
 </div>
-<div id="TopPicksCarousel" class="carousel slide" data-ride="carousel">
+<div id="TopPicksCarousel" class="carousel slide" data-ride="carousel" style="height:200px">
 
     
     <div class="carousel-inner">
@@ -19,9 +19,9 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
                     <!--https://images.unsplash.com/photo-1564128442383-9201fcc740eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=931&q=80-->
-                    <img src="~/images/PepperoniImage.jpg" class="d-block w-100" alt="Pepperoni">
+                    <img class="fav-items-image" src="~/images/PepperoniImage.jpg" class="d-block w-100" alt="Pepperoni">
                 </div>
-                <div class="carousel-item-right flex-row p-2">
+                <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Pepperoni</h4>
                     <p>Made with fresh Pepperoni slices and our classic Mozzarella Cheese.</p>
                 </div>
@@ -32,11 +32,11 @@
 
         <a class="carousel-item" href="#AllDressedItemPage" style="text-decoration:none">
             <div class="d-flex">
-                <div class="carousel-item-left flex-row p-2">
+                <div class="carousel-item-left flex-row p-2" >
                     <!--https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80-->
-                    <img src="~/images/AllDressedImage.jpg" class="d-block w-100" alt="AllDressed">
+                    <img class="fav-items-image" src="~/images/AllDressedImage.jpg" class="d-block w-100" alt="AllDressed">
                 </div>
-                <div class="carousel-item-right flex-row p-2">
+                <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>All Dressed</h4>
                     <p>Made with fresh Pepperoni slices, fresh Vegetables and our classic Mozzarella Cheese.</p>
                 </div>
@@ -46,9 +46,10 @@
         <a class="carousel-item" href="#CheeseItemPage" style="text-decoration:none">
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
-                    <img src="https://thumbs.dreamstime.com/b/cheese-pizza-yummy-lifting-up-51994812.jpg" class="d-block w-100" alt="Cheese">
+                    <!--https://kirbiecravings.com/flourless-cheese-crust-pizza/-->
+                    <img class="fav-items-image" src="~/images/CheeseImage.jpg" class="d-block w-100" alt="Cheese">
                 </div>
-                <div class="carousel-item-right flex-row p-2">
+                <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Cheese</h4>
                     <p>Made with our classic Mozzarella Cheese.</p>
                 </div>
@@ -59,9 +60,9 @@
             <div class="d-flex">
                 <div class="carousel-item-left flex-row p-2">
                     <!--https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80-->
-                    <img src="~/images/VegetarianImage.jpg" class="d-block w-100" alt="Vegetarian">
+                    <img class="fav-items-image" src="~/images/VegetarianImage.jpg" class="d-block w-100" alt="Vegetarian">
                 </div>
-                <div class="carousel-item-right flex-row p-2">
+                <div class="carousel-item-right flex-row p-2" style="color:black">
                     <h4>Vegetarian</h4>
                     <p>Made with fresh Vegetables and our classic Mozzarella Cheese.</p>
                 </div>
@@ -70,7 +71,7 @@
     </div>
 
     <a class="carousel-control-prev" href="#TopPicksCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="color:black"></span>
         <span class="sr-only">Previous</span>
 
     </a>
@@ -82,5 +83,16 @@
 </div>
 
 <style>
-    
+    .fav-items-image{
+        display: block;
+        max-width: 100%;
+        max-height: 200px;
+        width: auto;
+        height: auto;
+        padding-left: 25%;
+    }
+    .carousel-control-next,
+    .carousel-control-prev{
+        filter: invert(100%);
+    }
 </style>

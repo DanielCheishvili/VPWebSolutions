@@ -40,8 +40,9 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
-                    <a>FR</a>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img src="https://cdn-icons.flaticon.com/png/512/2838/premium/2838895.png?token=exp=1636904281~hmac=364a5c347311e77d4c8d970939cc9e17" height="20px"/></a>
+                    <button id="language-change" onclick="changeLanguage()">FR</button>
+                    <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
                 </div>
             </div>
         </nav>
@@ -59,6 +60,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/LanguageChange.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
