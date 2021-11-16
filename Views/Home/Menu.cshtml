@@ -1,0 +1,386 @@
+﻿@*
+    for the collapsible code i got this from here:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
+*@
+@{
+}
+
+
+<button type="button" class="collapsible">Pizza</button>
+<div class="content">
+ 
+    <div class="pizza-category">
+        <div>
+            <img  height="100" width="100" src="~/images/cheesepizza.jpg"/>
+            <h4>Cheese</h4>
+            <div>
+                <p id="cheese-price">$0.00</p>
+                <div class="button_div">
+
+                    <button id="small_pizza">S</button>
+                    <button id="med_pizza">M</button>
+                    <button id="large_pizza">L</button>
+                </div>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+
+        <div>
+            <img height="100" width="100" src="~/images/PepperoniPizza.jpg" />
+            <h4>Pepperoni</h4>
+            <p id="pep-price">$0.00</p>
+
+            <div class="button_div">
+
+                <button id="small_pizza_pep">S</button>
+                <button id="med_pizza_pep">M</button>
+                <button id="large_pizza_pep">L</button>
+            </div>
+
+            <button class="btn btn-primary">Add To Cart</button>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/AllDressed.jpg" />
+            <h4>All-Dressed</h4>
+            <p id="allD-price">$0.00</p>
+            <div class="button_div">
+
+                <button id="small_pizza_allD">S</button>
+                <button id="med_pizza_allD">M</button>
+                <button id="large_pizza_allD">L</button>
+            </div>
+            <button class="btn btn-primary">Add To Cart</button>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/veggie.jpg" />
+            <h4>Veggie</h4>
+            <p id="veg-price">$0.00</p>
+            <div class="button_div">
+
+                <button id="small_pizza_veg">S</button>
+                <button id="med_pizza_veg">M</button>
+                <button id="large_pizza_veg">L</button>
+            </div>
+            <button class="btn btn-primary">Add To Cart</button>
+        </div>
+    </div> 
+</div>
+
+
+<button type="button" class="collapsible">Burgers</button>
+<div class="content">
+
+    <div class="pizza-category">
+        <div>
+            <img height="100" width="100" src="~/images/cheeseburger.jpg" />
+            <h4>Cheeseburger</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+
+        <div>
+            <img height="100" width="100" src="~/images/hamburger.jpg" />
+            <h4>Hamburger</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/chickenBurger.jpg"  />
+            <h4>Chicken-Burger</h4>          
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/veggieburger.jpg" />
+            <h4>Veggie-Burger</h4>          
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<button type="button" class="collapsible">Drinks</button>
+<div class="content">
+
+    <div class="pizza-category">
+        <div>
+            <img height="100" width="100" src="~/images/water.jpg"  />
+            <h4>Water</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+
+        <div>
+            <img height="100" width="100" src="~/images/dietPepsi.jpg" />
+            <h4>Diet Pepsi</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/pepsi.jpg"  />
+            <h4>Pepsi</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/coke.jpg"/>
+            <h4>Coke</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/dietcoke.jpg"/>
+            <h4>Diet Coke</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+
+        <div>
+            <img height="100" width="100" src="~/images/7up.jpg"/>
+            <h4>7Up</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/gingerale.jpg" />
+            <h4>Ginger-Ale</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/fanta.jpg" />
+            <h4>Fanta</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<button type="button" class="collapsible">Fries</button>
+<div class="content">
+    <div class="pizza-category">
+        <div>
+            <img height="100" width="100" src="~/images/fries.jpg" />
+            <h4>Fries</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+
+        <div>
+            <img height="100" width="100" src="~/images/wedges.jpg"/>
+            <h4>Wedges</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" />
+            <h4>hashbrown</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+        <div>
+            <img height="100" width="100" src="~/images/rings.jpg" />
+            <h4>Rings</h4>
+            <div>
+                <p></p>
+                <button class="btn btn-primary">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+    collapsible();
+    cheesePizza();
+    pepPizza();
+    allDPizza();
+    vegPizza();
+    
+
+    
+
+    function cheesePizza() {
+        var price_text = document.getElementById("cheese-price");
+        document.getElementById("small_pizza").addEventListener("click", function () {
+
+            price_text.innerHTML = "$11.99";
+
+        });
+        document.getElementById("med_pizza").addEventListener("click", function () {
+
+            price_text.innerHTML = "$16.99";
+
+        });;
+        document.getElementById("large_pizza").addEventListener("click", function () {
+
+            price_text.innerHTML = "$20.99";
+
+        });;
+    }
+
+    function pepPizza() {
+        var price_text_pep = document.getElementById("pep-price");
+        document.getElementById("small_pizza_pep").addEventListener("click", function () {
+
+            price_text_pep.innerHTML = "$11.99";
+
+        });
+        document.getElementById("med_pizza_pep").addEventListener("click", function () {
+
+            price_text_pep.innerHTML = "$16.99";
+
+        });;
+        document.getElementById("large_pizza_pep").addEventListener("click", function () {
+
+            price_text_pep.innerHTML = "$20.99";
+
+        });;
+    }
+
+    function allDPizza() {
+        var price_text = document.getElementById("allD-price");
+        document.getElementById("small_pizza_allD").addEventListener("click", function () {
+
+            price_text.innerHTML = "$11.99";
+
+        });
+        document.getElementById("med_pizza_allD").addEventListener("click", function () {
+
+            price_text.innerHTML = "$16.99";
+
+        });;
+        document.getElementById("large_pizza_allD").addEventListener("click", function () {
+
+            price_text.innerHTML = "$20.99";
+
+        });;
+    }
+
+    function vegPizza() {
+        var price_text_veg = document.getElementById("veg-price");
+        small_pizza = document.getElementById("small_pizza_veg").addEventListener("click", function () {
+
+            price_text_veg.innerHTML = "$11.99";
+
+        });
+        document.getElementById("med_pizza_veg").addEventListener("click", function () {
+
+            price_text_veg.innerHTML = "$16.99";
+
+        });;
+        document.getElementById("large_pizza_veg").addEventListener("click", function () {
+
+            price_text_veg.innerHTML = "$20.99";
+
+        });;
+    }
+    
+
+    function collapsible() {
+        var coll = document.getElementsByClassName("collapsible");
+        var i = 0;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                }
+                else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    }
+
+   
+
+
+</script>
+
+<style>
+    .btn {
+        margin-left: 90px;
+        margin-right: 50px;
+    }
+    .button_div {
+        margin-left: 100px;
+        margin-right: 50px;
+    }
+    .pizza-category{
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 0.2fr 0.2fr 0.2fr
+    }
+    h4 {
+        margin-left: 90px;
+        margin-right: 50px;
+    }
+    p {
+        margin-left: 90px;
+        margin-right: 50px;
+    }
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    img
+    {
+        margin-left:90px;
+        margin-right:50px;
+    }
+</style>
