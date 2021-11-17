@@ -31,10 +31,10 @@ namespace VPWebSolutions
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DbConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDbContext<PizzaBrosContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
                 .EnableSensitiveDataLogging()
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));

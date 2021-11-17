@@ -46,6 +46,18 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [MinLength(2, ErrorMessage = "First Name must have at least 2 characters long.")]
+            [RegularExpression("^[^0-9]+$", ErrorMessage = "First Name cannot contain numbers.")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [MinLength(1)]
+            [RegularExpression("^[^0-9]+$", ErrorMessage = "Last Name cannot contain numbers.")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -60,6 +72,27 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            [Display(Name = "Province")]
+            public string Province { get; set; }
+
+            [Required]
+            //Taken from https://blog.platformular.com/2012/03/03/how-to-validate-canada-postal-code-in-c/
+            [RegularExpression("^[ABCEGHJ-NPRSTVXYabceghj-nprstvxy]{1}[0-9]{1}[ABCEGHJ-NPRSTV-Zabceghj-nprstv-z]{1}[ ]?[0-9]{1}[ABCEGHJ-NPRSTV-Zabceghj-nprstv-z]{1}[0-9]{1}$", ErrorMessage = "Must be in proper format with capital letters (X2X 2X2)")]
+            [Display(Name = "Postal Code")]
+            public string PostalCode { get; set; }
+
+            [DataType(DataType.PhoneNumber)]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

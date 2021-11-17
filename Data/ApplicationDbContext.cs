@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace VPWebSolutions.Data
             : base(options)
         {
         }
+        public DbSet<ContactModel> Contacts { get; set; }
+
         public DbSet<VPWebSolutions.Models.RegisterModel> RegisterModel { get; set; }
     }
+
+
 }

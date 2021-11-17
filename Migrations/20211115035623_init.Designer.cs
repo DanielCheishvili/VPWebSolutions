@@ -9,7 +9,7 @@ using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations
 {
-    [DbContext(typeof(PizzaBrosContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20211115035623_init")]
     partial class init
     {

@@ -191,6 +191,27 @@ namespace VPWebSolutions.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateTable(
+               name: "CustomerAccounts",
+               columns: table => new
+               {
+                   Id = table.Column<int>(type: "int", nullable: false)
+                       .Annotation("SqlServer:Identity", "1, 1"),
+                   Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Province = table.Column<string>(type: "nvarchar(max)", nullable: true)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("PK_CustomerAccounts", x => x.Id);
+               });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -215,6 +236,9 @@ namespace VPWebSolutions.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CustomerAccounts");
         }
     }
 }
