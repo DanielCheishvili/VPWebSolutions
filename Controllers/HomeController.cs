@@ -84,11 +84,11 @@ namespace VPWebSolutions.Controllers
             return View();
         }
 
-        [HttpGet("Register")]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        //[HttpGet("Register")]
+        //public IActionResult Register()
+        //{
+        //    return View();
+        //}
 
         [HttpPost("Register")]
         public IActionResult Register(RegisterModel register)
