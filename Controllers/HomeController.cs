@@ -22,10 +22,10 @@ namespace VPWebSolutions.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
-        private readonly PizzaBrosContext _db;
+        private readonly ApplicationDbContext _db;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, PizzaBrosContext context)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context)
         {
             _logger = logger;
             _emailSender = emailSender;
@@ -81,38 +81,6 @@ namespace VPWebSolutions.Controllers
 
         [HttpGet("Cart")]
         public IActionResult Cart(){
-            return View();
-        }
-
-        [HttpGet("Register")]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost("Register")]
-        public IActionResult Register(RegisterModel register)
-        {
-            if (ModelState.IsValid && IsReCaptchValid())
-            {
-                _db.Database.EnsureCreated();
-
-                _db.CustomerAccounts.Add(
-                    new CustomerAccount()
-                    {
-                        FirstName = register.FirstName,
-                        LastName = register.LastName,
-                        Email = register.Email,
-                        Password = register.Password,
-                        Address = register.Address,
-                        City = register.City,
-                        Province = register.Province,
-                        PostalCode = register.PostalCode,
-                        Phone = register.Phone
-                    });
-                _db.SaveChanges();
-                return View("Success", register);
-            }
             return View();
         }
 
