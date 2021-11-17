@@ -11,6 +11,8 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account.Manage
         public static string Index => "Index";
 
         public static string Email => "Email";
+       
+        public static string Address => "Address";
 
         public static string ChangePassword => "ChangePassword";
 
@@ -29,6 +31,8 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account.Manage
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
+        public static string AddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, Address);
+
 
         public static string DownloadPersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DownloadPersonalData);
 
