@@ -76,11 +76,20 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Menu")]
         public IActionResult Menu()
         {
-            ViewData["pizzas"] = _db.Pizzas;
-            ViewData["pizzas"] = _db.Drinks;
-            ViewData["pizzas"] = _db.Fries;
-            ViewData["pizzas"] = _db.Burgers;
+            
             return View();
+        }
+
+        [HttpGet("Test")]
+        public IActionResult Test()
+        {
+            /* ViewData["pizzas"] = _db.Pizzas;
+             ViewData["drinks"] = _db.Drinks;
+             ViewData["fries"] = _db.Fries;
+             ViewData["burgers"] = _db.Burgers;*/
+            var results = _db.MenuItem.ToList();
+            
+            return View(results);
         }
 
         [HttpGet("Cart")]

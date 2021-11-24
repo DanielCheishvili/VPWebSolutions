@@ -36,6 +36,8 @@ namespace VPWebSolutions.Data
                 .HasColumnType("money");
 
         }
+
+        public DbSet<VPWebSolutions.Data.Entities.MenuItem> MenuItem { get; set; }
     }
 
 
