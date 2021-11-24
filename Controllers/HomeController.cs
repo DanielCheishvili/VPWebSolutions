@@ -76,6 +76,10 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Menu")]
         public IActionResult Menu()
         {
+            ViewData["pizzas"] = _db.Pizzas;
+            ViewData["pizzas"] = _db.Drinks;
+            ViewData["pizzas"] = _db.Fries;
+            ViewData["pizzas"] = _db.Burgers;
             return View();
         }
 
