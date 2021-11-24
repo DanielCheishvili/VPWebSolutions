@@ -3,4 +3,17 @@
 *@
 @{
 }
-<h1>CART NOT IMPLEMENTED YET</h1>
+<h1>YOUR CART</h1>
+<div id="cartItems"></div>
+
+<script>
+    var isEmpty = document.getElementById("cartItems").innerHTML === "";
+    if (isEmpty) {
+        console.log("Checking if its entered");
+        document.getElementById("cartItems").innerHTML = '<button onclick="sendToMenu()" id="Button" type="button">START ORDER</button>'
+    }
+
+    function sendToMenu(){
+        window.location.href = "Menu";
+    }
+</script>
