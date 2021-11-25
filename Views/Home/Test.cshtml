@@ -8,32 +8,32 @@
 @foreach (var menuItemGrops in Model.GroupBy(i => i.Type))
  {
     <h2>@menuItemGrops.Key</h2>
-    <div class="row">
-        @foreach (var item in menuItemGrops.ToList())
-         {
-            <div class="col-md-3">
-                <div class="border rounded p-1">
-                    <img src="~/images/@(item.ImageId).jpg" class="img-fluid" alt="@item.Name" />
-                    <h4>@item.Name</h4>
-
-                    <ul>
-                        <li>Price: @item.Price.ToString("c")</li>
-                    </ul>
-                    @if (item.Type == VPWebSolutions.Data.Entities.MenuItemType.Pizza)
-                    {
-                        <div class="button_div">
-
-                            <button id="small_pizza_veg">S</button>
-                            <button id="med_pizza_veg">M</button>
-                            <button id="large_pizza_veg">L</button>
-                        </div>
-                        <button class="btn btn-primary">Add To Cart</button>
-                    }
-                </div>
-
-            </div>
-         }
-    </div>
    
-
+        <div class="row">
+            @foreach (var item in menuItemGrops.ToList())
+             {
+                <div class="col-md-3 ">
+                    <div class="border rounded p-1">
+                        <img src="~/images/@(item.ImageId).jpg" class="img-fluid vh-50" alt="@item.Name" />
+                        <h4>@item.Name</h4>
+                        <p id="price_text">Price: @item.Price.ToString("c")</p>
+                        <button class="btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+             }
+        </div>
  }
+<script>
+
+</script>
+
+<style>
+    html,body {
+        background-image: linear-gradient(to right, red, yellow);
+    }
+    h2 {
+        background-image: linear-gradient(to right, red, yellow);
+    }
+</style>
+
+

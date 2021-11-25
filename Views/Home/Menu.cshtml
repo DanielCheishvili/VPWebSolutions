@@ -1,16 +1,48 @@
-﻿@*
-    for the collapsible code i got this from here:https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible
-*@
+﻿@model IEnumerable<VPWebSolutions.Data.Entities.MenuItem>
+
 @{
+    ViewData["Title"] = "Test";
 }
 
+<h1>Test</h1>
+@foreach (var menuItemGrops in Model.GroupBy(i => i.Type))
+{
+    <h2>@menuItemGrops.Key</h2>
 
-<button type="button" class="collapsible">Pizza</button>
+    <div class="row">
+        @foreach (var item in menuItemGrops.ToList())
+        {
+            <div class="col-md-3 ">
+                <div class="border rounded p-1">
+                    <img src="~/images/@(item.ImageId).jpg" class="img-fluid vh-50" alt="@item.Name" />
+                    <h4>@item.Name</h4>
+                    <p id="price_text">Price: @item.Price.ToString("c")</p>
+                    <button class="btn btn-primary">Add To Cart</button>
+                </div>
+            </div>
+        }
+    </div>
+}
+<script>
+
+</script>
+
+<style>
+    html, body {
+        background-image: linear-gradient(to right, red, yellow);
+    }
+
+    h2 {
+        background-image: linear-gradient(to right, red, yellow);
+    }
+</style>
+
+@*<button type="button" class="collapsible">Pizza</button>
 <div class="content">
- 
+
     <div class="pizza-category">
         <div>
-            <img  height="100" width="100" src="~/images/cheesepizza.jpg"/>
+            <img height="100" width="100" src="~/images/cheesepizza.jpg" />
             <h4>Cheese</h4>
             <div>
                 <p id="cheese-price">$0.00</p>
@@ -62,7 +94,7 @@
             </div>
             <button class="btn btn-primary">Add To Cart</button>
         </div>
-    </div> 
+    </div>
 </div>
 
 
@@ -88,8 +120,8 @@
             </div>
         </div>
         <div>
-            <img height="100" width="100" src="~/images/chickenBurger.jpg"  />
-            <h4>Chicken-Burger</h4>          
+            <img height="100" width="100" src="~/images/chickenBurger.jpg" />
+            <h4>Chicken-Burger</h4>
             <div>
                 <p>$7.99</p>
                 <button class="btn btn-primary">Add To Cart</button>
@@ -97,7 +129,7 @@
         </div>
         <div>
             <img height="100" width="100" src="~/images/veggieburger.jpg" />
-            <h4>Veggie-Burger</h4>          
+            <h4>Veggie-Burger</h4>
             <div>
                 <p>$9.99</p>
                 <button class="btn btn-primary">Add To Cart</button>
@@ -112,7 +144,7 @@
 
     <div class="pizza-category">
         <div>
-            <img height="100" width="100" src="~/images/water.jpg"  />
+            <img height="100" width="100" src="~/images/water.jpg" />
             <h4>Water</h4>
             <div>
                 <p>$2.00</p>
@@ -129,7 +161,7 @@
             </div>
         </div>
         <div>
-            <img height="100" width="100" src="~/images/pepsi.jpg"  />
+            <img height="100" width="100" src="~/images/pepsi.jpg" />
             <h4>Pepsi</h4>
             <div>
                 <p>$2.00</p>
@@ -137,7 +169,7 @@
             </div>
         </div>
         <div>
-            <img height="100" width="100" src="~/images/coke.jpg"/>
+            <img height="100" width="100" src="~/images/coke.jpg" />
             <h4>Coke</h4>
             <div>
                 <p>$2.00</p>
@@ -145,7 +177,7 @@
             </div>
         </div>
         <div>
-            <img height="100" width="100" src="~/images/dietcoke.jpg"/>
+            <img height="100" width="100" src="~/images/dietcoke.jpg" />
             <h4>Diet Coke</h4>
             <div>
                 <p>$2.00</p>
@@ -154,7 +186,7 @@
         </div>
 
         <div>
-            <img height="100" width="100" src="~/images/7up.jpg"/>
+            <img height="100" width="100" src="~/images/7up.jpg" />
             <h4>7Up</h4>
             <div>
                 <p>$2.00</p>
@@ -195,7 +227,7 @@
         </div>
 
         <div>
-            <img height="100" width="100" src="~/images/wedges.jpg"/>
+            <img height="100" width="100" src="~/images/wedges.jpg" />
             <h4>Wedges</h4>
             <div>
                 <p>$4.50</p>
@@ -230,9 +262,9 @@
     pepPizza();
     allDPizza();
     vegPizza();
-    
 
-    
+
+
 
     function cheesePizza() {
         var price_text = document.getElementById("cheese-price");
@@ -309,7 +341,7 @@
 
         });;
     }
-    
+
 
     function collapsible() {
         var coll = document.getElementsByClassName("collapsible");
@@ -329,7 +361,7 @@
         }
     }
 
-   
+
 
 
 </script>
@@ -339,23 +371,28 @@
         margin-left: 90px;
         margin-right: 50px;
     }
+
     .button_div {
         margin-left: 100px;
         margin-right: 50px;
     }
-    .pizza-category{
-        display:grid;
+
+    .pizza-category {
+        display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: 0.2fr 0.2fr 0.2fr
     }
+
     h4 {
         margin-left: 90px;
         margin-right: 50px;
     }
+
     p {
         margin-left: 90px;
         margin-right: 50px;
     }
+
     .collapsible {
         background-color: #777;
         color: white;
@@ -378,9 +415,10 @@
         overflow: hidden;
         background-color: #f1f1f1;
     }
-    img
-    {
-        margin-left:90px;
-        margin-right:50px;
+
+    img {
+        margin-left: 90px;
+        margin-right: 50px;
     }
 </style>
+*@

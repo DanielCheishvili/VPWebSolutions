@@ -40,7 +40,7 @@ namespace VPWebSolutions.Data
                     ImageId = "cheesepizza",
                     Size = PizzaSize.Small,
                 };
-                var cheesePizzaM = new Pizza()
+               /* var cheesePizzaM = new Pizza()
                 {
                     Price = 16.99,
                     Name = "Cheese",
@@ -53,16 +53,16 @@ namespace VPWebSolutions.Data
                     Name = "Cheese",
                     ImageId = "cheesepizza",
                     Size = PizzaSize.Large
-                };
+                };*/
 
                 var pepPizzaS = new Pizza()
                 {
                     Price = 11.99,
-                    Name = "Pepperni",
+                    Name = "Pepperoni",
                     ImageId = "PepperoniPizza",
                     Size = PizzaSize.Small
                 };
-                var pepPizzaM = new Pizza()
+               /* var pepPizzaM = new Pizza()
                 {
                     Price = 16.99,
                     Name = "Pepperni",
@@ -75,7 +75,7 @@ namespace VPWebSolutions.Data
                     Name = "Pepperni",
                     ImageId = "PepperoniPizza",
                     Size = PizzaSize.Large
-                };
+                };*/
 
                 var vegPizzaS = new Pizza()
                 {
@@ -84,7 +84,7 @@ namespace VPWebSolutions.Data
                     ImageId = "veggie",
                     Size = PizzaSize.Small
                 };
-                var vegPizzaM = new Pizza()
+                /*var vegPizzaM = new Pizza()
                 {
                     Price = 16.99,
                     Name = "Veggie",
@@ -97,7 +97,7 @@ namespace VPWebSolutions.Data
                     Name = "Veggie",
                     ImageId = "veggie",
                     Size = PizzaSize.Large
-                };
+                };*/
 
                 var allDPizzaS = new Pizza()
                 {
@@ -106,7 +106,7 @@ namespace VPWebSolutions.Data
                     ImageId = "AllDressed",
                     Size = PizzaSize.Small
                 };
-                var allDPizzaM = new Pizza()
+                /*var allDPizzaM = new Pizza()
                 {
                     Price = 16.99,
                     Name = "All-Dressed",
@@ -119,7 +119,7 @@ namespace VPWebSolutions.Data
                     Name = "All-Dressed",
                     ImageId = "AllDressed",
                     Size = PizzaSize.Large
-                };
+                };*/
 
 
                 var cheeseburger = new Burger()
@@ -251,17 +251,17 @@ namespace VPWebSolutions.Data
 
                 #region adding To DB
                 pizzas.Add(cheesePizzaS);
-                pizzas.Add(cheesePizzaM);
-                pizzas.Add(cheesePizzaL);
+                /*pizzas.Add(cheesePizzaM);
+                pizzas.Add(cheesePizzaL);*/
                 pizzas.Add(vegPizzaS);
-                pizzas.Add(vegPizzaM);
-                pizzas.Add(vegPizzaL);
+               /* pizzas.Add(vegPizzaM);
+                pizzas.Add(vegPizzaL);*/
                 pizzas.Add(pepPizzaS);
-                pizzas.Add(pepPizzaM);
-                pizzas.Add(pepPizzaL);
+               /* pizzas.Add(pepPizzaM);
+                pizzas.Add(pepPizzaL);*/
                 pizzas.Add(allDPizzaS);
-                pizzas.Add(allDPizzaM);
-                pizzas.Add(allDPizzaL);
+               /* pizzas.Add(allDPizzaM);
+                pizzas.Add(allDPizzaL);*/
 
                 burgers.Add(cheeseburger);
                 burgers.Add(veggieBurger);
