@@ -13,14 +13,14 @@ namespace VPWebSolutions.Models
         [Required]
         [MinLength(2, ErrorMessage = "First name must be at least 2 characters long")]
         [MaxLength(50, ErrorMessage = "First name cannot exceed 50 characters")]
-        [RegularExpression("^[^0-9]+$", ErrorMessage = " First name cannot containt numbers")]
+        [RegularExpression("^[^0-9]+$", ErrorMessage = " First name cannot contain numbers")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [MinLength(2, ErrorMessage = "Last name must be at least 2 characters long")]
         [MaxLength(50, ErrorMessage = "Last name cannot exceed 50 characters")]
-        [RegularExpression("^[^0-9]+$", ErrorMessage = "Last name cannot containt numbers")]
+        [RegularExpression("^[^0-9]+$", ErrorMessage = "Last name cannot contain numbers")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 

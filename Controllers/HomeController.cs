@@ -78,7 +78,7 @@ namespace VPWebSolutions.Controllers
         {
 
             var results = _db.MenuItem.ToList();
-
+        
             return View(results);
         }
 
