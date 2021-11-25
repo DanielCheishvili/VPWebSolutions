@@ -9,8 +9,7 @@
 <script>
     var isEmpty = document.getElementById("cartItems").innerHTML === "";
     if (isEmpty) {
-        console.log("Checking if its entered");
-        document.getElementById("cartItems").innerHTML = '<button onclick="sendToMenu()" id="Button" type="button">START ORDER</button>'
+        document.getElementById("cartItems").innerHTML = '<button onclick="sendToMenu()" id="Button" type="button">START ORDER</button>';
     }
 
     function sendToMenu(){
