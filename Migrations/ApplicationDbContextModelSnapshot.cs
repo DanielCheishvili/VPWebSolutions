@@ -150,6 +150,88 @@ namespace VPWebSolutions.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.MenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("money");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MenuItem");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MenuItem");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("money");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
             modelBuilder.Entity("VPWebSolutions.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -319,6 +401,43 @@ namespace VPWebSolutions.Migrations
                     b.ToTable("RegisterModel");
                 });
 
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Burger", b =>
+                {
+                    b.HasBaseType("VPWebSolutions.Data.Entities.MenuItem");
+
+                    b.HasDiscriminator().HasValue("Burger");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Drink", b =>
+                {
+                    b.HasBaseType("VPWebSolutions.Data.Entities.MenuItem");
+
+                    b.Property<int>("QuantityInMl")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Drink");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Fries", b =>
+                {
+                    b.HasBaseType("VPWebSolutions.Data.Entities.MenuItem");
+
+                    b.HasDiscriminator().HasValue("Fries");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Pizza", b =>
+                {
+                    b.HasBaseType("VPWebSolutions.Data.Entities.MenuItem");
+
+                    b.Property<string>("PizzaType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Pizza");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -368,6 +487,26 @@ namespace VPWebSolutions.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
+                {
+                    b.HasOne("VPWebSolutions.Data.Entities.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId");
+
+                    b.HasOne("VPWebSolutions.Data.Entities.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("MenuItem");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

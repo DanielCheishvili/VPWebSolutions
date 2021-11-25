@@ -39,6 +39,7 @@ namespace VPWebSolutions
                 options.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
                 .EnableSensitiveDataLogging()
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddTransient<PizzaSeeder>();
 
             //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
