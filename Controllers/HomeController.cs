@@ -120,21 +120,29 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Checkout")]
         public IActionResult Checkout()
         {
-            var order = new Order
+            using(var transaction = _db.Database.BeginTransaction())
             {
-                OrderDate = DateTime.Now,
-                Items = CartActions.listItems,
-                Status = OrderStatus.ORDERED,
-            };
-            foreach(var item in CartActions.listItems)
-            {
-                _db.OrderItems.Add(item);
-            }
-            _db.Orders.Add(order);
-            
-            _db.SaveChanges();
+                var order = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    Items = CartActions.listItems,
+                    Status = OrderStatus.ORDERED,
+                };
+                foreach (var item in CartActions.listItems)
+                {
+                    _db.OrderItems.Add(item);
+                }
+                _db.Orders.Add(order);
                 
-           
+
+                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.MenuItem ON");
+                _db.SaveChanges();
+                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.MenuItem OFF");
+                transaction.Commit();
+            }
+            
+
+
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
             //MAKE VIEW DON"T FORGET

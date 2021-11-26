@@ -1,4 +1,7 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace VPWebSolutions.Data.Entities
 {
     public enum MenuItemType
@@ -10,6 +13,8 @@ namespace VPWebSolutions.Data.Entities
     }
     public abstract class MenuItem
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public double Price { get; set; }
         public MenuItemType Type { get; set; }
