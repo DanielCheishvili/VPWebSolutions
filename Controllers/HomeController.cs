@@ -134,7 +134,7 @@ namespace VPWebSolutions.Controllers
             
             _db.SaveChanges();
                 
-           // _db.SaveChanges();
+           
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
             //MAKE VIEW DON"T FORGET

@@ -17,10 +17,11 @@ namespace VPWebSolutions.Data.Entities
     public class Order
     {
         public const double TAX = 0.15;
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+  
 
-        [Key]
-        public int Id { get; set; }
+        /*[Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }*/
         public int CustomerId { get; set; }
         public DateTime OrderDate { get; set; }
         public ICollection<OrderItem> Items { get; set; }
