@@ -24,7 +24,10 @@
                         {
                             <p id="price_text">Price: @keyValuePair.Price</p>
                             <p id="price_text">Size:  @(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size)</p>
-                            <button class="btn btn-primary">Add To Cart</button>
+                            @using (Html.BeginForm("CartAdd", "Home", new { ItemId = keyValuePair.Id }, FormMethod.Post))
+                            {
+                                <button class="btn btn-primary" type="submit">Add To Cart</button>
+                            }
                         }
                     </div>
                 </div>
@@ -44,7 +47,16 @@
                         <img src="~/images/@(item.ImageId).jpg " class="menuImg" />
                         <h4>@item.Name</h4>
                         <p>Price: @item.Price.ToString("c")</p>
-                        <button class="btn btn-primary">Add To Cart</button>
+
+                        @using (Html.BeginForm("CartAdd", "Home", new { ItemId = item.Id }, FormMethod.Post))
+                        {
+                            <button class="btn btn-primary" type="submit">Add To Cart</button>
+                        }
+
+
+
+
+
                     </div>
                 </div>
             }

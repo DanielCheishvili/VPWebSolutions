@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -12,6 +13,7 @@ using System.Net;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
 using VPWebSolutions.Data.Entities;
+using VPWebSolutions.Logic;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Controllers
@@ -81,23 +83,65 @@ namespace VPWebSolutions.Controllers
         
             return View(results);
         }
-
-       /* [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            *//* ViewData["pizzas"] = _db.Pizzas;
-             ViewData["drinks"] = _db.Drinks;
-             ViewData["fries"] = _db.Fries;
-             ViewData["burgers"] = _db.Burgers;*//*
-            var results = _db.MenuItem.ToList();
-            
-            return View(results);
-        }
-*/
         [HttpGet("Cart")]
         public IActionResult Cart(){
+            
             return View();
+            
         }
+
+        [HttpPost]
+        public IActionResult CartAdd(int ItemId)
+        {
+            var itemAdd = _db.MenuItem.Find(ItemId);
+
+            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
+
+            if (matches.Count() == 0)
+            {
+                CartActions.listItems.Add(new OrderItem
+                {
+
+                    MenuItem = itemAdd,
+                    Quantity = 1,
+                    UnitPrice = itemAdd.Price,
+                });
+            }
+            else
+            {
+                matches[0].Quantity++;
+            }
+            
+
+            return RedirectToAction("Menu", "Home");
+        }
+
+        
+        [HttpGet("Checkout")]
+        public IActionResult Checkout()
+        {
+            var order = new Order
+            {
+                OrderDate = DateTime.Now,
+                Items = CartActions.listItems,
+                Status = OrderStatus.ORDERED,
+            };
+            foreach(var item in CartActions.listItems)
+            {
+                _db.OrderItems.Add(item);
+            }
+            _db.Orders.Add(order);
+            
+            _db.SaveChanges();
+                
+           // _db.SaveChanges();
+            CartActions.listItems.Clear();
+            return RedirectToAction("Index", "Home");
+            //MAKE VIEW DON"T FORGET
+            //return View();
+
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

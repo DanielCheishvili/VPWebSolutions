@@ -10,8 +10,8 @@ using VPWebSolutions.Data;
 namespace VPWebSolutions.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211124174314_dbSeeding")]
-    partial class dbSeeding
+    [Migration("20211126030833_orderFixAgain")]
+    partial class orderFixAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,12 +198,12 @@ namespace VPWebSolutions.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
