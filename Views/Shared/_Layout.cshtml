@@ -7,102 +7,109 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css?ver=<?php echo rand(111,999)?>" />
 </head>
-<body style="margin-top: 4%">
-    <header>
-        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
-                                Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
-                            </a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                    <button id="language-change" onclick="changeLanguage()">FR</button>
-                    <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <!-- https://mdbootstrap.com/docs/standard/navigation/footer/#indigocolor -->
-    <footer class="text-center text-lg-start bg-light text-muted">
-        <section class="d-flex justify-content-center justify-content-lg-between pl-4 py-2 border-bottom">
-            <div class="me-5 d-none d-lg-block">
-                <span>
-                    Get connected with us on social networks:
-                    <a href="https://www.instagram.com/pizzabrospizzeria/" target=" "><img src="~/images/instagram.png" height="35" width="35"/></a>
-                    <a href="https://www.facebook.com/pizzabrospizzeria" target=" "><img src="~/images/facebook.png" height="35" width="35"/></a>
-                    <a href="https://twitter.com/PizzaBros13" target=" "><img src="~/images/twitter.png" height="35" width="35"/></a>
-                    <a href="https://www.tiktok.com/@@pizzabrospizzeria?lang=en" target=" "><img src="~/images/tik-tok.png" height="35" width="35"/></a>
-                    <a href="mailto:pizzabrospizzeria@gmail.com" target=" "><img src="~/images/gmail.png" height="35" width="35"/></a>
-                    <a href="https://www.youtube.com/channel/UCR72NkHXW-KOmTNSSkNqkJw" target=" "><img src="~/images/youtube.png" height="35" width="35"/></a>
-
-                </span>
-            </div>
-        </section>
-        <section class="">
-            <div class="container text-center text-md-start">
-                <div class="row">
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
-                        <h6 class="text-uppercase fw-bold mb-2">
-                            <i class="fas fa-gem me-3"></i>Pizza Bros Pizzeria
-                        </h6>
-                        <p class="my-0">
-                            We are family business who pride ourselves on delivering the highest quality pizza. We have been in business since 1961.
-                            To be a PizzaBro franchisee is a privilege in itself.
-                        </p>
+<body style="margin-top: 6%">
+    <div id="page-container">
+        <div id="content-wrap">
+            <!-- all other page content -->
+            <header>
+                <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
+                                        Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
+                                    </a>
+                                </li>
+                            </ul>
+                            <partial name="_LoginPartial" />
+                            <button id="language-change" onclick="changeLanguage()">FR</button>
+                            <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
+                        </div>
                     </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-                        <h6 class="text-uppercase fw-bold mb-2">Pages</h6>
-                        <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
-                        <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="About">About Us</a></p>
-                        <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></p>
-                        <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
-                        <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Career">Careers</a></p>
-                    </div>
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
-                        <h6 class="text-uppercase fw-bold mb-2">
-                            Contact
-                        </h6>
-                        <p><i class="fas fa-home me-3"></i>21 275 Rue Lakeshore Road, Sainte-Anne-de-Bellevue, QC H9X 3L9</p>
-                        <p>pizzabros@gmail.com</p>
-                        <p><i class="fas fa-phone me-3"></i>514-233-5442</p>
-                    </div>
-                </div>
+                </nav>
+            </header>
+            <div class="container mb-3">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
             </div>
-        </section>
-        <div class="text-center" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2021 Copyright: VPWebSolutions
         </div>
-    </footer>
+
+        <!-- https://mdbootstrap.com/docs/standard/navigation/footer/#indigocolor -->
+        <footer id="footer" class="text-center text-lg-start bg-light text-muted">
+            <section class="d-flex justify-content-center justify-content-lg-between pl-4 py-2 border-bottom">
+                <div class="me-5 d-none d-lg-block">
+                    <span>
+                        Get connected with us on social networks:
+                        <a href="https://www.instagram.com/pizzabrospizzeria/" target=" "><img src="~/images/instagram.png" height="35" width="35" /></a>
+                        <a href="https://www.facebook.com/pizzabrospizzeria" target=" "><img src="~/images/facebook.png" height="35" width="35" /></a>
+                        <a href="https://twitter.com/PizzaBros13" target=" "><img src="~/images/twitter.png" height="35" width="35" /></a>
+                        <a href="https://www.tiktok.com/@@pizzabrospizzeria?lang=en" target=" "><img src="~/images/tik-tok.png" height="35" width="35" /></a>
+                        <a href="mailto:pizzabrospizzeria@gmail.com" target=" "><img src="~/images/gmail.png" height="35" width="35" /></a>
+                        <a href="https://www.youtube.com/channel/UCR72NkHXW-KOmTNSSkNqkJw" target=" "><img src="~/images/youtube.png" height="35" width="35" /></a>
+
+                    </span>
+                </div>
+            </section>
+            <section class="">
+                <div class="container text-center text-md-start">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
+                            <h6 class="text-uppercase fw-bold mb-2">
+                                <i class="fas fa-gem me-3"></i>Pizza Bros Pizzeria
+                            </h6>
+                            <p class="my-0">
+                                We are family business who pride ourselves on delivering the highest quality pizza. We have been in business since 1961.
+                                To be a PizzaBro franchisee is a privilege in itself.
+                            </p>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                            <h6 class="text-uppercase fw-bold mb-2">Pages</h6>
+                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
+                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="About">About Us</a></p>
+                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></p>
+                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Career">Careers</a></p>
+                        </div>
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
+                            <h6 class="text-uppercase fw-bold mb-2">
+                                Contact
+                            </h6>
+                            <p><i class="fas fa-home me-3"></i>21 275 Rue Lakeshore Road, Sainte-Anne-de-Bellevue, QC H9X 3L9</p>
+                            <p>pizzabros@gmail.com</p>
+                            <p><i class="fas fa-phone me-3"></i>514-233-5442</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="text-center" style="background-color: rgba(0, 0, 0, 0.05);">
+                © 2021 Copyright: VPWebSolutions
+            </div>
+        </footer>
+    </div>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/LanguageChange.js"></script>
