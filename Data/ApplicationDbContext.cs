@@ -18,11 +18,10 @@ namespace VPWebSolutions.Data
         public DbSet<ContactModel> Contacts { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Drink> Drinks { get; set; }
-        public DbSet<Fries> Fries  { get; set; }
+        public DbSet<Fries> Fries { get; set; }
         public DbSet<Burger> Burgers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-
+        public DbSet<OrderItem> OrderItems {get; set;}
         public DbSet<MenuItem> CartItems { get; set; }
 
         public DbSet<VPWebSolutions.Models.RegisterModel> RegisterModel { get; set; }
@@ -38,10 +37,12 @@ namespace VPWebSolutions.Data
                 .Property(o => o.UnitPrice)
                 .HasColumnType("money");
 
+            builder.Entity<Order>()
+                .HasMany(o => o.Items)
+                .WithOne(oi => oi.Order)
+                .HasForeignKey(oi => oi.OrderFK);
         }
 
         public DbSet<VPWebSolutions.Data.Entities.MenuItem> MenuItem { get; set; }
     }
-
-
 }

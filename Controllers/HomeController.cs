@@ -94,14 +94,13 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartAdd(int ItemId)
         {
             var itemAdd = _db.MenuItem.Find(ItemId);
-
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-
             if (matches.Count() == 0)
             {
                 CartActions.listItems.Add(new OrderItem
                 {
 
+                    MenuItem_Id = itemAdd.Id,
                     MenuItem = itemAdd,
                     Quantity = 1,
                     UnitPrice = itemAdd.Price,
@@ -120,34 +119,29 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Checkout")]
         public IActionResult Checkout()
         {
-            using(var transaction = _db.Database.BeginTransaction())
+            var order = new Order
             {
-                var order = new Order
-                {
-                    OrderDate = DateTime.Now,
-                    Items = CartActions.listItems,
-                    Status = OrderStatus.ORDERED,
-                };
-                foreach (var item in CartActions.listItems)
-                {
-                    _db.OrderItems.Add(item);
-                }
-                _db.Orders.Add(order);
-                
+                OrderDate = DateTime.Now,
+                Items = CartActions.listItems,
+                Status = OrderStatus.ORDERED,
+            };
 
-                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.MenuItem ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.MenuItem OFF");
-                transaction.Commit();
+            foreach(var orderItem in order.Items)
+            {
+                orderItem.Order = order;
+                orderItem.OrderFK = order.Id;
+                _db.OrderItems.Add(orderItem);
+                _db.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
             }
-            
 
+            _db.Orders.Add(order);
+
+            _db.SaveChanges();
 
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
             //MAKE VIEW DON"T FORGET
             //return View();
-
         }
 
 

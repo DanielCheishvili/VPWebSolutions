@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211127232302_remodelingOrderItemTable")]
+    partial class remodelingOrderItemTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,7 +216,7 @@ namespace VPWebSolutions.Migrations
                     b.Property<int>("MenuItem_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderFK")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -227,7 +229,7 @@ namespace VPWebSolutions.Migrations
 
                     b.HasIndex("MenuItem_Id");
 
-                    b.HasIndex("OrderFK");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -497,15 +499,11 @@ namespace VPWebSolutions.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VPWebSolutions.Data.Entities.Order", "Order")
+                    b.HasOne("VPWebSolutions.Data.Entities.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("MenuItem");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
