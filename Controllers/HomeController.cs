@@ -163,8 +163,18 @@ namespace VPWebSolutions.Controllers
             //return View();
         }
 
+        [HttpGet("CheckoutPage")]
         public IActionResult CheckoutPage()
+        {         
+            return View();
+        }
+        [HttpPost("CheckoutPage")]
+        public async Task<IActionResult> CheckoutPage(CheckoutModel contact)
         {
+            if(ModelState.IsValid)
+            {
+                await _emailSender.SendEmailAsync(contact.Email,"Order Confirmation", "Your order has been placed. Thank you for choosing PizzaBros");
+            }
             return View();
         }
 

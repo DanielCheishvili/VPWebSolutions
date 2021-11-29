@@ -44,5 +44,7 @@ namespace VPWebSolutions.Data
         }
 
         public DbSet<VPWebSolutions.Data.Entities.MenuItem> MenuItem { get; set; }
+
+        public DbSet<VPWebSolutions.Models.CheckoutModel> CheckoutModel { get; set; }
     }
 }
