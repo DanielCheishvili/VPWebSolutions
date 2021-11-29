@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,9 +25,7 @@ namespace VPWebSolutions.Controllers
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
         private readonly ApplicationDbContext _db;
-        //private readonly SignInManager<ApplicationUser> _signInManager;
-        //private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationUser _user;
+
 
         public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context)
         {
@@ -36,7 +33,6 @@ namespace VPWebSolutions.Controllers
             _emailSender = emailSender;
             _configuration = configuration;
             _db = context;
-            //_user = user;
         }
 
         public IActionResult Index()
@@ -84,14 +80,14 @@ namespace VPWebSolutions.Controllers
         {
 
             var results = _db.MenuItem.ToList();
-
+        
             return View(results);
         }
         [HttpGet("Cart")]
-        public IActionResult Cart() {
-
+        public IActionResult Cart(){
+            
             return View();
-
+            
         }
 
         [HttpPost]
@@ -114,7 +110,7 @@ namespace VPWebSolutions.Controllers
             {
                 matches[0].Quantity++;
             }
-
+            
 
             return RedirectToAction("Menu", "Home");
         }
@@ -123,9 +119,9 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count > 1)
+            if(matches.Count > 1)
             {
-                foreach (var item in matches)
+                foreach(var item in matches)
                 {
                     CartActions.listItems.RemoveAt(item.Id);
                 }
@@ -134,11 +130,11 @@ namespace VPWebSolutions.Controllers
             {
                 CartActions.listItems.RemoveAt(ItemId);
             }
-
+            
             return RedirectToAction("Cart", "Home");
         }
 
-
+        
         [HttpGet("Checkout")]
         public IActionResult Checkout()
         {
@@ -146,11 +142,10 @@ namespace VPWebSolutions.Controllers
             {
                 OrderDate = DateTime.Now,
                 Items = CartActions.listItems,
-                //Status = OrderStatus.ORDERED, //TODO make a list page where cooks can set it to cooked
-                Status = OrderStatus.COOKED,
+                Status = OrderStatus.ORDERED,
             };
 
-            foreach (var orderItem in order.Items)
+            foreach(var orderItem in order.Items)
             {
                 orderItem.Order = order;
                 orderItem.OrderFK = order.Id;
@@ -163,25 +158,23 @@ namespace VPWebSolutions.Controllers
             _db.SaveChanges();
 
             CartActions.listItems.Clear();
-            return RedirectToAction("OrderConfirmation", "Home", new { id = order.Id });
+            return RedirectToAction("Index", "Home");
             //MAKE VIEW DON"T FORGET
             //return View();
         }
 
-        public IActionResult OrderConfirmation(int id)
-        {
-            var order = _db.Orders
-                .OrderBy(o => o.OrderDate)
-                .Include(o => o.Items)
-                .ThenInclude(oi => oi.MenuItem)
-                .FirstOrDefault(o => o.Id == id);
-
-
-            return View(order);
-        }
-
+        [HttpGet("CheckoutPage")]
         public IActionResult CheckoutPage()
+        {         
+            return View();
+        }
+        [HttpPost("CheckoutPage")]
+        public async Task<IActionResult> CheckoutPage(CheckoutModel contact)
         {
+            if(ModelState.IsValid)
+            {
+                await _emailSender.SendEmailAsync(contact.Email,"Order Confirmation", "Your order has been placed. Thank you for choosing PizzaBros");
+            }
             return View();
         }
 
