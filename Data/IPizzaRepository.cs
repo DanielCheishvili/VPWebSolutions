@@ -6,7 +6,7 @@ using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
-    public interface PizzaRepository
+    public interface IPizzaRepository
     {
         bool SaveAll();
         ApplicationUser GetUserById(int id);

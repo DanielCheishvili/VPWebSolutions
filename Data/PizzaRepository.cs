@@ -12,7 +12,7 @@ namespace VPWebSolutions.Data
 
         public PizzaRepository(MenuDbContext ctx)
         {
-            _ctx = ctx;
+            _ctx = ctx;  
         }
         public ApplicationUser GetUserById(int id)
         {
