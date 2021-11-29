@@ -12,7 +12,7 @@
         <div id="content-wrap">
             <!-- all other page content -->
             <header>
-                <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white border-bottom box-shadow mb-3">
+                <nav class="navbar fixed-top navbar-expand-md border-bottom box-shadow mb-3">
                     <div class="container">
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,19 +22,19 @@
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="About">About Us</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
+                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
@@ -45,7 +45,7 @@
                             <partial name="_LoginPartial" />
                             <button id="language-change" onclick="changeLanguage()">FR</button>
                             <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
                         </div>
                     </div>
                 </nav>
@@ -118,3 +118,16 @@
 </body>
 
 </html>
+
+<style>
+    .navbar {
+        background-color: #F7CE37;
+    }
+    .nav-link {
+        color: #F4FAF9;
+    }
+    html, body {
+        background-color: #6D47AB;
+    }
+    
+</style>

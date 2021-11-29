@@ -39,5 +39,22 @@ namespace VPWebSolutions.Models
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string Phone { get; set; }
+
+        [Required]
+        [Display(Name= "Card number")]
+        [DataType(DataType.CreditCard)]
+        public int CreditNumber { get; set; }
+
+        [Required]
+        [Display(Name ="Expiration Date")]
+        public string Month { get; set; }
+
+        [Required]
+        public int Year { get; set; }
+
+        [Required]
+        [Display(Name = "Security Code")]
+        [RegularExpression("^[0-9]{3}$")]
+        public int SecurityCode { get; set; }
     }
 }
