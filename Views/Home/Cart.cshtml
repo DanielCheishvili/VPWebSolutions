@@ -42,14 +42,17 @@
                     <p>$@((item.MenuItem.Price*item.Quantity))</p>
                 </td>
                 <td>
-                    <a asp-action="Remove" asp-route-id="@item.">Remove</a>
+                    @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.Id }, FormMethod.Post))
+                    {
+                        <a asp-action="CartRemove" >Remove</a>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
+@using (Html.BeginForm("CheckoutPage", "Home", FormMethod.Get))
 {
     <button class="btn btn-primary" type="submit">Checkout</button>
 }
