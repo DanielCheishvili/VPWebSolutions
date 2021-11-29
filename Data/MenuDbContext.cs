@@ -9,26 +9,26 @@ using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class MenuDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public MenuDbContext(DbContextOptions<MenuDbContext> options)
             : base(options)
         {
         }
-        public DbSet<ContactModel> Contacts { get; set; }
+        
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Fries> Fries { get; set; }
         public DbSet<Burger> Burgers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems {get; set;}
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ContactModel> Contacts { get; set; }
+        public DbSet<ApplicationUser> UserDatas { get; set; }
         public DbSet<MenuItem> CartItems { get; set; }
 
-        public DbSet<VPWebSolutions.Models.RegisterModel> RegisterModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
             builder.Entity<MenuItem>()
                 .Property(m => m.Price)
                 .HasColumnType("money");
@@ -41,6 +41,8 @@ namespace VPWebSolutions.Data
                 .HasMany(o => o.Items)
                 .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderFK);
+
+            base.OnModelCreating(builder);
         }
 
         public DbSet<VPWebSolutions.Data.Entities.MenuItem> MenuItem { get; set; }

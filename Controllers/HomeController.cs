@@ -24,15 +24,17 @@ namespace VPWebSolutions.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
-        private readonly ApplicationDbContext _db;
+        private readonly IdentityDbContext _Userdb;
+        private readonly MenuDbContext _Menudb;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, IdentityDbContext identityDbContext, MenuDbContext menuDbContext)
         {
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
-            _db = context;
+            _Userdb = identityDbContext;
+            _Menudb = menuDbContext;
         }
 
         public IActionResult Index()
@@ -52,8 +54,8 @@ namespace VPWebSolutions.Controllers
                 //Send the email
                 await _emailSender.SendEmailAsync(contact.Email, contact.Topic, contact.Message);
                 //Add contact model to the database
-                _db.Contacts.Add(contact);
-                _db.SaveChanges();
+                _Menudb.Contacts.Add(contact);
+                _Menudb.SaveChanges();
                 //Call the view success and send the contact model
                 return View("Success", contact);
             }
@@ -79,7 +81,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult Menu()
         {
 
-            var results = _db.MenuItem.ToList();
+            var results = _Menudb.MenuItem.ToList();
         
             return View(results);
         }
@@ -93,7 +95,7 @@ namespace VPWebSolutions.Controllers
         [HttpPost]
         public IActionResult CartAdd(int ItemId)
         {
-            var itemAdd = _db.MenuItem.Find(ItemId);
+            var itemAdd = _Menudb.MenuItem.Find(ItemId);
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
             if (matches.Count() == 0)
             {
@@ -149,13 +151,13 @@ namespace VPWebSolutions.Controllers
             {
                 orderItem.Order = order;
                 orderItem.OrderFK = order.Id;
-                _db.OrderItems.Add(orderItem);
-                _db.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                _Menudb.OrderItems.Add(orderItem);
+                _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
             }
 
-            _db.Orders.Add(order);
+            _Menudb.Orders.Add(order);
 
-            _db.SaveChanges();
+            _Menudb.SaveChanges();
 
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
