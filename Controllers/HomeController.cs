@@ -115,6 +115,25 @@ namespace VPWebSolutions.Controllers
             return RedirectToAction("Menu", "Home");
         }
 
+        [HttpPost]
+        public IActionResult CartRemove(int ItemId)
+        {
+            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
+            if(matches.Count > 1)
+            {
+                foreach(var item in matches)
+                {
+                    CartActions.listItems.RemoveAt(item.Id);
+                }
+            }
+            else
+            {
+                CartActions.listItems.RemoveAt(ItemId);
+            }
+            
+            return RedirectToAction("Cart", "Home");
+        }
+
         
         [HttpGet("Checkout")]
         public IActionResult Checkout()

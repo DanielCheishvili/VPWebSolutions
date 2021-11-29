@@ -42,7 +42,10 @@
                     <p>$@((item.MenuItem.Price*item.Quantity))</p>
                 </td>
                 <td>
-                    <a asp-action="Remove" asp-route-id="@item.">Remove</a>
+                    @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.Id }, FormMethod.Post))
+                    {
+                        <a asp-action="CartRemove" >Remove</a>
+                    }
                 </td>
             </tr>
         }
