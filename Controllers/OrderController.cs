@@ -29,6 +29,7 @@ namespace VPWebSolutions.Controllers
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.OUT_FOR_DELIVERY)
                 .ToList();
 
             return View(orders);
@@ -39,6 +40,16 @@ namespace VPWebSolutions.Controllers
         {
             var order = _db.Orders.Find(id);
             return View(order);
+        }
+
+        public IActionResult UpdateStatus(int id)
+        {
+            var order = _db.Orders.Find(id);
+            order.Status = order.Status.Next();
+            _db.Orders.Update(order);
+            _db.SaveChanges();
+
+            return RedirectToAction("Orders", "Order");
         }
     }
 }

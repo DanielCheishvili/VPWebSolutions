@@ -10,7 +10,7 @@ namespace VPWebSolutions.Data.Entities
         PENDING,
         ORDERED,
         COOKED,
-        SHIPPED,
+        OUT_FOR_DELIVERY,
         DELIVERED,
         CANCELED,
     }

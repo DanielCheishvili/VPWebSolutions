@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Orders";
 }
+@using VPWebSolutions.Data 
 
 <h1>Orders</h1>
 
@@ -37,9 +38,15 @@
                 @Html.DisplayFor(modelItem => item.CustomerId)
             </td>
             <td>
-                <li>
-
-                </li>
+                <ul>
+               @foreach(var oi in item.Items)
+                {
+                   <li>
+                       @oi.Quantity @oi.MenuItem.Name 
+                   </li>
+                }
+                    <li>@item.Status.Next()</li>
+                </ul>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderDate)
@@ -49,8 +56,9 @@
             </td>
             <td>
                 @Html.ActionLink("View", "Order", new {  id=item.Id  }, null) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink(String.Format("Set status to " + item.Status.Next().ToString()), "UpdateStatus", new {id=item.Id}, null)
+                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
 }
