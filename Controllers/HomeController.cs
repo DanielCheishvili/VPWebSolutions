@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,15 +27,19 @@ namespace VPWebSolutions.Controllers
         //Instantiating the IEmailSender interface using Dependency Injection
         private readonly UserIdentityDbContext _Userdb;
         private readonly BusinessDbContext _Menudb;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager )
         {
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
             _Userdb = identityDbContext;
             _Menudb = menuDbContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -144,7 +149,7 @@ namespace VPWebSolutions.Controllers
             {
                 OrderDate = DateTime.Now,
                 Items = CartActions.listItems,
-                Status = OrderStatus.ORDERED,
+                Status = OrderStatus.COOKED, //make cook set it to cooked
             };
 
             foreach(var orderItem in order.Items)
@@ -153,6 +158,11 @@ namespace VPWebSolutions.Controllers
                 orderItem.OrderFK = order.Id;
                 _Menudb.OrderItems.Add(orderItem);
                 _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+            }
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
             }
 
             _Menudb.Orders.Add(order);
