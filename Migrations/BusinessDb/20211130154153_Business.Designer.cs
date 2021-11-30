@@ -10,8 +10,8 @@ using VPWebSolutions.Data;
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20211130120501_BusinessData")]
-    partial class BusinessData
+    [Migration("20211130154153_Business")]
+    partial class Business
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,30 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShowProfileViewModelUserDataId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShowProfileViewModelUserDataId");
+
+                    b.ToTable("IdentityRole");
+                });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.MenuItem", b =>
                 {
@@ -70,6 +94,9 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<float>("OrderTotal")
                         .HasColumnType("real");
 
+                    b.Property<int?>("ShowProfileViewModelUserDataId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -77,6 +104,8 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShowProfileViewModelUserDataId");
 
                     b.HasIndex("UserDataId");
 
@@ -175,6 +204,24 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("VPWebSolutions.Models.ShowProfileViewModel", b =>
+                {
+                    b.Property<int>("UserDataId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserDataId");
+
+                    b.ToTable("ShowProfileViewModel");
+                });
+
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Burger", b =>
                 {
                     b.HasBaseType("VPWebSolutions.Data.Entities.MenuItem");
@@ -212,8 +259,19 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasDiscriminator().HasValue("Pizza");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.HasOne("VPWebSolutions.Models.ShowProfileViewModel", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("ShowProfileViewModelUserDataId");
+                });
+
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
                 {
+                    b.HasOne("VPWebSolutions.Models.ShowProfileViewModel", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("ShowProfileViewModelUserDataId");
+
                     b.HasOne("VPWebSolutions.Data.Entities.UserData", "UserData")
                         .WithMany()
                         .HasForeignKey("UserDataId");
@@ -243,6 +301,13 @@ namespace VPWebSolutions.Migrations.BusinessDb
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Models.ShowProfileViewModel", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

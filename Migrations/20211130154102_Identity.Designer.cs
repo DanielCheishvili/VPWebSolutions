@@ -10,7 +10,7 @@ using VPWebSolutions.Data;
 namespace VPWebSolutions.Migrations
 {
     [DbContext(typeof(UserIdentityDbContext))]
-    [Migration("20211130120401_Identity")]
+    [Migration("20211130154102_Identity")]
     partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
