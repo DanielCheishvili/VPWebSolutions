@@ -43,6 +43,10 @@ namespace VPWebSolutions.Data
             {
                 await _roleManager.CreateAsync(new IdentityRole(Enums.Roles.Employee.ToString()));
             }
+            if (!_db.Roles.Any(r => r.Name == "Cook"))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(Enums.Roles.Cook.ToString()));
+            }
             if (!_db.Roles.Any(r => r.Name == "Customer"))
             {
                 await _roleManager.CreateAsync(new IdentityRole(Enums.Roles.Customer.ToString()));

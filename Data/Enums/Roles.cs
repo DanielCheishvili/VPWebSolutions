@@ -10,6 +10,7 @@ namespace VPWebSolutions.Data.Enums
         Admin,
         Manager,
         Employee,
+        Cook,
         Deliverer,
         Customer
     }
