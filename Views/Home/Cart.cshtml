@@ -6,54 +6,66 @@
 @model IEnumerable<VPWebSolutions.Data.Entities.OrderItem>
 @using VPWebSolutions.Logic
 <h1>YOUR CART</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MenuItem.ImageId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MenuItem.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MenuItem.Price)
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in CartActions.listItems)
-        {
-            <tr>
-                <td>
-                    <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MenuItem.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    <p>$@((item.MenuItem.Price*item.Quantity))</p>
-                </td>
-                <td>
-                    @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.Id }, FormMethod.Post))
-                    {
-                        <a asp-action="CartRemove" >Remove</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@using (Html.BeginForm("CheckoutPage", "Home", FormMethod.Get))
+@if (CartActions.listItems.Count <= 0)
 {
-    <button class="btn btn-primary" type="submit">Checkout</button>
+    <p>Your cart is currently empty, but your stomach doesn't have to be. Add some items and come back here to checkout.</p>
+    @using (Html.BeginForm("Menu", "Home", FormMethod.Get))
+    {
+        <button class="btn btn-primary" type="submit">START ORDER</button>
+    }
 }
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItem.ImageId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItem.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItem.Price)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in CartActions.listItems)
+            {
+                <tr>
+                    <td>
+                        <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItem.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        <p>$@((item.MenuItem.Price*item.Quantity))</p>
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.Id }, FormMethod.Post))
+                        {
+                            <button class="btn btn-primary" type="submit">Remove</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
+    {
+        <button class="btn btn-primary" type="submit">Checkout</button>
+    }
+}
+
 
