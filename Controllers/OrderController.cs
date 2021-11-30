@@ -39,16 +39,27 @@ namespace VPWebSolutions.Controllers
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                .Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.OUT_FOR_DELIVERY)
+                .Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.IN_DELIVERY)
                 .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
                 .ToList();
 
             foreach (var order in orders)
             {
-                var cust = _userManager.FindByIdAsync(order.IdCustomer);
-                if (cust != null)
+                if(order.isGuestUser)
                 {
-                    order.Customer = cust.Result;
+                    var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
+                    if (checkoutInfo.Count() > 0)
+                    {
+                        order.Customer = new ApplicationUser { Address = checkoutInfo[0].Address };
+                    }
+                }
+                else
+                {
+                    var cust = _userManager.FindByIdAsync(order.IdCustomer);
+                    if (cust != null)
+                    {
+                        order.Customer = cust.Result;
+                    }
                 }
             }
 

@@ -11,7 +11,7 @@ namespace VPWebSolutions.Data.Entities
         PENDING,
         ORDERED,
         COOKED,
-        OUT_FOR_DELIVERY,
+        IN_DELIVERY,
         DELIVERED,
         CANCELED,
     }
@@ -32,5 +32,6 @@ namespace VPWebSolutions.Data.Entities
         public ApplicationUser Customer { get; set; }
         public string IdCustomer { get; set; }
         public string DeliveryGuyId { get; set; }
+        public bool isGuestUser { get; set; }
     }
 }

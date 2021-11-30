@@ -164,14 +164,16 @@ namespace VPWebSolutions.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                    order.isGuestUser = false;
                 }
-                if (!_signInManager.IsSignedIn(User))
+                else
                 {
                     model.Order = order;
                     model.OrderFK = order.Id;
                     _Menudb.CheckOut.Add(model);
+                    order.isGuestUser = true;
                 }
-
+                
                 _Menudb.Orders.Add(order);
 
                 _Menudb.SaveChanges();
