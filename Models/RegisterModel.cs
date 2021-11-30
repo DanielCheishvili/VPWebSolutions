@@ -1,14 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VPWebSolutions.Models
 {
     public class RegisterModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         [MinLength(2, ErrorMessage ="First Name must have at least 2 characters long.")]
         [RegularExpression("^[^0-9]+$", ErrorMessage ="First Name cannot contain numbers.")]
@@ -22,6 +17,7 @@ namespace VPWebSolutions.Models
         public string LastName { get; set; }
 
         [Required]
+        [Key]
         [DataType(DataType.EmailAddress)]
         [MinLength(2)]
         [MaxLength(30)]

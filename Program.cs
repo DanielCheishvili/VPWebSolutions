@@ -23,17 +23,10 @@ namespace VPWebSolutions
         private static void RunSeeding(IHost host)
         {
             var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
-
             using (var scope = scopeFactory.CreateScope())
             {
-                var pizzaSeeder = scope.ServiceProvider.GetService<PizzaSeeder>();
-                pizzaSeeder.Seed();
-
-                var identitySeeder = scope.ServiceProvider.GetService<IdentitySeeder>();
-                identitySeeder.SeedAsync().Wait();
-
-                var businessDataSeeder = scope.ServiceProvider.GetService<BusinessDataSeeder>();
-                businessDataSeeder.SeedAsync();
+                var seeder = scope.ServiceProvider.GetService<PizzaSeeder>();
+                seeder.Seed();
             }
         }
 
