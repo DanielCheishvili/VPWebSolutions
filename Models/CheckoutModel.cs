@@ -25,6 +25,10 @@ namespace VPWebSolutions.Models
         public string LastName { get; set; }
 
         [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Required]
         [RegularExpression("[a-zA-z][0-9][a-zA-z] ?[0-9][a-zA-z][0-9]", ErrorMessage = "Please enter a valid canadian postal code (X1X 1X1)")]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }

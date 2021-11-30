@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,14 +26,18 @@ namespace VPWebSolutions.Controllers
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
             _db = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -99,7 +104,6 @@ namespace VPWebSolutions.Controllers
             {
                 CartActions.listItems.Add(new OrderItem
                 {
-
                     MenuItem_Id = itemAdd.Id,
                     MenuItem = itemAdd,
                     Quantity = 1,
@@ -142,7 +146,7 @@ namespace VPWebSolutions.Controllers
             {
                 OrderDate = DateTime.Now,
                 Items = CartActions.listItems,
-                Status = OrderStatus.ORDERED,
+                Status = OrderStatus.COOKED, //TODO PAGE FOR COOKS TO SET ORDER TO COOKED SO THIS CAN BE CHANGED BACK TO ORDERED
             };
 
             foreach(var orderItem in order.Items)
@@ -151,6 +155,11 @@ namespace VPWebSolutions.Controllers
                 orderItem.OrderFK = order.Id;
                 _db.OrderItems.Add(orderItem);
                 _db.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+            }
+
+            if(_signInManager.IsSignedIn(User))
+            {
+                order.CustomerId = _userManager.GetUserAsync(User).Result.Id;
             }
 
             _db.Orders.Add(order);
