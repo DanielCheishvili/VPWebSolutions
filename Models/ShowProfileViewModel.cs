@@ -13,11 +13,8 @@ namespace VPWebSolutions.Models
         [Key]
         [HiddenInput(DisplayValue =false)]
         public int UserDataId { get; set; }
-
         public string Address { get; set; }
-
         public string Email { get; set; }
-
         public List<IdentityRole> Roles { get; set; }
         public List<Order> Orders { get; set; }
     }
