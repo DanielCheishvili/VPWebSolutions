@@ -145,39 +145,45 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Checkout")]
         public IActionResult Checkout(CheckoutModel model)
         {
-            var order = new Order
+            if(ModelState.IsValid)
             {
-                OrderDate = DateTime.Now,
-                Items = CartActions.listItems,
-                Status = OrderStatus.COOKED, //make cook set it to cooked
-            };
+                var order = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    Items = CartActions.listItems,
+                    Status = OrderStatus.COOKED, //make cook set it to cooked
+                };
 
-            foreach(var orderItem in order.Items)
-            {
-                orderItem.Order = order;
-                orderItem.OrderFK = order.Id;
-                _Menudb.OrderItems.Add(orderItem);
-                _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                foreach (var orderItem in order.Items)
+                {
+                    orderItem.Order = order;
+                    orderItem.OrderFK = order.Id;
+                    _Menudb.OrderItems.Add(orderItem);
+                    _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                }
+
+
+                if (_signInManager.IsSignedIn(User))
+                {
+                    order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                }
+                if (!_signInManager.IsSignedIn(User))
+                {
+                    model.Order = order;
+                    model.OrderFK = order.Id;
+                    _Menudb.CheckOut.Add(model);
+                }
+
+                _Menudb.Orders.Add(order);
+
+                _Menudb.SaveChanges();
+
+                CartActions.listItems.Clear();
+                return RedirectToAction("Index", "Home");
+                //MAKE VIEW DON"T FORGET
+                
             }
-
-
-            if (_signInManager.IsSignedIn(User))
-            {
-                order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
-            }
-           if(!_signInManager.IsSignedIn(User) || model.Address == _userManager.GetUserAsync(User).Result?.Address)
-           {
-
-           }
-
-            _Menudb.Orders.Add(order);
-
-            _Menudb.SaveChanges();
-
-            CartActions.listItems.Clear();
-            return RedirectToAction("Index", "Home");
-            //MAKE VIEW DON"T FORGET
-            //return View();
+            return View("CheckoutPage");
         }
 
         public IActionResult CheckoutPage()
