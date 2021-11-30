@@ -126,19 +126,17 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if(matches.Count > 1)
+            if (matches.Count > 1)
             {
-                foreach(var item in matches)
+                foreach (var item in matches)
                 {
-                    CartActions.listItems.RemoveAt(item.Id);
+                    
+                    CartActions.listItems.Remove(item);
                 }
             }
-            else
-            {
-                CartActions.listItems.RemoveAt(ItemId);
-            }
             
-            return RedirectToAction("Cart", "Home");
+
+                return RedirectToAction("Cart", "Home");
         }
 
         
@@ -166,14 +164,16 @@ namespace VPWebSolutions.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                    order.isGuestUser = false;
                 }
-                if (!_signInManager.IsSignedIn(User))
+                else
                 {
                     model.Order = order;
                     model.OrderFK = order.Id;
                     _Menudb.CheckOut.Add(model);
+                    order.isGuestUser = true;
                 }
-
+                
                 _Menudb.Orders.Add(order);
 
                 _Menudb.SaveChanges();

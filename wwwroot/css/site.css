@@ -2,9 +2,12 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: #28334AFF;
+    font-size: 25px;
+    font-weight: bold
 }
 
 /* Provide sufficient contrast against white background */

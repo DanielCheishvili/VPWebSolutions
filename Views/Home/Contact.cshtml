@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Contact";
 }
-<script src="https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit" async defer></script>
+@*<script src="https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit" async defer></script>
 
 <script type="text/javascript">
     var your_site_key = '6LfWLwodAAAAAM4geLlqDsGV5RhB6pPVb8QobaAC';
@@ -25,7 +25,7 @@
             document.getElementById("recapctcha-error").innerText = null;
         }
     };
-</script>
+</script>*@
 
 <h1>Contact</h1>
 <hr />
@@ -76,7 +76,7 @@
                 <textarea asp-for="Message" class="form-control"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <div id="ReCaptchContainer"></div>
+            <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM"></div>
             <p id="recapctcha-error" style="color:#dc3545;">@ViewData["ErrorMessage"]</p>
             <div class="form-group">
                 <input id="submit-form" type="submit" value="Create" class="btn btn-primary" disabled />
@@ -90,3 +90,20 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+
+    //Help from https://stackoverflow.com/questions/27902539/how-can-i-validate-google-recaptcha-v2-using-javascript-jquery
+
+    function captchaVerify() {
+        var response = grecaptcha.getResponse();
+
+
+        if (response.length == 0) {
+            document.getElementById("submit-form").setAttribute("disabled", "True");
+        }
+        else {
+            document.getElementById("submit-form").removeAttribute("disabled");
+        }
+    }
+</script>
