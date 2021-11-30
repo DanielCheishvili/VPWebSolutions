@@ -32,14 +32,12 @@ namespace VPWebSolutions
         {            
             services.AddDbContext<UserIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
-                .EnableSensitiveDataLogging()
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                .EnableSensitiveDataLogging());
 
             services.AddDbContext<BusinessDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("BusinessConnection"))
-                    .EnableSensitiveDataLogging()
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                    .EnableSensitiveDataLogging());
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
