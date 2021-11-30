@@ -126,19 +126,17 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if(matches.Count > 1)
+            if (matches.Count > 1)
             {
-                foreach(var item in matches)
+                foreach (var item in matches)
                 {
-                    CartActions.listItems.RemoveAt(item.Id);
+                    
+                    CartActions.listItems.Remove(item);
                 }
             }
-            else
-            {
-                CartActions.listItems.RemoveAt(ItemId);
-            }
             
-            return RedirectToAction("Cart", "Home");
+
+                return RedirectToAction("Cart", "Home");
         }
 
         
