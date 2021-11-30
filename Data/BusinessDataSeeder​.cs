@@ -20,7 +20,7 @@ namespace VPWebSolutions.Data
             _userManager = userManager;
         }
 
-        public async void SeedAsync()
+        public async Task SeedAsync()
         {
             //  Make sure the database is created before we make any queries.​
             //  Will create the database if it doesn't exist yet (and thereby avoid errors)​

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using VPWebSolutions.Data.Entities;
 
 namespace VPWebSolutions.Models
 {
     public class CheckoutModel
     {
         public int Id { get; set; }
+
+        public Order Order { get; set; }
+        public int OrderFK { get; set; }
 
         [Required]
         [MinLength(2, ErrorMessage = "First name must be at least 2 characters long")]
@@ -46,19 +50,21 @@ namespace VPWebSolutions.Models
 
         [Required]
         [Display(Name= "Card number")]
-        [DataType(DataType.CreditCard)]
         public int CreditNumber { get; set; }
 
         [Required]
-        [Display(Name ="Expiration Date")]
+        [Display(Name ="Expiration Month")]
         public string Month { get; set; }
 
         [Required]
+        [Display(Name = "Expiration Year")]
         public int Year { get; set; }
 
         [Required]
         [Display(Name = "Security Code")]
-        [RegularExpression("^[0-9]{3}$")]
+        [RegularExpression("^[0-9]{3}$", ErrorMessage = "Please enter a valid CVV (XXX)")]
         public int SecurityCode { get; set; }
+
+ 
     }
 }
