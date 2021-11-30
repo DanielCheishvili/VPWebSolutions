@@ -13,88 +13,76 @@
 
 <h1>Checkout Page</h1>
 <hr />
-<h2>Summary: </h2>
-<div>
-    <ul style="list-style-type:none">
-        @foreach (var orderItem in CartActions.listItems)
+<div class="grid-container">
+    <div class="billing">
+        <h3>Billing information</h3>
+        @using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
         {
-            <li>
-                @orderItem.Quantity
-                @orderItem.MenuItem.Name
-                @orderItem.UnitPrice.ToString("c")
-            </li>
-        }
-        <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
-        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
-        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
-    </ul>
-</div>
-<hr />
-<div>
-    <h3>Billing information</h3>
-</div>
-<hr />
-
-@using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
-{
-    <div class="row">
-        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="grid-container-2">
+                <div class="left">
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" value="" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {<input asp-for="Address" class="form-control" /> }
+                        else
+                        { <input asp-for="Address" class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {<input asp-for="Email" class="form-control" /> }
+                        else
+                        { <input asp-for="Email" class="form-control" value="@UserManager.GetUserAsync(User).Result.Email" />}
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
 
-            @if (!SignInManager.IsSignedIn(User))
-            {
-                <div class="form-group">
-                    <label asp-for="FirstName" class="control-label"></label>
-                    <input asp-for="FirstName" class="form-control" value="" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                <div class="right">
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="PostalCode" class="control-label"></label>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {<input asp-for="PostalCode" class="form-control" /> }
+                        else
+                        { <input asp-for="PostalCode" class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {<input asp-for="Phone" class="form-control" /> }
+                        else
+                        { <input asp-for="Phone" class="form-control" value="@UserManager.GetUserAsync(User).Result.PhoneNumber" />}
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-            }
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                @if (!SignInManager.IsSignedIn(User))
-                {<input asp-for="Address" class="form-control" /> }
-                else
-                { <input asp-for="Address" class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                @if (!SignInManager.IsSignedIn(User))
-                {<input asp-for="PostalCode" class="form-control" /> }
-                else
-                { <input asp-for="PostalCode" class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                @if (!SignInManager.IsSignedIn(User))
-                {<input asp-for="Email" class="form-control" /> }
-                else
-                { <input asp-for="Email" class="form-control" value="@UserManager.GetUserAsync(User).Result.Email" />}
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                @if (!SignInManager.IsSignedIn(User))
-                {<input asp-for="Phone" class="form-control" /> }
-                else
-                { <input asp-for="Phone" class="form-control" value="@UserManager.GetUserAsync(User).Result.PhoneNumber" />}
-                <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
 
             <div>
                 <p class="p-button control-label">Method of Payment</p>
 
-                <label>
+                <label class="radio-buttons">
                     <input type="radio" name="type" class="form-control" id="creditCard" onclick="checkMethodPayment()" checked> Credit Card
                 </label>
 
-                <label>
+                <label class="radio-buttons">
                     <input type="radio" name="type" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
                 </label>
 
@@ -103,7 +91,7 @@
             <div id="creditCardInfo">
                 <div class="form-group">
                     <label asp-for="CreditNumber" class="control-label"></label>
-                    <input asp-for="CreditNumber" class="form-control"/>
+                    <input asp-for="CreditNumber" class="form-control" />
                     <span asp-validation-for="CreditNumber" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -146,22 +134,81 @@
                     <span asp-validation-for="SecurityCode" class="text-danger"></span>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Place your order</button>
-    </div>
-}
 
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Place your order</button>
+            </div>
+        }
+    </div>
+    <div class="summary">
+        <h2>Summary: </h2>
+        <ul style="list-style-type:none">
+            @foreach (var orderItem in CartActions.listItems)
+            {
+                <li>
+                    @orderItem.Quantity
+                    @orderItem.MenuItem.Name
+                    @orderItem.UnitPrice.ToString("c")
+                </li>
+            }
+            <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
+            <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
+            <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
+        </ul>
+    </div>
+</div>
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <style>
+    .radio-buttons{
+        margin:0 10px 0 10px;
+    }
     h1, h2, li, h3, label, .p-button {
         color: #DEC20B;
         font-weight: bold;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 0.33fr 0.33fr 0.33fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 20px;
+        height: fit-content;
+    }
+    .billing {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+    }
+    .summary {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+
+    .grid-container-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 20px;
+        height: fit-content;
+    }
+    .left {
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+    .right {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 </style>
 
@@ -171,7 +218,7 @@
 
         var cash = document.getElementById("cash");
 
-        creditCardInfo.style.display = cash.checked ? "hidden" : "block";
+        creditCardInfo.style.display = cash.checked ? "none" : "block";
     }
 
 </script>
