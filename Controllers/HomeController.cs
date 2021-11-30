@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,19 +24,17 @@ namespace VPWebSolutions.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
-        private readonly ApplicationDbContext _db;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserIdentityDbContext _Userdb;
+        private readonly BusinessDbContext _Menudb;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
         {
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
-            _db = context;
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _Userdb = identityDbContext;
+            _Menudb = menuDbContext;
         }
 
         public IActionResult Index()
@@ -57,8 +54,8 @@ namespace VPWebSolutions.Controllers
                 //Send the email
                 await _emailSender.SendEmailAsync(contact.Email, contact.Topic, contact.Message);
                 //Add contact model to the database
-                _db.Contacts.Add(contact);
-                _db.SaveChanges();
+                _Menudb.Contacts.Add(contact);
+                _Menudb.SaveChanges();
                 //Call the view success and send the contact model
                 return View("Success", contact);
             }
@@ -84,7 +81,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult Menu()
         {
 
-            var results = _db.MenuItem.ToList();
+            var results = _Menudb.MenuItem.ToList();
         
             return View(results);
         }
@@ -98,12 +95,13 @@ namespace VPWebSolutions.Controllers
         [HttpPost]
         public IActionResult CartAdd(int ItemId)
         {
-            var itemAdd = _db.MenuItem.Find(ItemId);
+            var itemAdd = _Menudb.MenuItem.Find(ItemId);
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
             if (matches.Count() == 0)
             {
                 CartActions.listItems.Add(new OrderItem
                 {
+
                     MenuItem_Id = itemAdd.Id,
                     MenuItem = itemAdd,
                     Quantity = 1,
@@ -146,25 +144,20 @@ namespace VPWebSolutions.Controllers
             {
                 OrderDate = DateTime.Now,
                 Items = CartActions.listItems,
-                Status = OrderStatus.COOKED, //TODO PAGE FOR COOKS TO SET ORDER TO COOKED SO THIS CAN BE CHANGED BACK TO ORDERED
+                Status = OrderStatus.ORDERED,
             };
 
             foreach(var orderItem in order.Items)
             {
                 orderItem.Order = order;
                 orderItem.OrderFK = order.Id;
-                _db.OrderItems.Add(orderItem);
-                _db.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                _Menudb.OrderItems.Add(orderItem);
+                _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
             }
 
-            if(_signInManager.IsSignedIn(User))
-            {
-                order.CustomerId = _userManager.GetUserAsync(User).Result.Id;
-            }
+            _Menudb.Orders.Add(order);
 
-            _db.Orders.Add(order);
-
-            _db.SaveChanges();
+            _Menudb.SaveChanges();
 
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
@@ -172,18 +165,8 @@ namespace VPWebSolutions.Controllers
             //return View();
         }
 
-        [HttpGet("CheckoutPage")]
         public IActionResult CheckoutPage()
-        {         
-            return View();
-        }
-        [HttpPost("CheckoutPage")]
-        public async Task<IActionResult> CheckoutPage(CheckoutModel contact)
         {
-            if(ModelState.IsValid)
-            {
-                await _emailSender.SendEmailAsync(contact.Email,"Order Confirmation", "Your order has been placed. Thank you for choosing PizzaBros");
-            }
             return View();
         }
 
