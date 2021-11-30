@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,43 +16,67 @@
             <!-- all other page content -->
             <header>
                 <nav class="navbar fixed-top navbar-expand-md border-bottom box-shadow mb-3">
-                    <div class="container">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
-                                        Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
-                                    </a>
-                                </li>
-                            </ul>
-                            <partial name="_LoginPartial" />
-                            <button id="language-change" onclick="changeLanguage()">FR</button>
-                            <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
+                    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Deliverer"))
+                    {
+                        <div class="container">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Orders">Orders</a>
+                                    </li>
+                                </ul>
+                                <partial name="_LoginPartial" />
+                                <button id="language-change" onclick="changeLanguage()">FR</button>
+                                <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
+                                @*<a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>*@
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="container">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
+                                            Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
+                                        </a>
+                                    </li>
+                                </ul>
+                                <partial name="_LoginPartial" />
+                                <button id="language-change" onclick="changeLanguage()">FR</button>
+                                <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
+                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
+                            </div>
+                        </div>
+                    }
                 </nav>
-            </header>
+                </header>
             <div class="container mb-3">
                 <main role="main" class="pb-3">
                     @RenderBody()
@@ -109,7 +136,7 @@
             </div>
         </footer>
     </div>
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/LanguageChange.js"></script>
@@ -123,11 +150,12 @@
     .navbar {
         background-color: #F7CE37;
     }
+
     .nav-link {
         color: #F4FAF9;
     }
+
     html, body {
         background-color: #6D47AB;
     }
-    
 </style>

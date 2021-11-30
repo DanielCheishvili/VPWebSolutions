@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,14 +32,15 @@ namespace VPWebSolutions.Controllers
         }
 
         [HttpGet("Orders")]
+        [Authorize(Roles = "Deliverer")]
         public IActionResult Orders()
         {
             var orders = _Menudb.Orders
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                //.Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.OUT_FOR_DELIVERY)
-                //.Where(o => o.DeliveryGuyId =s= null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
+                .Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.OUT_FOR_DELIVERY)
+                .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
                 .ToList();
 
             foreach (var order in orders)
@@ -53,14 +55,14 @@ namespace VPWebSolutions.Controllers
             return View(orders);
         }
 
-        [HttpGet("Order")]
-        public IActionResult Order(int id)
+        public IActionResult UpdateStatus(int id)
         {
             var order = _Menudb.Orders.Find(id);
             order.Status = order.Status.Next();
             order.DeliveryGuyId = _userManager.GetUserAsync(User).Result.Id;
             _Menudb.Orders.Update(order);
-            return View(order);
+            _Menudb.SaveChanges();
+            return RedirectToAction("Orders", "Order");
         }
     }
 }
