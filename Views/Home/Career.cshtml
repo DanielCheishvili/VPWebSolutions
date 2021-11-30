@@ -4,17 +4,19 @@
 @{
 }
 
-<div class="row jumbotron jumbotron-fluid">
-    <div class="col-md-8 offset-md-5">
-        <h1 style="color:black">Join Us</h1>
-        <p style="color:black">We Make it, You Take it</p>
-    </div>
+
+<div class="title">
+    <h1 class="title-1">Join Us</h1>
+    <p class="title-2">We Make it, You Take it</p>
 </div>
-<h4>Why Join Us?</h4>
-<p>We are the #1 leading pizzeria in the world. We have been making pizzas for you since 1961. We are aiming to keep being the best and producing the best quality pizza.
-   Want to be part of that team as well? Want to leave a positive impacts on peoples live? Are you passionate about pizzas? If you answered
-    Yes to all those questions then you are the one.Send in your cv <a href="mailto:pizzabrospizzeria@gmail.com?subject=Careers">Here.</a></p>
-<h4>Job Posting</h4>
+
+
+
+<h4 class="color-only">Why Join Us?</h4>
+<p class="color-only">We are the #1 leading pizzeria in the world. We have been making pizzas for you since 1961. We are aiming to keep being the best and producing the best quality pizza.
+   Want to be part of that team as well? Want to leave a positive impacts on peoples lives? Are you passionate about pizzas? If you answered
+    Yes to all those questions then you are the one. Send in your cv <a class="color-only" href="mailto:pizzabrospizzeria@gmail.com?subject=Careers"><u>here.</u></a></p>
+<h4 class="color-only">Job Posting</h4>
 <table>
     <tr>
         <th>Position</th>
@@ -48,13 +50,21 @@
     </tr>
 </table>
 <style>
-    .jumbotron {
-        color: white;
-        background-image:url("");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 20vh;
+    
+    .title {
+        color: #DEC20B;
+        font-weight: bold;
+        text-align: center;
+        padding: 60px 0;
+        height: 25vh;
+        
+    }
+    .title-1 {
+
+        font-size: 70px;
+    }
+    .title-2 {
+        font-size: 20px;
     }
     <!-- https://www.w3schools.com/html/html_tables.asp -- >
     table {
@@ -64,12 +74,26 @@
     }
 
     td, th {
-        border: 1px solid #dddddd;
+        border: 1px solid #DEC20B;
         text-align: left;
         padding: 8px;
+        
+    }
+    tr:nth-child(odd) {
+        color: #DEC20B;
+    }
+    tr:nth-child(even) {
+        background-color: #DEC20B;
+        color: #28334AFF;
     }
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
+    h4 {
+        text-align: center;
+        color: #DEC20B;
+        font-weight: bold;
     }
+    .color-only {
+        color: #DEC20B;
+    }
+    
 </style>
