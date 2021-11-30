@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
@@ -25,27 +26,52 @@ namespace VPWebSolutions.Data
         {
             _db.Database.EnsureCreated();
 
-            ApplicationUser user = await _userManager.FindByEmailAsync("test@user.com");
-
-            if(user == null)
+            ApplicationUser admin = await _userManager.FindByEmailAsync("admin@user.com");
+            if(admin == null)
             {
-                user = new ApplicationUser()
+                admin = new ApplicationUser()
                 {
-                    UserName = "test@user.com",
-                    Email = "test@user.com"
+                    UserName = "admin@user.com",
+                    Email = "admin@user.com"
                 };
-                var result = await _userManager.CreateAsync(user, "Test123!");
+                var result = await _userManager.CreateAsync(admin, "Test123!");
                 if(result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create new user in seeder");
                 }
+                await _userManager.AddToRoleAsync(admin, Roles.Admin.ToString());
+            }
 
-                if(!_db.Roles.Any(r => r.Name == "Admin"))
+            ApplicationUser manager = await _userManager.FindByEmailAsync("manager@user.com");
+            if (manager == null)
+            {
+                manager = new ApplicationUser()
                 {
-                    await _roleManager.CreateAsync(new IdentityRole { Name = "Admin", NormalizedName = "Admin" });
+                    UserName = "manager@user.com",
+                    Email = "manager@user.com"
+                };
+                var result = await _userManager.CreateAsync(manager, "Test123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
                 }
+                await _userManager.AddToRoleAsync(admin, Roles.Manager.ToString());
+            }
 
-                await _userManager.AddToRoleAsync(user, "Admin");
+            ApplicationUser cook = await _userManager.FindByEmailAsync("cook@user.com");
+            if (cook == null)
+            {
+                cook = new ApplicationUser()
+                {
+                    UserName = "cook@user.com",
+                    Email = "cook@user.com"
+                };
+                var result = await _userManager.CreateAsync(cook, "Test123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+                await _userManager.AddToRoleAsync(cook, Roles.Cook.ToString());
             }
         }
     }
