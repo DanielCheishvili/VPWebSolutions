@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130163755_addedPropertiesToOrderBuilder")]
+    partial class addedPropertiesToOrderBuilder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DeliveryGuyId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdCustomer")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")

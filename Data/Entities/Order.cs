@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data.Entities
 {
@@ -10,7 +11,7 @@ namespace VPWebSolutions.Data.Entities
         PENDING,
         ORDERED,
         COOKED,
-        SHIPPED,
+        OUT_FOR_DELIVERY,
         DELIVERED,
         CANCELED,
     }
@@ -28,5 +29,8 @@ namespace VPWebSolutions.Data.Entities
         public DateTime OrderDate { get; set; }
         public ICollection<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
+        public ApplicationUser Customer { get; set; }
+        public string IdCustomer { get; set; }
+        public string DeliveryGuyId { get; set; }
     }
 }
