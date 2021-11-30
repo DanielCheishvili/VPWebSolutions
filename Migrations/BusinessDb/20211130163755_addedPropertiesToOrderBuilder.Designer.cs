@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130163755_addedPropertiesToOrderBuilder")]
+    partial class addedPropertiesToOrderBuilder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,9 +91,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<string>("DeliveryGuyId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdCustomer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -109,9 +108,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isGuestUser")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -235,65 +231,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationUser");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Models.CheckoutModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CreditNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Month")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderFK")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SecurityCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("CheckOut");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Models.ContactModel", b =>
@@ -438,15 +375,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .IsRequired();
 
                     b.Navigation("MenuItem");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Models.CheckoutModel", b =>
-                {
-                    b.HasOne("VPWebSolutions.Data.Entities.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
                 });

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130173845_AddedCheckoutTable")]
+    partial class AddedCheckoutTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,9 +111,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isGuestUser")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -270,10 +269,7 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderFK")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
@@ -290,8 +286,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("CheckOut");
                 });
@@ -438,15 +432,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .IsRequired();
 
                     b.Navigation("MenuItem");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Models.CheckoutModel", b =>
-                {
-                    b.HasOne("VPWebSolutions.Data.Entities.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
                 });

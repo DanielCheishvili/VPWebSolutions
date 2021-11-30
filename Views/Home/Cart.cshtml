@@ -8,7 +8,7 @@
 <h1>YOUR CART</h1>
 @if (CartActions.listItems.Count <= 0)
 {
-    <p>Your cart is currently empty, but your stomach doesn't have to be. Add some items and come back here to checkout.</p>
+    <p class="p-button">Your cart is currently empty, but your stomach doesn't have to be. Add some items and come back here to checkout.</p>
     @using (Html.BeginForm("Menu", "Home", FormMethod.Get))
     {
         <button class="btn btn-primary" type="submit">START ORDER</button>
@@ -26,6 +26,9 @@ else
                     @Html.DisplayNameFor(model => model.MenuItem.Name)
                 </th>
                 <th>
+                    <p>Size</p>
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Quantity)
                 </th>
                 <th>
@@ -38,34 +41,47 @@ else
         <tbody>
             @foreach (var item in CartActions.listItems)
             {
-                <tr>
-                    <td>
-                        <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MenuItem.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        <p>$@((item.MenuItem.Price*item.Quantity))</p>
-                    </td>
-                    <td>
-                        @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.Id }, FormMethod.Post))
-                        {
-                            <button class="btn btn-primary" type="submit">Remove</button>
-                        }
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItem.Name)
+                </td>
+                <td>
+                    @if(item.MenuItem.Type == VPWebSolutions.Data.Entities.MenuItemType.Pizza)
+                    {
+                        VPWebSolutions.Data.Entities.Pizza pizza = (VPWebSolutions.Data.Entities.Pizza)item.MenuItem;
+                        <p>@pizza.Size</p>
+                    }
+                    @*@Html.DisplayFor(modelItem => item.MenuItem)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <p>$@((item.MenuItem.Price*item.Quantity))</p>
+                </td>
+                <td>
+                    @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
+                    {
+                        <button class="btn btn-primary" type="submit">Remove</button>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>
 
-    @using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
+    @using (Html.BeginForm("CheckoutPage", "Home", FormMethod.Get))
     {
         <button class="btn btn-primary" type="submit">Checkout</button>
     }
 }
 
-
+<style>
+    .p-button, h1, th, td {
+        color: #DEC20B;
+        font-weight: bold;
+    }
+</style>

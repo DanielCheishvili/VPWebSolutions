@@ -26,6 +26,8 @@ namespace VPWebSolutions.Data
         public DbSet<UserData> UserDatas { get; set; }
         public DbSet<MenuItem> CartItems { get; set; }
 
+        public DbSet<CheckoutModel> CheckOut { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

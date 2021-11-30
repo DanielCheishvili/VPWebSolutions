@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Contact";
 }
-<script src="https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit" async defer></script>
+@*<script src="https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit" async defer></script>
 
 <script type="text/javascript">
     var your_site_key = '6LfWLwodAAAAAM4geLlqDsGV5RhB6pPVb8QobaAC';
@@ -25,7 +25,7 @@
             document.getElementById("recapctcha-error").innerText = null;
         }
     };
-</script>
+</script>*@
 
 <h1>Contact</h1>
 <hr />
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Topic" class="control-label"></label>
-                <select name="Topic" id="Topic">
+                <select name="Topic" id="Topic" style="width:100%;">
                     <option value="" selected disabled hidden>Choose here</option>
                     <option value="Product questions">Product questions</option>
                     <option value="Customer Service and feedback">Customer Service and feedback</option>
@@ -76,10 +76,10 @@
                 <textarea asp-for="Message" class="form-control"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <div id="ReCaptchContainer"></div>
+            <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM" style="transform: scale(0.77); -webkit-transform: scale(1.16); transform-origin: 0 0; -webkit-transform-origin: 0 0;"></div>
             <p id="recapctcha-error" style="color:#dc3545;">@ViewData["ErrorMessage"]</p>
             <div class="form-group">
-                <input id="submit-form" type="submit" value="Create" class="btn btn-primary" disabled />
+                <input id="submit-form" type="submit" value="Send" class="btn btn-primary" disabled />
                 <input type="reset" value="Reset" class="btn btn-primary" />
 
             </div>
@@ -90,3 +90,31 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+
+    //Help from https://stackoverflow.com/questions/27902539/how-can-i-validate-google-recaptcha-v2-using-javascript-jquery
+
+    function captchaVerify() {
+        var response = grecaptcha.getResponse();
+
+
+        if (response.length == 0) {
+            document.getElementById("submit-form").setAttribute("disabled", "True");
+        }
+        else {
+            document.getElementById("submit-form").removeAttribute("disabled");
+        }
+    }
+</script>
+
+<style>
+    h1 {
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    h1, label {
+        color: #DEC20B;
+    } 
+</style>

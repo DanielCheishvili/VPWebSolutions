@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,15 +27,19 @@ namespace VPWebSolutions.Controllers
         //Instantiating the IEmailSender interface using Dependency Injection
         private readonly UserIdentityDbContext _Userdb;
         private readonly BusinessDbContext _Menudb;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager )
         {
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
             _Userdb = identityDbContext;
             _Menudb = menuDbContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -121,48 +126,64 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if(matches.Count > 1)
+            if (matches.Count > 1)
             {
-                foreach(var item in matches)
+                foreach (var item in matches)
                 {
-                    CartActions.listItems.RemoveAt(item.Id);
+                    
+                    CartActions.listItems.Remove(item);
                 }
             }
-            else
-            {
-                CartActions.listItems.RemoveAt(ItemId);
-            }
             
-            return RedirectToAction("Cart", "Home");
+
+                return RedirectToAction("Cart", "Home");
         }
 
         
         [HttpGet("Checkout")]
-        public IActionResult Checkout()
+        public IActionResult Checkout(CheckoutModel model)
         {
-            var order = new Order
+            if(ModelState.IsValid)
             {
-                OrderDate = DateTime.Now,
-                Items = CartActions.listItems,
-                Status = OrderStatus.ORDERED,
-            };
+                var order = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    Items = CartActions.listItems,
+                    Status = OrderStatus.COOKED, //make cook set it to cooked
+                };
 
-            foreach(var orderItem in order.Items)
-            {
-                orderItem.Order = order;
-                orderItem.OrderFK = order.Id;
-                _Menudb.OrderItems.Add(orderItem);
-                _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                foreach (var orderItem in order.Items)
+                {
+                    orderItem.Order = order;
+                    orderItem.OrderFK = order.Id;
+                    _Menudb.OrderItems.Add(orderItem);
+                    _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+                }
+
+
+                if (_signInManager.IsSignedIn(User))
+                {
+                    order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                    order.isGuestUser = false;
+                }
+                else
+                {
+                    model.Order = order;
+                    model.OrderFK = order.Id;
+                    _Menudb.CheckOut.Add(model);
+                    order.isGuestUser = true;
+                }
+                
+                _Menudb.Orders.Add(order);
+
+                _Menudb.SaveChanges();
+
+                CartActions.listItems.Clear();
+                return RedirectToAction("Index", "Home");
+                //MAKE VIEW DON"T FORGET
+                
             }
-
-            _Menudb.Orders.Add(order);
-
-            _Menudb.SaveChanges();
-
-            CartActions.listItems.Clear();
-            return RedirectToAction("Index", "Home");
-            //MAKE VIEW DON"T FORGET
-            //return View();
+            return View("CheckoutPage");
         }
 
         public IActionResult CheckoutPage()

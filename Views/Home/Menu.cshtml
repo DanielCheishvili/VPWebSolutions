@@ -3,7 +3,20 @@
 @{
     ViewData["Title"] = "Menu";
 }
-
+@section Scripts {
+    <script type="text/javascript">
+        function AddToCart(id) {
+            console.log(id);
+            $.ajax({
+                method: "POST",
+                url: "/Home/CartAdd",
+                data: { ItemId: id }
+            })
+            //todo add pop up or something to let the user know the item was added sccessfully
+            event.preventDefault();
+        }
+    </script>
+}
 <h1>Menu</h1>
 @foreach (var menuItemGrops in Model.GroupBy(i => i.Type))
 {
@@ -13,8 +26,6 @@
         <div class="row">
             @foreach (var myDictionary in menuItemGrops.GroupBy(i => i.Name).ToDictionary(t => t.Key, t => t.ToList()))
             {
-
-
                 <div class="col-md-3 ">
                     <div class="border rounded p-1">
                         <img src="~/images/@(myDictionary.Value[0].ImageId).jpg" class="menuImg" />
@@ -22,17 +33,12 @@
 
                         @foreach (var keyValuePair in myDictionary.Value.OrderBy(i => i.Price))
                         {
-                            <p id="price_text">Price: @keyValuePair.Price</p>
-                            <p id="price_text">Size:  @(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size)</p>
-                            @using (Html.BeginForm("CartAdd", "Home", new { ItemId = keyValuePair.Id }, FormMethod.Post))
-                            {
-                                <button class="btn btn-primary" type="submit">Add To Cart</button>
-                            }
+                            <p class="p-button" id="price_text">Price: @keyValuePair.Price</p>
+                            <p class="p-button" id="price_text">Size:  @(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size)</p>
+                            <button class="btn btn-primary" type="button" onclick="AddToCart(@keyValuePair.Id)">Add To Cart</button>
                         }
                     </div>
                 </div>
-
-
             }
         </div>
     }
@@ -41,40 +47,33 @@
         <div class="row">
             @foreach (var item in menuItemGrops.ToList())
             {
-
                 <div class="col-md-3 ">
                     <div class="border rounded p-1">
                         <img src="~/images/@(item.ImageId).jpg " class="menuImg" />
                         <h4>@item.Name</h4>
-                        <p>Price: @item.Price.ToString("c")</p>
-
-                        @using (Html.BeginForm("CartAdd", "Home", new { ItemId = item.Id }, FormMethod.Post))
-                        {
-                            <button class="btn btn-primary" type="submit">Add To Cart</button>
-                        }
-
-
-
-
-
+                        <p class="p-button">Price: @item.Price.ToString("c")</p>
+                        <button class="btn btn-primary" type="button" onclick="AddToCart(@item.Id)">Add To Cart</button>
                     </div>
                 </div>
             }
         </div>
-
     }
 
 }
 
 <style>
-    html, body {
-        background-image: linear-gradient(to right, red, yellow);
+    h1 {
+        font-size: 60px;
     }
-
-    h2 {
-        background-image: linear-gradient(to right, red, yellow);
+    h4 {
+        color: orange;
     }
-
+    h1, h2, .p-button {
+        color: #DEC20B;
+    }
+    .p-button, h1, h2, h4 {
+        font-weight: bold;
+    }
     .menuImg {
         height: 300px;
         width: 100%;
