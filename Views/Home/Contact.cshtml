@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Topic" class="control-label"></label>
-                <select name="Topic" id="Topic">
+                <select name="Topic" id="Topic" style="width:100%;">
                     <option value="" selected disabled hidden>Choose here</option>
                     <option value="Product questions">Product questions</option>
                     <option value="Customer Service and feedback">Customer Service and feedback</option>
@@ -76,10 +76,10 @@
                 <textarea asp-for="Message" class="form-control"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM"></div>
+            <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM" style="transform: scale(0.77); -webkit-transform: scale(1.16); transform-origin: 0 0; -webkit-transform-origin: 0 0;"></div>
             <p id="recapctcha-error" style="color:#dc3545;">@ViewData["ErrorMessage"]</p>
             <div class="form-group">
-                <input id="submit-form" type="submit" value="Create" class="btn btn-primary" disabled />
+                <input id="submit-form" type="submit" value="Send" class="btn btn-primary" disabled />
                 <input type="reset" value="Reset" class="btn btn-primary" />
 
             </div>
@@ -107,3 +107,14 @@
         }
     }
 </script>
+
+<style>
+    h1 {
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    h1, label {
+        color: #DEC20B;
+    } 
+</style>
