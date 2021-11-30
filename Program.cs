@@ -29,6 +29,9 @@ namespace VPWebSolutions
                 var pizzaSeeder = scope.ServiceProvider.GetService<PizzaSeeder>();
                 pizzaSeeder.Seed();
 
+                var roleSeeder = scope.ServiceProvider.GetService<RoleSeeder>();
+                roleSeeder.SeedAsync().Wait();
+
                 var identitySeeder = scope.ServiceProvider.GetService<IdentitySeeder>();
                 identitySeeder.SeedAsync().Wait();
 

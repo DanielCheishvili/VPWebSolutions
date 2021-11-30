@@ -64,6 +64,7 @@ namespace VPWebSolutions
             });
             services.AddSingleton<IConfiguration>(Configuration);
 
+            services.AddTransient<RoleSeeder>();
             services.AddTransient<PizzaSeeder>();
             services.AddTransient<BusinessDataSeeder>();
             services.AddTransient<IdentitySeeder>();
