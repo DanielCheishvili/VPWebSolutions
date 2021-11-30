@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
@@ -9,8 +10,7 @@ namespace VPWebSolutions.Data
     public interface IPizzaRepository
     {
         bool SaveAll();
-        ApplicationUser GetUserById(int id);
-        ApplicationUser GetUserByIdentityUserId(int currentUserId);
-
+        UserData GetUserById(int id);
+        UserData GetUserByIdentityUserId(int currentUserId);
     }
 }

@@ -24,11 +24,11 @@ namespace VPWebSolutions.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         //Instantiating the IEmailSender interface using Dependency Injection
-        private readonly IdentityDbContext _Userdb;
-        private readonly MenuDbContext _Menudb;
+        private readonly UserIdentityDbContext _Userdb;
+        private readonly BusinessDbContext _Menudb;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, IdentityDbContext identityDbContext, MenuDbContext menuDbContext)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
         {
             _logger = logger;
             _emailSender = emailSender;

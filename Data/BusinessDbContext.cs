@@ -9,9 +9,9 @@ using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
-    public class MenuDbContext : DbContext
+    public class BusinessDbContext : DbContext
     {
-        public MenuDbContext(DbContextOptions<MenuDbContext> options)
+        public BusinessDbContext(DbContextOptions<BusinessDbContext> options)
             : base(options)
         {
         }
@@ -23,7 +23,7 @@ namespace VPWebSolutions.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ContactModel> Contacts { get; set; }
-        public DbSet<ApplicationUser> UserDatas { get; set; }
+        public DbSet<UserData> UserDatas { get; set; }
         public DbSet<MenuItem> CartItems { get; set; }
 
 
@@ -46,5 +46,7 @@ namespace VPWebSolutions.Data
         }
 
         public DbSet<VPWebSolutions.Data.Entities.MenuItem> MenuItem { get; set; }
+
+        public DbSet<VPWebSolutions.Models.ShowProfileViewModel> ShowProfileViewModel { get; set; }
     }
 }

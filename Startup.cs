@@ -30,13 +30,12 @@ namespace VPWebSolutions
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddDbContext<UserIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 .EnableSensitiveDataLogging()
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-            services.AddTransient<PizzaSeeder>();
 
-            services.AddDbContext<MenuDbContext>(options =>
+            services.AddDbContext<BusinessDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("BusinessConnection"))
                     .EnableSensitiveDataLogging()
@@ -44,7 +43,7 @@ namespace VPWebSolutions
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<UserIdentityDbContext>();
 
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //        .AddEntityFrameworkStores<IdentityDbContext>()
@@ -64,6 +63,10 @@ namespace VPWebSolutions
                 options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
             });
             services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddTransient<PizzaSeeder>();
+            services.AddTransient<BusinessDataSeeder>();
+            services.AddTransient<IdentitySeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

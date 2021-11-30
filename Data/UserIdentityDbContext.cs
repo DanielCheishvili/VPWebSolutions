@@ -9,9 +9,9 @@ using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
-    public class IdentityDbContext : IdentityDbContext<ApplicationUser>
+    public class UserIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+        public UserIdentityDbContext(DbContextOptions<UserIdentityDbContext> options)
             : base(options)
         {
         }

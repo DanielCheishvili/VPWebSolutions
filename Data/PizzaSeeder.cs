@@ -9,10 +9,10 @@ namespace VPWebSolutions.Data
 {
     public class PizzaSeeder
     {
-        private readonly MenuDbContext _db;
+        private readonly BusinessDbContext _db;
         private readonly IWebHostEnvironment _hosting;
 
-        public PizzaSeeder(MenuDbContext ctx, IWebHostEnvironment hosting)
+        public PizzaSeeder(BusinessDbContext ctx, IWebHostEnvironment hosting)
         {
             _db = ctx;
             _hosting = hosting;

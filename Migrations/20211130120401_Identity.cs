@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VPWebSolutions.Migrations.IdentityDb
+namespace VPWebSolutions.Migrations
 {
     public partial class Identity : Migration
     {
@@ -55,9 +55,11 @@ namespace VPWebSolutions.Migrations.IdentityDb
                 name: "RegisterModel",
                 columns: table => new
                 {
-                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -67,7 +69,7 @@ namespace VPWebSolutions.Migrations.IdentityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegisterModel", x => x.Email);
+                    table.PrimaryKey("PK_RegisterModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

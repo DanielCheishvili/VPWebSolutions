@@ -10,10 +10,10 @@ namespace VPWebSolutions.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IdentityDbContext _Userdb;
-        private readonly MenuDbContext _Menudb;
+        private readonly UserIdentityDbContext _Userdb;
+        private readonly BusinessDbContext _Menudb;
 
-        public OrderController(IdentityDbContext identityDbContext, MenuDbContext menuDbContext)
+        public OrderController(UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
         {
             _Userdb = identityDbContext;
             _Menudb = menuDbContext;

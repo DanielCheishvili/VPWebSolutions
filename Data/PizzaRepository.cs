@@ -2,31 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data
 {
     public class PizzaRepository : IPizzaRepository
     {
-        private readonly MenuDbContext _ctx;
-
-        public PizzaRepository(MenuDbContext ctx)
+        private readonly BusinessDbContext _ctx;
+        public PizzaRepository(BusinessDbContext ctx)
         {
-            _ctx = ctx;  
+            _ctx = ctx;
         }
-        public ApplicationUser GetUserById(int id)
+        
+        UserData IPizzaRepository.GetUserById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public ApplicationUser GetUserByIdentityUserId(int currentUserId)
-        {
-            throw new NotImplementedException();
+            return _ctx.UserDatas.SingleOrDefault(p => p.UserDataId == id);
         }
 
-        public bool SaveAll()
+        UserData IPizzaRepository.GetUserByIdentityUserId(int currentUserId)
         {
-            throw new NotImplementedException();
+            return _ctx.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId.ToString());
+        }
+
+        bool IPizzaRepository.SaveAll()
+        {
+            return _ctx.SaveChanges() > 0;
         }
     }
 }
