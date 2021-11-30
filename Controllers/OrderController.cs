@@ -51,6 +51,7 @@ namespace VPWebSolutions.Controllers
         //TODO only dellivery ppl and higher ups can see this
         public IActionResult Order(int id)
         {
+            //todo work on order view
             var order = _db.Orders.Find(id);
             return View(order);
         }

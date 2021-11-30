@@ -60,16 +60,10 @@
                 @Html.DisplayFor(modelItem => order.Status)
             </td>
             <td>
-                @using (Html.BeginForm("Order", "Order", new { id = order.Id }, FormMethod.Get))
-                {
-                <button class="btn btn-primary" type="submit" style="background-color:#F7CE37; color:black">View</button>
-                }
                 @using (Html.BeginForm("UpdateStatus", "Order", new { id = order.Id }, FormMethod.Post))
                 {
                     <button class="btn btn-primary" type="submit" style="background-color: #F7CE37; color: black">@String.Format("Set status to " + order.Status.Next().ToString())</button>
                 }
-                @*@Html.ActionLink("View", "Order", new { id = order.Id }, null) |
-        @Html.ActionLink(String.Format("Set status to " + order.Status.Next().ToString()), "UpdateStatus", new { id = order.Id }, null)*@
             </td>
         </tr>
 }
