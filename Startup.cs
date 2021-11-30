@@ -29,26 +29,29 @@ namespace VPWebSolutions
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DbConnection")));
-            //services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DbConnection"))
+        {            
+            services.AddDbContext<UserIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 .EnableSensitiveDataLogging()
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-            services.AddTransient<PizzaSeeder>();
 
-            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDbContext<BusinessDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("BusinessConnection"))
+                    .EnableSensitiveDataLogging()
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultUI()
-                    .AddDefaultTokenProviders();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<UserIdentityDbContext>();
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //        .AddEntityFrameworkStores<IdentityDbContext>()
+            //        .AddDefaultUI()
+            //        .AddDefaultTokenProviders();
+
+
+
 
             services.AddControllersWithViews();
 
@@ -60,6 +63,10 @@ namespace VPWebSolutions
                 options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
             });
             services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddTransient<PizzaSeeder>();
+            services.AddTransient<BusinessDataSeeder>();
+            services.AddTransient<IdentitySeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

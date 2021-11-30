@@ -10,11 +10,13 @@ namespace VPWebSolutions.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UserIdentityDbContext _Userdb;
+        private readonly BusinessDbContext _Menudb;
 
-        public OrderController(ApplicationDbContext db)
+        public OrderController(UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext)
         {
-            _db = db;
+            _Userdb = identityDbContext;
+            _Menudb = menuDbContext;
         }
 
         public IActionResult Index()
@@ -25,7 +27,7 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Orders")]
         public IActionResult Orders()
         {
-            var orders = _db.Orders
+            var orders = _Menudb.Orders
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
@@ -37,7 +39,7 @@ namespace VPWebSolutions.Controllers
         [HttpGet("Order")]
         public IActionResult Order(int id)
         {
-            var order = _db.Orders.Find(id);
+            var order = _Menudb.Orders.Find(id);
             return View(order);
         }
     }
