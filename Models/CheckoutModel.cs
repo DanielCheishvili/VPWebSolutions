@@ -10,6 +10,8 @@ namespace VPWebSolutions.Models
     {
         public int Id { get; set; }
 
+        public int OrderId { get; set; }
+
         [Required]
         [MinLength(2, ErrorMessage = "First name must be at least 2 characters long")]
         [MaxLength(50, ErrorMessage = "First name cannot exceed 50 characters")]
@@ -58,7 +60,9 @@ namespace VPWebSolutions.Models
 
         [Required]
         [Display(Name = "Security Code")]
-        [RegularExpression("^[0-9]{3}$")]
+        [RegularExpression("^[0-9]{3}$", ErrorMessage = "Please enter a valid CVV (XXX)")]
         public int SecurityCode { get; set; }
+
+ 
     }
 }

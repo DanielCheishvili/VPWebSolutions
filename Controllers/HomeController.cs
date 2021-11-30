@@ -143,7 +143,7 @@ namespace VPWebSolutions.Controllers
 
         
         [HttpGet("Checkout")]
-        public IActionResult Checkout()
+        public IActionResult Checkout(CheckoutModel model)
         {
             var order = new Order
             {
@@ -160,10 +160,15 @@ namespace VPWebSolutions.Controllers
                 _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
             }
 
+
             if (_signInManager.IsSignedIn(User))
             {
                 order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
             }
+           if(!_signInManager.IsSignedIn(User) || model.Address == _userManager.GetUserAsync(User).Result?.Address)
+           {
+
+           }
 
             _Menudb.Orders.Add(order);
 
