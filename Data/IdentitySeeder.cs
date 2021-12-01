@@ -58,6 +58,22 @@ namespace VPWebSolutions.Data
                 await _userManager.AddToRoleAsync(admin, Roles.Manager.ToString());
             }
 
+            ApplicationUser deliverer = await _userManager.FindByEmailAsync("deliverer@user.com");
+            if (deliverer == null)
+            {
+                deliverer = new ApplicationUser()
+                {
+                    UserName = "deliverer@user.com",
+                    Email = "deliverer@user.com"
+                };
+                var result = await _userManager.CreateAsync(deliverer, "Test123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+                await _userManager.AddToRoleAsync(deliverer, Roles.Deliverer.ToString());
+            }
+
             ApplicationUser cook = await _userManager.FindByEmailAsync("cook@user.com");
             if (cook == null)
             {
