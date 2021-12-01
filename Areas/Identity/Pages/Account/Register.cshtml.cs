@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using VPWebSolutions.Data;
+using VPWebSolutions.Data.Entities;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Areas.Identity.Pages.Account
@@ -25,19 +28,23 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly BusinessDbContext _businessDb;
+
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            BusinessDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _businessDb = context;
         }
 
         [BindProperty]
@@ -115,6 +122,17 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
+                    UserData userData = new UserData​
+                    {
+                        IdentityUserId = user.Id,
+                        PrefferedAddress = $"{user.Address}, {user.City}, {user.PostalCode}",
+                        Orders = new List<Order>()
+                    };
+                    _businessDb.UserDatas.Add(userData);
+                    _businessDb.SaveChanges();
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

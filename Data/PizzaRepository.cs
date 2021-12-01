@@ -20,9 +20,9 @@ namespace VPWebSolutions.Data
             return _ctx.UserDatas.SingleOrDefault(p => p.UserDataId == id);
         }
 
-        UserData IPizzaRepository.GetUserByIdentityUserId(int currentUserId)
+        UserData IPizzaRepository.GetUserByIdentityUserId(string currentUserId)
         {
-            return _ctx.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId.ToString());
+            return _ctx.UserDatas.SingleOrDefault(p => p.IdentityUserId == currentUserId);
         }
 
         bool IPizzaRepository.SaveAll()

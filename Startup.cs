@@ -29,16 +29,14 @@ namespace VPWebSolutions
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             services.AddDbContext<UserIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 .EnableSensitiveDataLogging());
-
             services.AddDbContext<BusinessDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("BusinessConnection"))
                     .EnableSensitiveDataLogging());
-
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<UserIdentityDbContext>();
@@ -66,6 +64,7 @@ namespace VPWebSolutions
             services.AddTransient<PizzaSeeder>();
             services.AddTransient<BusinessDataSeeder>();
             services.AddTransient<IdentitySeeder>();
+            services.AddScoped<IPizzaRepository, PizzaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
