@@ -62,6 +62,18 @@
                                     <li class="nav-item">
                                         <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Career">Careers</a>
                                     </li>
+                                    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployeesAndManagers">Manage Employees</a>
+                                        </li>
+                                    }
+                                    else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager"))
+                                    {                                     
+                                        <li class="nav-item">
+                                            <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a>
+                                        </li>
+                                    }
                                     <li class="nav-item">
                                         <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
                                             Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442

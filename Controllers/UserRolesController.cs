@@ -22,7 +22,10 @@ namespace VPWebSolutions.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetEmployees()
         {
             var users = await _userManager.Users.ToListAsync();
             var userRolesViewModel = new List<UserRolesViewModel>();
@@ -34,10 +37,55 @@ namespace VPWebSolutions.Controllers
                 thisViewModel.FirstName = user.FirstName;
                 thisViewModel.LastName = user.LastName;
                 thisViewModel.Roles = await GetUserRoles(user);
-                userRolesViewModel.Add(thisViewModel);
+
+                bool addToModel = true;
+                foreach (IdentityRole role in thisViewModel.Roles)
+                {
+                    if(role.Name == Roles.Admin.ToString() || role.Name == Roles.Manager.ToString() || role.Name == Roles.Customer.ToString())
+                    {
+                        addToModel = false;
+                        break;
+                    }
+                }
+                if (addToModel)
+                {
+                    userRolesViewModel.Add(thisViewModel);
+                }
             }
-            return View(userRolesViewModel);
+            return View("Index", userRolesViewModel);
         }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetEmployeesAndManagers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userRolesViewModel = new List<UserRolesViewModel>();
+            foreach (ApplicationUser user in users)
+            {
+                var thisViewModel = new UserRolesViewModel();
+                thisViewModel.UserIdentityId = user.Id;
+                thisViewModel.Email = user.Email;
+                thisViewModel.FirstName = user.FirstName;
+                thisViewModel.LastName = user.LastName;
+                thisViewModel.Roles = await GetUserRoles(user);
+
+                bool addToModel = true;
+                foreach (IdentityRole role in thisViewModel.Roles)
+                {
+                    if (role.Name == Roles.Admin.ToString() || role.Name == Roles.Customer.ToString())
+                    {
+                        addToModel = false;
+                        break;
+                    }
+                }
+                if (addToModel)
+                {
+                    userRolesViewModel.Add(thisViewModel);
+                }
+            }
+            return View("Index", userRolesViewModel);
+        }
+
         private async Task<List<IdentityRole>> GetUserRoles(ApplicationUser user)
         {
             List<string> roleStrings = (List<string>)await _userManager.GetRolesAsync(user);
@@ -50,6 +98,7 @@ namespace VPWebSolutions.Controllers
             return identityRoles;
         }
 
+        
         //[Authorize(Roles = "Admin")]
         //[Authorize(Roles = "Manager")]
         public async Task<IActionResult> Manage(string userId)
@@ -61,12 +110,16 @@ namespace VPWebSolutions.Controllers
                 ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
                 return View("NotFound");
             }
+
             ViewBag.UserName = user.UserName;
+            ViewBag.Refer = Request.Headers["Referer"].ToString();
+            
             var model = new List<ManageUserRolesViewModel>();
             foreach (var role in _roleManager.Roles)
             {
                 var userRolesViewModel = new ManageUserRolesViewModel
                 {
+                    returnUrl = ViewBag.Refer,
                     RoleId = role.Id,
                     RoleName = role.Name
                 };
@@ -80,6 +133,8 @@ namespace VPWebSolutions.Controllers
                 }
                 model.Add(userRolesViewModel);
             }
+
+
             return View(model);
         }
 
@@ -104,7 +159,7 @@ namespace VPWebSolutions.Controllers
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
-            return RedirectToAction("Index");
+            return View("Index");
         }
     }
 }
