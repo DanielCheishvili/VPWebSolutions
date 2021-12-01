@@ -28,29 +28,17 @@ namespace VPWebSolutions.Data
             // If there are no userdatas, then load/create sample userdata​
             if (!_db.UserDatas.Any())
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync("test@user.com");
-                if (user == null)
+                ApplicationUser admin = await _userManager.FindByEmailAsync("admin@user.com");
+                if (admin == null)
                 {
                     throw new InvalidOperationException("Could not seed business data due to missing seed user");
                 }
-
-                // Create sample UserData​
                 UserData userData = new UserData​
                 {
-                    IdentityUserId = user.Id,
-                    PrefferedAddress = "900 Park Ave",
+                    IdentityUserId = admin.Id,
                     Orders = new List<Order>()
                 };
-                // Now, let's create a sample order​
-                var order = new Order()
-                {
-                    OrderNumber = "10000",
-                    OrderTotal = 123.45f,
-                    UserData = userData
-                };
-                userData.Orders.Add(order);
                 _db.UserDatas.Add(userData);
-                _db.Orders.Add(order);
                 // Actually write the changes to the database
                 // This will figure out all the foreign keys, etc to reflect the correct mappings.​
                 _db.SaveChanges();

@@ -64,6 +64,7 @@ namespace VPWebSolutions
             services.AddTransient<PizzaSeeder>();
             services.AddTransient<BusinessDataSeeder>();
             services.AddTransient<IdentitySeeder>();
+            services.AddScoped<IPizzaRepository, PizzaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

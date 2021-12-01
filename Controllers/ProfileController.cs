@@ -39,7 +39,7 @@ namespace VPWebSolutions.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             List<String> userRoles = (await _userManager.GetRolesAsync(user)).ToList();
-            var userdata = _repository.GetUserById(Convert.ToInt32(user.Id));
+            var userdata = _repository.GetUserByIdentityUserId(user.Id);
             if (userdata == null)
             {
                 // Create UserData on first use

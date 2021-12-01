@@ -11,6 +11,6 @@ namespace VPWebSolutions.Data
     {
         bool SaveAll();
         UserData GetUserById(int id);
-        UserData GetUserByIdentityUserId(int currentUserId);
+        UserData GetUserByIdentityUserId(string currentUserId);
     }
 }
