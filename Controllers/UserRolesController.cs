@@ -24,7 +24,7 @@ namespace VPWebSolutions.Controllers
         }
         
         [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             var users = await _userManager.Users.ToListAsync();
