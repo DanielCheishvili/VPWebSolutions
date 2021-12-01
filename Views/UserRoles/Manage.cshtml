@@ -24,10 +24,14 @@
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
-            <input type="submit" value="Update" class="btn btn-primary"
-                   style="width:auto" />
-            <a href="@ViewBag.Refer" 
-               class="btn btn-primary" style="width:auto">Cancel</a>
+            @using (Html.BeginForm())
+            {
+                <input type="hidden" name="returnUrl" value="@ViewBag.refer" />
+                <input type="submit" value="Update" class="btn btn-primary"
+                       style="width:auto" />
+                <a href="@ViewBag.Refer"
+                   class="btn btn-primary" style="width:auto">Cancel</a>
+            }
         </div>
     </div>
 </form>

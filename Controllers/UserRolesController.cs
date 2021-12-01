@@ -139,7 +139,7 @@ namespace VPWebSolutions.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
+        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId, string returnUrl)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -159,7 +159,7 @@ namespace VPWebSolutions.Controllers
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
-            return View("Index");
+            return Redirect(returnUrl);
         }
     }
 }
