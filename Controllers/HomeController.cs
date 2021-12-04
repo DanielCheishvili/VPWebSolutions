@@ -14,6 +14,7 @@ using System.Net;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
 using VPWebSolutions.Data.Entities;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Logic;
 using VPWebSolutions.Models;
 
@@ -149,7 +150,7 @@ namespace VPWebSolutions.Controllers
                 {
                     OrderDate = DateTime.Now,
                     Items = CartActions.listItems,
-                    Status = OrderStatus.COOKED, //make cook set it to cooked
+                    Status = OrderStatus.ORDERED
                 };
 
                 foreach (var orderItem in order.Items)
@@ -173,7 +174,7 @@ namespace VPWebSolutions.Controllers
                     _Menudb.CheckOut.Add(model);
                     order.isGuestUser = true;
                 }
-                
+                order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
                 _Menudb.SaveChanges();

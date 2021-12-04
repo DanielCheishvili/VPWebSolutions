@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Data.Entities
 {
-    public enum OrderStatus
-    {
-        PENDING,
-        ORDERED,
-        COOKED,
-        IN_DELIVERY,
-        DELIVERED,
-        CANCELED,
-    }
     public class Order
     {
         public const double TAX = 0.15;
@@ -33,5 +25,9 @@ namespace VPWebSolutions.Data.Entities
         public string IdCustomer { get; set; }
         public string DeliveryGuyId { get; set; }
         public bool isGuestUser { get; set; }
+        [Display(Name = "Delivery Address")]
+        public string OrderAddress { get; set; }
+        public DateTime PreparingStartTime { get; set; }
+        public DateTime PreparingDoneTime { get; set; }
     }
 }

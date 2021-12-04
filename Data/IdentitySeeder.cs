@@ -89,6 +89,38 @@ namespace VPWebSolutions.Data
                 }
                 await _userManager.AddToRoleAsync(cook, Roles.Cook.ToString());
             }
+
+            ApplicationUser deliverer2 = await _userManager.FindByEmailAsync("deliverer2@user.com");
+            if (deliverer2 == null)
+            {
+                deliverer2 = new ApplicationUser()
+                {
+                    UserName = "deliverer2@user.com",
+                    Email = "deliverer2@user.com"
+                };
+                var result = await _userManager.CreateAsync(deliverer2, "Test123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+                await _userManager.AddToRoleAsync(deliverer2, "Deliverer");
+            }
+
+            ApplicationUser cook2 = await _userManager.FindByEmailAsync("cook2@user.com");
+            if (cook2 == null)
+            {
+                cook2 = new ApplicationUser()
+                {
+                    UserName = "cook2@user.com",
+                    Email = "cook2@user.com"
+                };
+                var result = await _userManager.CreateAsync(cook2, "Test123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in seeder");
+                }
+                await _userManager.AddToRoleAsync(cook2, "Cook");
+            }
         }
     }
 }

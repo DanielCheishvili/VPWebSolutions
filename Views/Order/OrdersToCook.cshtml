@@ -1,20 +1,17 @@
 ﻿@model IEnumerable<VPWebSolutions.Data.Entities.Order>
 
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "OrdersToCook";
 }
 @using VPWebSolutions.Data
 
-<h1>Orders</h1>
+<h1>Orders To Cook</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderAddress)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Items)
@@ -25,22 +22,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            @*<th>
+                Name
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => order.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => order.OrderAddress)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
                     <ul>
-                        @foreach (var oi in order.Items)
+                        @foreach (var oi in item.Items)
                         {
                             <li>
                                 @oi.Quantity @oi.MenuItem.Name
@@ -49,16 +46,18 @@
                     </ul>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => order.OrderDate)
+                    @Html.DisplayFor(modelItem => item.OrderDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => order.Status)
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Customer.Id)
+                </td>*@
                 <td>
-                    @*@Html.ActionLink("View", "Order", new { id = order.Id }, null) |*@
-                    @using (Html.BeginForm("UpdateStatus", "Order", new { id = order.Id, redirectTo = "Orders" }, FormMethod.Post))
+                    @using (Html.BeginForm("UpdateStatus", "Order", new { id = item.Id, redirectTo = "OrdersToCook" }, FormMethod.Post))
                     {
-                        <button class="btn btn-primary" type="submit" style="background-color: #F7CE37; color: black">@String.Format("Set status to " + order.Status.Next().ToString())</button>
+                        <button class="btn btn-primary" type="submit" style="background-color: #F7CE37; color: black">@String.Format("Set status to " + item.Status.Next().ToString())</button>
                     }
                 </td>
             </tr>

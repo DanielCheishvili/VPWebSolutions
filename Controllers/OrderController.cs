@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Controllers
@@ -39,18 +40,56 @@ namespace VPWebSolutions.Controllers
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                .Where(o => o.Status == Data.Entities.OrderStatus.COOKED || o.Status == Data.Entities.OrderStatus.IN_DELIVERY)
+                .Where(o => o.Status == OrderStatus.READY || o.Status == OrderStatus.IN_DELIVERY)
+                .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
+                .ToList();
+
+            return View(orders);
+        }
+
+        public IActionResult UpdateStatus(int id, string redirectTo)
+        {
+            var order = _Menudb.Orders.Find(id);
+            order.Status = order.Status.Next();
+            switch(order.Status)
+            {
+                case OrderStatus.PREPARING:
+                    order.PreparingStartTime = DateTime.Now;
+                    break;
+                case OrderStatus.READY:
+                    order.PreparingDoneTime = DateTime.Now;
+                    break;
+                case OrderStatus.IN_DELIVERY:
+                    order.DeliveryGuyId = _userManager.GetUserAsync(User).Result.Id;
+                    break;
+
+            }
+            _Menudb.Orders.Update(order);
+            _Menudb.SaveChanges();
+
+            return RedirectToAction(redirectTo, "Order");
+        }
+
+        [HttpGet("OrdersToCook")]
+        [Authorize(Roles = "Cook")]
+        public IActionResult OrdersToCook()
+        {
+            var orders = _Menudb.Orders
+                .OrderBy(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.Status == OrderStatus.ORDERED || o.Status == OrderStatus.PREPARING)
                 .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
                 .ToList();
 
             foreach (var order in orders)
             {
-                if(order.isGuestUser)
+                if (order.isGuestUser)
                 {
                     var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
                     if (checkoutInfo.Count() > 0)
                     {
-                        order.Customer = new ApplicationUser { Address = checkoutInfo[0].Address };
+                        order.Customer = new ApplicationUser { FirstName = checkoutInfo[0].FirstName };
                     }
                 }
                 else
@@ -64,16 +103,6 @@ namespace VPWebSolutions.Controllers
             }
 
             return View(orders);
-        }
-
-        public IActionResult UpdateStatus(int id)
-        {
-            var order = _Menudb.Orders.Find(id);
-            order.Status = order.Status.Next();
-            order.DeliveryGuyId = _userManager.GetUserAsync(User).Result.Id;
-            _Menudb.Orders.Update(order);
-            _Menudb.SaveChanges();
-            return RedirectToAction("Orders", "Order");
         }
     }
 }
