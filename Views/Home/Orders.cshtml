@@ -4,8 +4,7 @@
     ViewData["Title"] = "Orders";
 }
 <script type="text/javascript">
-    function myFunction(dropdown) {
-        //todo TEST FOR LAST WEEK AND LAST MONTH
+    function filterFunction(dropdown) {
         var selected = dropdown.options[dropdown.selectedIndex].value
         var table = document.getElementsByClassName("table");
         var tr = table[0].getElementsByTagName("tr");
@@ -16,9 +15,8 @@
             }
             return;
         }
-
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
+            td = tr[i].getElementsByTagName("td")[3];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 var status = txtValue.trim();
@@ -52,7 +50,7 @@
 }
 else
 {
-    <select id="mySelect" onchange="myFunction(this)">
+    <select id="mySelect" onchange="filterFunction(this)">
         <option value="all">All Orders</option>
         <option value="current">Current</option>
         <option value="previous">Previous</option>

@@ -218,11 +218,7 @@ namespace VPWebSolutions.Controllers
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem);
             var order = orders.First(o => o.Id == id);
-            //foreach(OrderItem orderItem in order.Items)
-            //{
-            //    order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
-            //}
-            //todo check if it is current users order
+            //todo block off if order does not belong to logged in user
             return View(order);
         }
 
