@@ -1,0 +1,120 @@
+﻿@model IEnumerable<VPWebSolutions.Data.Entities.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<script type="text/javascript">
+    function myFunction(dropdown) {
+        //todo TEST FOR LAST WEEK AND LAST MONTH
+        var selected = dropdown.options[dropdown.selectedIndex].value
+        var table = document.getElementsByClassName("table");
+        var tr = table[0].getElementsByTagName("tr");
+        var dateFlag = new Date(); // today
+        var isRange = false;
+
+        switch (selected) {
+            case "Yesterday":
+                dateFlag.setDate(dateFlag.getDate() - 1);
+                break;
+            case "Last Week":
+                dateFlag.setDate(dateFlag.getDate() - 14);
+                isRange = true
+                break;
+            case "Last Month":
+                dateFlag.setDate(dateFlag.getDate() - 31);
+                isRange = true;
+                break;
+        }
+
+        if (selected == "All Orders") {
+            for (i = 0; i < tr.length; i++) {
+                tr[i].style.display = "";
+            }
+            return;
+        }
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                var orderDate = new Date(Date.parse(txtValue.trim()));
+
+                if (shouldBeShown(orderDate, dateFlag, isRange)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function shouldBeShown(orderDate, dateFlag, isRange) {
+        if (isRange) {
+            return orderDate >= dateFlag;
+
+        } else {
+            return orderDate.getDate() == dateFlag.getDate() &&
+                orderDate.getMonth() == dateFlag.getMonth() &&
+                orderDate.getFullYear() == dateFlag.getFullYear()
+        }
+    }
+</script>
+
+<h1>Orders</h1>
+<select id="mySelect" onchange="myFunction(this)">
+    <option value="All Orders">All Orders</option>
+    <option value="Today">Today</option>
+    <option value="Yesterday">Yesterday</option>
+    <option value="Last Week">Last Week</option>
+    <option value="Last Month">Last Month</option>
+</select>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCustomer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderAddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCustomer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderAddress)
+            </td>
+            <td>
+                @* ADD DETAILS VIEW *@
+                @Html.ActionLink("Edit", "EditStatus", new {  id=item.Id  }, new { @class = "btn btn-primary" }) @*|
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

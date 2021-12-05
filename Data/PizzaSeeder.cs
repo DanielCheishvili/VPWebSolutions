@@ -290,6 +290,53 @@ namespace VPWebSolutions.Data
                 _db.SaveChanges();
             }
 
+
+            if(_db.Orders.Count() < 15)
+            {
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-1)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-1)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-5)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-6)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-28)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-14)
+                });
+
+                _db.Orders.Add(new Order()
+                {
+                    OrderAddress = "somewhere",
+                    OrderDate = (DateTime.Now).AddDays(-30)
+                });
+
+                _db.SaveChanges();
+            }
         }
 
     }

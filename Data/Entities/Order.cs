@@ -27,7 +27,7 @@ namespace VPWebSolutions.Data.Entities
         public bool isGuestUser { get; set; }
         [Display(Name = "Delivery Address")]
         public string OrderAddress { get; set; }
-        public DateTime PreparingStartTime { get; set; }
-        public DateTime PreparingDoneTime { get; set; }
+        public DateTime? PreparingStartTime { get; set; }
+        public DateTime? PreparingDoneTime { get; set; }
     }
 }

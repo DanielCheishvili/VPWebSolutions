@@ -150,7 +150,7 @@ namespace VPWebSolutions.Controllers
                 {
                     OrderDate = DateTime.Now,
                     Items = CartActions.listItems,
-                    Status = OrderStatus.ORDERED
+                    Status = OrderStatus.ORDERED,
                 };
 
                 foreach (var orderItem in order.Items)
