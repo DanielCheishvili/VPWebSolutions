@@ -174,6 +174,11 @@ namespace VPWebSolutions.Controllers
                     _Menudb.CheckOut.Add(model);
                     order.isGuestUser = true;
                 }
+                foreach (OrderItem orderItem in order.Items)
+                {
+                    order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
+                }
+
                 order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
@@ -190,6 +195,35 @@ namespace VPWebSolutions.Controllers
         public IActionResult CheckoutPage()
         {
             return View();
+        }
+
+        public IActionResult Orders()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                RedirectToAction("Error"); //todo make this work
+            }
+            var orders = _Menudb.Orders
+                .OrderBy(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.IdCustomer == _userManager.GetUserAsync(User).Result.Id);
+            return View(orders);
+        }
+
+        public IActionResult OrderDetails(int id)
+        {
+            var orders = _Menudb.Orders
+                .OrderBy(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem);
+            var order = orders.First(o => o.Id == id);
+            //foreach(OrderItem orderItem in order.Items)
+            //{
+            //    order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
+            //}
+            //todo check if it is current users order
+            return View(order);
         }
 
 

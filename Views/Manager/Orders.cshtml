@@ -79,10 +79,16 @@
                 @Html.DisplayNameFor(model => model.OrderDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Items)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTotal)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCustomer)
+                Customer @Html.DisplayNameFor(model => model.Customer.Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderAddress)
@@ -100,19 +106,32 @@
                 @Html.DisplayFor(modelItem => item.OrderDate)
             </td>
             <td>
+                <ul>
+                    @foreach (var oi in item.Items)
+                    {
+                        <li>
+                            @oi.Quantity @oi.MenuItem.Name
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
+                @item.OrderTotal.ToString("c")
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCustomer)
+                @Html.DisplayFor(modelItem => item.Customer.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderAddress)
             </td>
             <td>
                 @* ADD DETAILS VIEW *@
-                @Html.ActionLink("Edit", "EditStatus", new {  id=item.Id  }, new { @class = "btn btn-primary" }) @*|
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                @Html.ActionLink("Edit", "EditStatus", new { id = item.Id }, new { @class = "btn btn-primary" }) @*|
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
 }

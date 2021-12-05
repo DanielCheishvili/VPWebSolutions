@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,10 +16,14 @@ namespace VPWebSolutions.Controllers
     public class ManagerController : Controller
     {
         private readonly BusinessDbContext _menuDb;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManagerController(BusinessDbContext menuDbContext)
+
+        public ManagerController(BusinessDbContext menuDbContext, UserManager<ApplicationUser> userManager)
         {
             _menuDb = menuDbContext;
+            _userManager = userManager;
+
         }
 
         public IActionResult Index()
@@ -33,6 +38,26 @@ namespace VPWebSolutions.Controllers
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
                 .ToList();
+
+            foreach (var order in orders)
+            {
+                if (order.isGuestUser)
+                {
+                    var checkoutInfo = _menuDb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
+                    if (checkoutInfo.Count() > 0)
+                    {
+                        order.Customer = new ApplicationUser { Email = checkoutInfo[0].Email };
+                    }
+                }
+                else
+                {
+                    var cust = _userManager.FindByIdAsync(order.IdCustomer);
+                    if (cust != null)
+                    {
+                        order.Customer = cust.Result;
+                    }
+                }
+            }
 
             return View(orders);
         }
