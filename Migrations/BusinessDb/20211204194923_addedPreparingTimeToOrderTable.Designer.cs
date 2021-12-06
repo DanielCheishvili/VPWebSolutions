@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211204194923_addedPreparingTimeToOrderTable")]
+    partial class addedPreparingTimeToOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,10 +106,10 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<float>("OrderTotal")
                         .HasColumnType("real");
 
-                    b.Property<DateTime?>("PreparingDoneTime")
+                    b.Property<DateTime>("PreparingDoneTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("PreparingStartTime")
+                    b.Property<DateTime>("PreparingStartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ShowProfileViewModelUserDataId")

@@ -1,0 +1,62 @@
+﻿@model List<EditStatusViewModel>
+
+@{
+    ViewData["Title"] = "EditStatus";
+}
+<script type="text/javascript">
+    function aFunction(checkbox) {
+        var checkboxes = document.getElementsByClassName("form-check-input");
+        for (let chkBx of checkboxes) {
+            if (chkBx !== checkbox) {
+                chkBx.checked = false;
+            }
+        }
+    }
+
+    function func() {
+        var checkBoxes = document.getElementsByClassName("form-check-input");
+        var counter = 0;
+        for (let checkbox of checkBoxes) {
+            if (checkbox.checked) {
+                counter++;
+            }
+        }
+        if (counter == 0) {
+            var warning = document.getElementById("warning");
+            warning.innerHTML = "Please select a status";
+            event.preventDefault();
+        }
+    }
+</script>
+<h1>Edit Order Status</h1>
+<hr />
+<form method="post" onsubmit="func()">
+    <div class="card">
+        <div class="card-header">
+            <h2>Manage Order Status</h2>
+            Edit status for order #@ViewBag.Order.Id.
+        </div>
+        <div class="card-body">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].StatusName" />
+                    <input asp-for="@Model[i].Selected" class="form-check-input" onclick="aFunction(this)" />
+                    <label class="form-check-label" asp-for="@Model[i].Selected">
+                        @Model[i].StatusName
+                    </label>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <p id="warning" style="color:red"></p>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-primary" style="width:auto" />
+            <a asp-action="Orders" class="btn btn-primary" style="width:auto">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
