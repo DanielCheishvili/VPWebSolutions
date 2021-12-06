@@ -101,22 +101,33 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartAdd(int ItemId)
         {
             var itemAdd = _Menudb.MenuItem.Find(ItemId);
-            var matches = _Menudb.CartItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count() == 0)
-            {
-                _Menudb.CartItems.Add(new OrderItem
-                {
-
-                    MenuItem_Id = itemAdd.Id,
-                    MenuItem = itemAdd,
-                    Quantity = 1,
-                    UnitPrice = itemAdd.Price,
-                });
+            var cart = _Menudb.Cart.Where(c => c.IdCustomer == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+            if (cart == null){
+                cart = new Cart() {
+                    IdCustomer = _userManager.GetUserAsync(User).Result.Id,
+                    CartItems = new List<OrderItem>()
+                }; 
             }
             else
             {
-                matches[0].Quantity++;
+                if (cart.CartItems.Count() == 0)
+                {
+                    cart.CartItems.Add(new OrderItem
+                    {
+
+                        MenuItem_Id = itemAdd.Id,
+                        MenuItem = itemAdd,
+                        Quantity = 1,
+                        UnitPrice = itemAdd.Price,
+                    });
+                }
+                else
+                {
+                    cart.CartItems[0].Quantity++;
+                }
             }
+
+            
             _Menudb.SaveChanges();
 
             return RedirectToAction("Menu", "Home");

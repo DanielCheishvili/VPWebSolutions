@@ -10,6 +10,6 @@ namespace VPWebSolutions.Data.Entities
         public int Id { get; set; }
         public List<OrderItem> CartItems { get; set; }
 
-        public Account Customer { get; set; }
+        public string IdCustomer { get; set; }
     }
 }
