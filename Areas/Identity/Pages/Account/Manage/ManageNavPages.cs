@@ -12,7 +12,7 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account.Manage
 
         public static string Email => "Email";
 
-        public static string Orders => "Orders";
+        public static string Orders => "OrderList";
 
         public static string Address => "Address";
 

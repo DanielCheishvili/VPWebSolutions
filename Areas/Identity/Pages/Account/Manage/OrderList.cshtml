@@ -9,7 +9,7 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <table class="table">
     <tbody>
-        @foreach (var item in Orders) {
+        @foreach (var item in Model.Orders) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.OrderNumber)
