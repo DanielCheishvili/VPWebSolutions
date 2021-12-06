@@ -101,10 +101,10 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartAdd(int ItemId)
         {
             var itemAdd = _Menudb.MenuItem.Find(ItemId);
-            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
+            var matches = _Menudb.CartItems.Where(p => p.MenuItem.Id == ItemId).ToList();
             if (matches.Count() == 0)
             {
-                CartActions.listItems.Add(new OrderItem
+                _Menudb.CartItems.Add(new OrderItem
                 {
 
                     MenuItem_Id = itemAdd.Id,
@@ -117,7 +117,7 @@ namespace VPWebSolutions.Controllers
             {
                 matches[0].Quantity++;
             }
-            
+            _Menudb.SaveChanges();
 
             return RedirectToAction("Menu", "Home");
         }
@@ -126,7 +126,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count > 1)
+            if (matches.Count >= 1)
             {
                 foreach (var item in matches)
                 {
