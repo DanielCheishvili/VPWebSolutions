@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206172401_cartToDatabase")]
+    partial class cartToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,9 +94,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<string>("IdCustomer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderAddress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -104,20 +103,11 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<float>("OrderTotal")
                         .HasColumnType("real");
 
-                    b.Property<DateTime?>("PreparingDoneTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("PreparingStartTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("ShowProfileViewModelUserDataId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");

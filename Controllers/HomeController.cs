@@ -102,23 +102,34 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartAdd(int ItemId)
         {
             var itemAdd = _Menudb.MenuItem.Find(ItemId);
-            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count() == 0)
-            {
-                CartActions.listItems.Add(new OrderItem
-                {
-
-                    MenuItem_Id = itemAdd.Id,
-                    MenuItem = itemAdd,
-                    Quantity = 1,
-                    UnitPrice = itemAdd.Price,
-                });
+            var cart = _Menudb.Cart.Where(c => c.IdCustomer == _userManager.GetUserAsync(User).Result.Id).FirstOrDefault();
+            if (cart == null){
+                cart = new Cart() {
+                    IdCustomer = _userManager.GetUserAsync(User).Result.Id,
+                    CartItems = new List<OrderItem>()
+                }; 
             }
             else
             {
-                matches[0].Quantity++;
+                if (cart.CartItems.Count() == 0)
+                {
+                    cart.CartItems.Add(new OrderItem
+                    {
+
+                        MenuItem_Id = itemAdd.Id,
+                        MenuItem = itemAdd,
+                        Quantity = 1,
+                        UnitPrice = itemAdd.Price,
+                    });
+                }
+                else
+                {
+                    cart.CartItems[0].Quantity++;
+                }
             }
+
             
+            _Menudb.SaveChanges();
 
             return RedirectToAction("Menu", "Home");
         }
@@ -127,7 +138,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count > 1)
+            if (matches.Count >= 1)
             {
                 foreach (var item in matches)
                 {
