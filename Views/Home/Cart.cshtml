@@ -57,7 +57,9 @@ else
                     @*@Html.DisplayFor(modelItem => item.MenuItem)*@
                 </td>
                 <td>
+                    <button class="btn btn-primary" type="submit">-</button>
                     @Html.DisplayFor(modelItem => item.Quantity)
+                    <button class="btn btn-primary" type="submit">+</button>
                 </td>
                 <td>
                     <p>$@((item.MenuItem.Price*item.Quantity))</p>

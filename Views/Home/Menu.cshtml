@@ -5,12 +5,13 @@
 }
 @section Scripts {
     <script type="text/javascript">
-        function AddToCart(id) {
-            console.log(id);
+        function AddToCart(itemTypeKey) {
+            //console.log(itemTypeKey.value);
+            console.log(itemTypeKey);
             $.ajax({
                 method: "POST",
                 url: "/Home/CartAdd",
-                data: { ItemId: id }
+                data: { ItemId: itemTypeKey.value }
             })
             //todo add pop up or something to let the user know the item was added sccessfully
             event.preventDefault();
@@ -30,13 +31,17 @@
                     <div class="border rounded p-1">
                         <img src="~/images/@(myDictionary.Value[0].ImageId).jpg" class="menuImg" />
                         <h4>@myDictionary.Key</h4>
+                        <select name="pizza" id="@(myDictionary.Value[0].ImageId)">
+                            @foreach (var keyValuePair in myDictionary.Value.OrderBy(i => i.Price))
+                            {
+                                <option value="@keyValuePair.Id">@(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size) : @keyValuePair.Price</option>
+                                //<p class="p-button" id="price_text">Price: @keyValuePair.Price</p>
+                                //<p class="p-button" id="price_text">Size:  @(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size)</p>
 
-                        @foreach (var keyValuePair in myDictionary.Value.OrderBy(i => i.Price))
-                        {
-                            <p class="p-button" id="price_text">Price: @keyValuePair.Price</p>
-                            <p class="p-button" id="price_text">Size:  @(((VPWebSolutions.Data.Entities.Pizza)keyValuePair).Size)</p>
-                            <button class="btn btn-primary" type="button" onclick="AddToCart(@keyValuePair.Id)">Add To Cart</button>
-                        }
+                            }
+                        </select>
+                        <button class="btn btn-primary" type="button" onclick="AddToCart(@(myDictionary.Value[0].ImageId))">Add To Cart</button>
+
                     </div>
                 </div>
             }
