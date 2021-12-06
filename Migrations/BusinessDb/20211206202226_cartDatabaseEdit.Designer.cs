@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
 namespace VPWebSolutions.Migrations.BusinessDb
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206202226_cartDatabaseEdit")]
+    partial class cartDatabaseEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,9 +148,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MenuItem_Id")
                         .HasColumnType("int");
 
@@ -162,8 +161,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("money");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("MenuItem_Id");
 
@@ -449,10 +446,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
                 {
-                    b.HasOne("VPWebSolutions.Data.Entities.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("VPWebSolutions.Data.Entities.MenuItem", "MenuItem")
                         .WithMany()
                         .HasForeignKey("MenuItem_Id")
@@ -464,8 +457,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("MenuItem");
 
@@ -479,11 +470,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Data.Entities.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
