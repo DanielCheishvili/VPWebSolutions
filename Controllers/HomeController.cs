@@ -204,7 +204,7 @@ namespace VPWebSolutions.Controllers
                 RedirectToAction("Error"); //todo make this work
             }
             var orders = _Menudb.Orders
-                .OrderBy(o => o.OrderDate)
+                .OrderByDescending(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
                 .Where(o => o.IdCustomer == _userManager.GetUserAsync(User).Result.Id);

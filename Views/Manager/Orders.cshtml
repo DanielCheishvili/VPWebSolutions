@@ -128,7 +128,7 @@
                 @Html.DisplayFor(modelItem => item.OrderAddress)
             </td>
             <td>
-                @* todo ADD DETAILS VIEW *@
+                @Html.ActionLink("View", "OrderDetails", new { id = item.Id }, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Edit", "EditStatus", new { id = item.Id }, new { @class = "btn btn-primary" })
             </td>
         </tr>

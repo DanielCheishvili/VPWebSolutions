@@ -34,7 +34,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult Orders()
         {
             var orders = _menuDb.Orders
-                .OrderBy(o => o.OrderDate)
+                .OrderByDescending(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
                 .ToList();
@@ -104,6 +104,15 @@ namespace VPWebSolutions.Controllers
             _menuDb.Orders.Update(order);
             _menuDb.SaveChanges();
             return RedirectToAction("Orders");
+        }
+
+        public IActionResult OrderDetails(int id)
+        {
+            var orders = _menuDb.Orders
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem);
+            var order = orders.First(o => o.Id == id);
+            return View(order);
         }
     }
 }
