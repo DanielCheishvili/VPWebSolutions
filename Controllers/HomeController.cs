@@ -141,8 +141,8 @@ namespace VPWebSolutions.Controllers
         }
 
         
-        [HttpGet("Checkout")]
-        public IActionResult Checkout(CheckoutModel model)
+        [HttpPost]
+        public IActionResult Checkout(CheckoutModel model, string orderType)
         {
             if(ModelState.IsValid)
             {
@@ -157,11 +157,11 @@ namespace VPWebSolutions.Controllers
                 {
                     orderItem.Order = order;
                     orderItem.OrderFK = order.Id;
+                    
                     _Menudb.OrderItems.Add(orderItem);
                     _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
                 }
-
-
+                order.Type = orderType;
                 if (_signInManager.IsSignedIn(User))
                 {
                     order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;

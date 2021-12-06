@@ -9,18 +9,17 @@
 }
 @using VPWebSolutions.Logic;
 
-
-
 <h1>Checkout Page</h1>
 <hr />
-<button type="button" class="btn btn-lg btn-primary" id="pickup">Pickup</button>
-<button type="button" class="btn btn-lg btn-primary" id="delivery">Delivery</button>
-<div id="deliveryInfo">
-    <div class="grid-container">
-        <div class="billing">
-            <h3>Billing information</h3>
-            @using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
-            {
+
+@using (Html.BeginForm("Checkout", "Home", FormMethod.Post))
+{
+    <div id="deliveryInfo">
+        <div class="grid-container">
+            <div class="billing">
+
+                <h3>Billing information</h3>
+
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="grid-container-2">
                     <div class="left">
@@ -139,30 +138,36 @@
                 </div>
 
 
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Place your order</button>
-                </div>
-            }
-        </div>
 
-        <div class="summary" id="summaryId">
-            <h2>Summary: </h2>
-            <ul style="list-style-type:none">
-                @foreach (var orderItem in CartActions.listItems)
-                {
-                    <li>
-                        @orderItem.Quantity
-                        @orderItem.MenuItem.Name
-                        @orderItem.UnitPrice.ToString("c")
-                    </li>
-                }
-                <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
-                <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
-                <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
-            </ul>
+
+
+            </div>
+
+            <div class="summary" id="summaryId">
+                <h2>Summary: </h2>
+                <ul style="list-style-type:none">
+                    @foreach (var orderItem in CartActions.listItems)
+                    {
+                        <li>
+                            @orderItem.Quantity
+                            @orderItem.MenuItem.Name
+                            @orderItem.UnitPrice.ToString("c")
+                        </li>
+                    }
+                    <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
+                    <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
+                    <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+    <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="pickup" value="pickup">Pickup</button>
+    <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="delivery" value="delivery">Delivery</button>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Place your order</button>
+    </div>
+}
 
 
 
@@ -171,13 +176,15 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <style>
-    .radio-buttons{
-        margin:0 10px 0 10px;
+    .radio-buttons {
+        margin: 0 10px 0 10px;
     }
+
     h1, h2, li, h3, label, .p-button {
         color: #DEC20B;
         font-weight: bold;
     }
+
     .grid-container {
         display: grid;
         grid-template-columns: 0.33fr 0.33fr 0.33fr;
@@ -185,10 +192,12 @@
         grid-column-gap: 20px;
         height: fit-content;
     }
+
     .billing {
         grid-column-start: 1;
         grid-column-end: span 2;
     }
+
     .summary {
         grid-column-start: 3;
         grid-column-end: 3;
@@ -201,14 +210,17 @@
         grid-column-gap: 20px;
         height: fit-content;
     }
+
     .left {
         grid-column-start: 1;
         grid-column-end: 1;
     }
+
     .right {
         grid-column-start: 2;
         grid-column-end: 2;
     }
+
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -242,7 +254,7 @@
             summary.style.display = "block";
         });
 
-       
+
 
 
     }
@@ -253,6 +265,14 @@
         document.getElementById("cvv").required = false;
 
 
+    }
+    function addOrderType(orderType) {
+        $.ajax({
+            method: "POST",
+            url: "/Home/Checkout",
+            data: { Type: orderType.value }
+        });
+        event.preventDefault();
     }
     function addRequiredAttr() {
         document.getElementById("ccNumber").setAttribute('required');
