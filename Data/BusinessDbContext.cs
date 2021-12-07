@@ -24,7 +24,7 @@ namespace VPWebSolutions.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ContactModel> Contacts { get; set; }
         public DbSet<UserData> UserDatas { get; set; }
-        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Cart> Cart { get; set; }
 
         public DbSet<CheckoutModel> CheckOut { get; set; }
 

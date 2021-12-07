@@ -43,21 +43,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.ToTable("IdentityRole");
                 });
 
-            modelBuilder.Entity("VPWebSolutions.Data.Entities.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IdCustomer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Carts");
-                });
-
             modelBuilder.Entity("VPWebSolutions.Data.Entities.MenuItem", b =>
                 {
                     b.Property<int>("Id")
@@ -158,9 +143,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MenuItem_Id")
                         .HasColumnType("int");
 
@@ -175,13 +157,11 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("MenuItem_Id");
 
                     b.HasIndex("OrderFK");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.UserData", b =>
@@ -461,10 +441,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
                 {
-                    b.HasOne("VPWebSolutions.Data.Entities.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("VPWebSolutions.Data.Entities.MenuItem", "MenuItem")
                         .WithMany()
                         .HasForeignKey("MenuItem_Id")
@@ -476,8 +452,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("MenuItem");
 
@@ -491,11 +465,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Data.Entities.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>

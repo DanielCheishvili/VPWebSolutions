@@ -17,6 +17,5 @@ namespace VPWebSolutions.Data.Entities
         public double UnitPrice { get; set; }
         public Order Order { get; set; }
         public int OrderFK { get; set; }
-        public Cart Cart { get; set; }
     }
 }

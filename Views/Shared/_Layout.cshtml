@@ -38,9 +38,7 @@
                             </div>
                         </div>
                     }
-
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Cook"))
-
                     {
                         <div class="container">
                             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
@@ -74,14 +72,10 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a>
-
                                     </li>
                                 </ul>
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
-
-                                <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
                             </div>
                         </div>
                     }
@@ -138,7 +132,7 @@
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
                                 <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
                                 <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
-
+                                
                             </div>
                         </div>
                     }
