@@ -45,6 +45,7 @@ namespace VPWebSolutions.Controllers
 
             foreach (var order in orders)
             {
+                /*
                 if(order.isGuestUser)
                 {
                     var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
@@ -61,6 +62,7 @@ namespace VPWebSolutions.Controllers
                         order.Customer = cust.Result;
                     }
                 }
+                */
             }
 
             return View(orders);

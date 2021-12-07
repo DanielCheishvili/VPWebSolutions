@@ -30,7 +30,9 @@ namespace VPWebSolutions.Data.Entities
         public ICollection<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
         public ApplicationUser Customer { get; set; }
-        public string IdCustomer { get; set; }
+        //TODO Need to remove Customer
+
+        public int IdCustomer { get; set; }
         public string DeliveryGuyId { get; set; }
         public bool isGuestUser { get; set; }
     }

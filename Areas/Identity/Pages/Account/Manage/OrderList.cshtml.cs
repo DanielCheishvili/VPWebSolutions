@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using VPWebSolutions.Data;
 using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
@@ -12,23 +14,27 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account.Manage
 {
     public partial class OrderModel : PageModel
     {
-        private readonly UserManager<UserData> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BusinessDbContext _businessDb;
+
 
         public OrderModel(
-            UserManager<UserData> userManager)
+            UserManager<ApplicationUser> userManager, BusinessDbContext businessDb)
         {
             _userManager = userManager;
+            _businessDb = businessDb;
         }
 
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; } = new List<Order>();
 
         [TempData]
         public string StatusMessage { get; set; }
 
 
-        private async Task LoadAsync(UserData user)
+        private async Task LoadAsync(ApplicationUser user)
         {
-            Orders = user.Orders;
+            var findUser = _businessDb.UserDatas.Where(u => u.IdentityUserId == user.Id).ToList();
+            Orders = findUser[0].Orders;
         }
 
         public async Task<IActionResult> OnGetAsync()
