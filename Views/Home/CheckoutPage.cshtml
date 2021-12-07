@@ -81,11 +81,11 @@
                     <p class="p-button control-label">Method of Payment</p>
 
                     <label class="radio-buttons">
-                        <input type="radio" name="type" class="form-control" id="creditCard" onclick="checkMethodPayment(); addRequiredAttr()" checked> Credit Card
+                        <input value="cc" type="radio" name="checkoutType" class="form-control" id="creditCard" onclick="checkMethodPayment()" checked> Credit Card
                     </label>
 
                     <label class="radio-buttons">
-                        <input type="radio" name="type" class="form-control" id="cash" onclick="checkMethodPayment(); removeRequiredAttr()">  Cash
+                        <input value="cash"type="radio" name="checkoutType" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
                     </label>
 
                     <span class="text-danger"></span>
@@ -93,12 +93,12 @@
                 <div id="creditCardInfo">
                     <div class="form-group">
                         <label asp-for="CreditNumber" class="control-label"></label>
-                        <input asp-for="CreditNumber" class="form-control" id="ccNumber" />
+                        <input asp-for="CreditNumber" class="form-control" id="ccNumber" required />
                         <span asp-validation-for="CreditNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Month" class="control-label"></label>
-                        <select name="Month" id="ccExpiryMonth" style="width:100%;">
+                        <select name="Month" id="ccExpiryMonth" style="width:100%;" required>
                             <option value="" selected disabled hidden>Choose Month</option>
                             <option value="January">January</option>
                             <option value="February">February</option>
@@ -119,8 +119,8 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Year" class="control-label"></label>
-                        <select id="ccExpiryYear" name="Year" style="width:100%;">
-                            <option>Year</option>
+                        <select id="ccExpiryYear" name="Year" style="width:100%;" required>
+                            <option value="" selected disabled hidden>Choose Year</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
                             <option value="2023">2023</option>
@@ -132,7 +132,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="SecurityCode" class="control-label"></label>
-                        <input asp-for="SecurityCode" class="form-control" id="cvv" />
+                        <input asp-for="SecurityCode" class="form-control" id="cvv" required />
                         <span asp-validation-for="SecurityCode" class="text-danger"></span>
                     </div>
                 </div>
@@ -161,11 +161,9 @@
             </div>
         </div>
     </div>
-    <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="pickup" value="pickup">Pickup</button>
-    <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="delivery" value="delivery">Delivery</button>
-
     <div class="form-group">
-        <button class="btn btn-primary" type="submit">Place your order</button>
+        <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="pickup" value="pickup">Place your order for Pickup</button>
+        <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="delivery" value="delivery">Place your order for Delivery</button>
     </div>
 }
 
@@ -237,6 +235,13 @@
         var creditCardInfo = document.getElementById("creditCardInfo");
 
         var cash = document.getElementById("cash");
+        if (cash.checked) {
+            document.getElementById("ccNumber").required = false;
+            document.getElementById("ccExpiryMonth").required = false;
+            document.getElementById("ccExpiryYear").required = false;
+            document.getElementById("cvv").required = false;
+            console.log("HI");
+        }
 
         creditCardInfo.style.display = cash.checked ? "none" : "block";
     }

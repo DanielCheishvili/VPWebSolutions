@@ -13,5 +13,6 @@ namespace VPWebSolutions.Data.Enums
         IN_DELIVERY,
         DELIVERED,
         CANCELED,
+        COOKED,
     }
 }

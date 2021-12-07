@@ -178,7 +178,7 @@ namespace VPWebSolutions.Controllers
                 {
                     order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
                 }
-
+           
                 order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
