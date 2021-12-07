@@ -99,6 +99,15 @@ namespace VPWebSolutions.Data
                     Email = "manager2@user.com"
                 };
                 var result = await _userManager.CreateAsync(manager2, "Test123!");
+            ApplicationUser employee = await _userManager.FindByEmailAsync("emp@user.com");
+            if (employee == null)
+            {
+                employee = new ApplicationUser()
+                {
+                    UserName = "emp@user.com",
+                    Email = "emp@user.com"
+                };
+                var result = await _userManager.CreateAsync(employee, "Test123!");
                 if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create new user in seeder");
@@ -136,6 +145,7 @@ namespace VPWebSolutions.Data
                     throw new InvalidOperationException("Could not create new user in seeder");
                 }
                 await _userManager.AddToRoleAsync(cook2, "Cook");
+                await _userManager.AddToRoleAsync(employee, Roles.Employee.ToString());
             }
         }
     }
