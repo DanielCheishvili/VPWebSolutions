@@ -38,6 +38,47 @@
                             </div>
                         </div>
                     }
+                    else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Cook"))
+                    {
+                        <div class="container">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Order" asp-action="OrdersToCook">Orders To Cook</a>
+                                    </li>
+                                </ul>
+                                <partial name="_LoginPartial" />
+                                <button id="language-change" onclick="changeLanguage()">FR</button>
+                            </div>
+                        </div>
+                    }
+                    else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager"))
+                    {
+                        <div class="container">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Manager" asp-action="Orders">View Orders</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a>
+                                    </li>
+                                </ul>
+                                <partial name="_LoginPartial" />
+                                <button id="language-change" onclick="changeLanguage()">FR</button>
+                            </div>
+                        </div>
+                    }
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
                     {
                         <div class="container">
@@ -96,9 +137,15 @@
                                             <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a>
                                         </li>
                                     }
+                                    else if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Orders">View Orders</a>
+                                        </li>
+                                    }
                                     <li class="nav-item">
                                         <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
-                                            Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span>514-233-5442
+                                            Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span> <br>514-233-5442
                                         </a>
                                     </li>
                                 </ul>
@@ -192,5 +239,10 @@
 
     html, body {
         background-color: #6D47AB;
+    }
+
+    a.nav-link {
+        display: table-cell;
+        vertical-align: middle;
     }
 </style>

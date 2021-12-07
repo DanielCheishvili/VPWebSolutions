@@ -1,0 +1,16 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Orders";
+    ViewData["ActivePage"] = ManageNavPages.Orders;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <h1>Orders</h1>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

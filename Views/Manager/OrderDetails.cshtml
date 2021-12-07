@@ -1,0 +1,82 @@
+﻿@model VPWebSolutions.Data.Entities.Order
+
+@{
+    ViewData["Title"] = "OrderDetails";
+}
+
+<h1>OrderDetails</h1>
+@* todo change a little bit *@
+<div>
+    <h4>Order #@Model.Id</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Items)
+        </dt>
+        <dd class="col-sm-10">
+            <ul style="list-style:none; padding-left:0;">
+                @foreach (var oi in Model.Items)
+                {
+                    <li>@oi.Quantity @oi.MenuItem.Name</li>
+                }
+            </ul>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderTotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.OrderTotal.ToString("c")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCustomer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdCustomer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeliveryGuyId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeliveryGuyId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.isGuestUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.isGuestUser)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PreparingStartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PreparingStartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PreparingDoneTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PreparingDoneTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Orders" class="btn btn-primary">Back to List</a>
+</div>

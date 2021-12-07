@@ -14,6 +14,7 @@ using System.Net;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
 using VPWebSolutions.Data.Entities;
+using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Logic;
 using VPWebSolutions.Models;
 
@@ -150,7 +151,7 @@ namespace VPWebSolutions.Controllers
                 {
                     OrderDate = DateTime.Now,
                     Items = CartActions.listItems,
-                    Status = OrderStatus.COOKED, //make cook set it to cooked
+                    Status = OrderStatus.ORDERED,
                 };
 
                 foreach (var orderItem in order.Items)
@@ -174,7 +175,12 @@ namespace VPWebSolutions.Controllers
                     _Menudb.CheckOut.Add(model);
                     order.isGuestUser = true;
                 }
+                foreach (OrderItem orderItem in order.Items)
+                {
+                    order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
+                }
 
+                order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
                 _Menudb.SaveChanges();
@@ -230,6 +236,30 @@ namespace VPWebSolutions.Controllers
 
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult Orders()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                RedirectToAction("Error"); //todo make this work
+            }
+            var orders = _Menudb.Orders
+                .OrderByDescending(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.IdCustomer == _userManager.GetUserAsync(User).Result.Id);
+            return View(orders);
+        }
+
+        public IActionResult OrderDetails(int id)
+        {
+            var orders = _Menudb.Orders
+                .OrderBy(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem);
+            var order = orders.First(o => o.Id == id);
+            //todo block off if order does not belong to logged in user
+            return View(order);
         }
 
 
