@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<VPWebSolutions.Data.Entities.MenuItem>
-@using VPWebSolutions.Logic
+
 @{
     ViewData["Title"] = "Menu";
 }
@@ -12,20 +12,6 @@
                 method: "POST",
                 url: "/Home/CartAdd",
                 data: { ItemId: itemTypeKey.value }
-            })
-            //var cartCount = document.getElementById("cartCount");
-            //cartCount.innerText = 10;
-            //console.log(@CartActions.listItems);
-            //todo add pop up or something to let the user know the item was added sccessfully
-            event.preventDefault();
-        }
-        function AddToCartOther(itemId) {
-            //console.log(itemTypeKey.value);
-            //console.log(itemTypeKey);
-            $.ajax({
-                method: "POST",
-                url: "/Home/CartAdd",
-                data: { ItemId: itemId }
             })
             //todo add pop up or something to let the user know the item was added sccessfully
             event.preventDefault();
@@ -71,7 +57,7 @@
                         <img src="~/images/@(item.ImageId).jpg " class="menuImg" />
                         <h4>@item.Name</h4>
                         <p class="p-button">Price: @item.Price.ToString("c")</p>
-                        <button class="btn btn-primary" type="button" onclick="AddToCartOther(@item.Id)">Add To Cart</button>
+                        <button class="btn btn-primary" type="button" onclick="AddToCart(@item.Id)">Add To Cart</button>
                     </div>
                 </div>
             }
@@ -84,19 +70,15 @@
     h1 {
         font-size: 60px;
     }
-
     h4 {
         color: orange;
     }
-
     h1, h2, .p-button {
         color: #DEC20B;
     }
-
     .p-button, h1, h2, h4 {
         font-weight: bold;
     }
-
     .menuImg {
         height: 300px;
         width: 100%;

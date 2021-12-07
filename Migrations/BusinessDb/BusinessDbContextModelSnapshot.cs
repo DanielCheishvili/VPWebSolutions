@@ -161,7 +161,7 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
                     b.HasIndex("OrderFK");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.UserData", b =>
