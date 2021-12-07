@@ -205,7 +205,7 @@ namespace VPWebSolutions.Controllers
             {
                 OrderDate = DateTime.Now,
                 Items = CartActions.listItems,
-                Status = OrderStatus.COOKED, //make cook set it to cooked
+                Status = OrderStatus.ORDERED,
             };
 
             foreach (var orderItem in order.Items)
