@@ -47,7 +47,7 @@ namespace VPWebSolutions.Controllers
                     var checkoutInfo = _menuDb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
                     if (checkoutInfo.Count() > 0)
                     {
-                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
+                        order.UserData = new UserData { FullName = checkoutInfo[0].FirstName + " " + checkoutInfo[0].LastName };
                     }
                 }
                 else

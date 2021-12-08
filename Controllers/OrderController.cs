@@ -45,6 +45,26 @@ namespace VPWebSolutions.Controllers
                 .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
                 .ToList();
 
+            foreach (var order in orders)
+            {
+                if (order.isGuestUser)
+                {
+                    var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
+                    if (checkoutInfo.Count() > 0)
+                    {
+                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
+                    }
+                }
+                else
+                {
+                    var cust = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
+                    if (cust != null)
+                    {
+                        order.UserData = cust;
+                    }
+                }
+            }
+
             return View(orders);
         }
 

@@ -127,6 +127,7 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account
                     {
                         IdentityUserId = user.Id,
                         PrefferedAddress = $"{user.Address}, {user.City}, {user.PostalCode}",
+                        FullName = Input.FirstName + " " + Input.LastName,
                         Orders = new List<Order>()
                     };
                     _businessDb.UserDatas.Add(userData);
