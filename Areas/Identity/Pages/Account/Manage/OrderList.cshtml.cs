@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using VPWebSolutions.Data;
 using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
@@ -33,8 +34,12 @@ namespace VPWebSolutions.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var findUser = _businessDb.UserDatas.Where(u => u.IdentityUserId == user.Id).ToList();
-            Orders = findUser[0].Orders;
+            var findUser = _businessDb.UserDatas.Where(u => u.IdentityUserId == user.Id).ToList()[0];
+            var findOrders = _businessDb.Orders.Where(u => u.IdCustomer == findUser.UserDataId)
+                                .Include(o => o.Items)
+                                .ThenInclude(oi => oi.MenuItem)
+                                .ToList();
+            Orders = findOrders;
         }
 
         public async Task<IActionResult> OnGetAsync()
