@@ -171,6 +171,10 @@ namespace VPWebSolutions.Controllers
                     var user = userList[0];
                     order.IdCustomer = user.UserDataId;
                     order.isGuestUser = false;
+                    if(user.Orders == null)
+                    {
+                        user.Orders = new List<Order>();
+                    }
                     user.Orders.Add(order);
                 }
                 else
@@ -225,7 +229,10 @@ namespace VPWebSolutions.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                var userId = _userManager.GetUserAsync(User).Result.Id;
+                var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+                var user = userList[0];
+                order.IdCustomer = user.UserDataId;
                 order.isGuestUser = false;
             }
             else
@@ -249,11 +256,14 @@ namespace VPWebSolutions.Controllers
             {
                 RedirectToAction("Error"); //todo make this work
             }
+            var userId = _userManager.GetUserAsync(User).Result.Id;
+            var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+            var user = userList[0];
             var orders = _Menudb.Orders
                 .OrderByDescending(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                .Where(o => o.IdCustomer == _userManager.GetUserAsync(User).Result.Id);
+                .Where(o => o.IdCustomer == user.UserDataId);
             return View(orders);
         }
 
