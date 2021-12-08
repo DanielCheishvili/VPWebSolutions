@@ -147,6 +147,7 @@ namespace VPWebSolutions.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var order = new Order
                 {
                     OrderDate = DateTime.Now,
@@ -165,8 +166,12 @@ namespace VPWebSolutions.Controllers
 
                 if (_signInManager.IsSignedIn(User))
                 {
-                    order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                    var userId = _userManager.GetUserAsync(User).Result.Id;
+                    var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+                    var user = userList[0];
+                    order.IdCustomer = user.UserDataId;
                     order.isGuestUser = false;
+                    user.Orders.Add(order);
                 }
                 else
                 {
@@ -184,6 +189,7 @@ namespace VPWebSolutions.Controllers
                 _Menudb.Orders.Add(order);
 
                 _Menudb.SaveChanges();
+
 
                 CartActions.listItems.Clear();
                 return RedirectToAction("Index", "Home");
