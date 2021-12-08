@@ -142,8 +142,8 @@ namespace VPWebSolutions.Controllers
         }
 
 
-        [HttpGet("Checkout")]
-        public IActionResult Checkout(CheckoutModel model)
+        [HttpPost]
+        public IActionResult Checkout(CheckoutModel model,string orderType )
         {
             if (ModelState.IsValid)
             {
@@ -188,7 +188,7 @@ namespace VPWebSolutions.Controllers
                 {
                     order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
                 }
-
+                order.Type = orderType;
                 order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
