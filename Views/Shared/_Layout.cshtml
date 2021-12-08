@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@using VPWebSolutions.Logic
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -78,6 +79,27 @@
                             </div>
                         </div>
                     }
+                    else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
+                    {
+                        <div class="container">
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
+                                    </li>
+                                </ul>
+                                <partial name="_LoginPartial" />
+                                <button id="language-change" onclick="changeLanguage()">FR</button>
+                                <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
+                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+                            </div>
+                        </div>
+                    }
                     else
                     {
                         <div class="container">
@@ -115,12 +137,6 @@
                                             <a class="nav-link " asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a>
                                         </li>
                                     }
-                                    else if (SignInManager.IsSignedIn(User))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Orders">View Orders</a>
-                                        </li>
-                                    }
                                     <li class="nav-item">
                                         <a class="btn btn-primary btn-xlg" href="tel:514-233-5442" background-color:rgba(0,0,238,.5)">
                                             Delivery in Montréal: <span class="glyphicon glyphicon-earphone"></span> <br>514-233-5442
@@ -130,12 +146,13 @@
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
                                 <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px" /></a>
+                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+
                             </div>
                         </div>
                     }
                 </nav>
-                </header>
+            </header>
             <div class="container mb-3">
                 <main role="main" class="pb-3">
                     @RenderBody()

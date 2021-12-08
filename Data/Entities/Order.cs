@@ -21,8 +21,7 @@ namespace VPWebSolutions.Data.Entities
         public DateTime OrderDate { get; set; }
         public ICollection<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
-        public ApplicationUser Customer { get; set; }
-        public string IdCustomer { get; set; }
+        public int IdCustomer { get; set; }
         public string DeliveryGuyId { get; set; }
         public bool isGuestUser { get; set; }
         [Display(Name = "Delivery Address")]
