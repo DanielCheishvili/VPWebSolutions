@@ -14,7 +14,7 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer.Address)
+                @Html.DisplayNameFor(model => model.UserData.PrefferedAddress)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Items)
@@ -36,7 +36,7 @@
                     @Html.DisplayFor(modelItem => order.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => order.Customer.Address)
+                    @Html.DisplayFor(modelItem => order.UserData.PrefferedAddress)
                 </td>
                 <td>
                     @foreach (var oi in order.Items)
