@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
-namespace VPWebSolutions.Migrations.BusinessDb
+namespace VPWebSolutions.Migrations
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20211130190235_AddedFKonCheckoutModel")]
-    partial class AddedFKonCheckoutModel
+    [Migration("20211208181023_addedFullNameToUserData")]
+    partial class addedFullNameToUserData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,21 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasIndex("ShowProfileViewModelUserDataId");
 
                     b.ToTable("IdentityRole");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IdCustomer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.MenuItem", b =>
@@ -85,13 +100,13 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("DeliveryGuyId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdCustomer")
+                    b.Property<int>("IdCustomer")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
@@ -103,6 +118,12 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<float>("OrderTotal")
                         .HasColumnType("real");
 
+                    b.Property<DateTime?>("PreparingDoneTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PreparingStartTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("ShowProfileViewModelUserDataId")
                         .HasColumnType("int");
 
@@ -112,9 +133,10 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<int?>("UserDataId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("isGuestUser")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("CustomerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ShowProfileViewModelUserDataId");
 
@@ -130,6 +152,9 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MenuItem_Id")
                         .HasColumnType("int");
 
@@ -143,6 +168,8 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("money");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("MenuItem_Id");
 
@@ -158,6 +185,9 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -167,73 +197,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasKey("UserDataId");
 
                     b.ToTable("UserDatas");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationUser");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Models.CheckoutModel", b =>
@@ -256,12 +219,10 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -354,6 +315,12 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserDataId");
 
                     b.ToTable("ShowProfileViewModel");
@@ -405,10 +372,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
                 {
-                    b.HasOne("VPWebSolutions.Models.ApplicationUser", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("VPWebSolutions.Models.ShowProfileViewModel", null)
                         .WithMany("Orders")
                         .HasForeignKey("ShowProfileViewModelUserDataId");
@@ -417,13 +380,15 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .WithMany()
                         .HasForeignKey("UserDataId");
 
-                    b.Navigation("Customer");
-
                     b.Navigation("UserData");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.OrderItem", b =>
                 {
+                    b.HasOne("VPWebSolutions.Data.Entities.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("VPWebSolutions.Data.Entities.MenuItem", "MenuItem")
                         .WithMany()
                         .HasForeignKey("MenuItem_Id")
@@ -435,6 +400,8 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cart");
 
                     b.Navigation("MenuItem");
 
@@ -448,6 +415,11 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("VPWebSolutions.Data.Entities.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>

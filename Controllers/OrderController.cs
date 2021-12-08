@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Data.Enums;
 using VPWebSolutions.Models;
 
@@ -43,6 +44,26 @@ namespace VPWebSolutions.Controllers
                 .Where(o => o.Status == OrderStatus.READY || o.Status == OrderStatus.IN_DELIVERY)
                 .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
                 .ToList();
+
+            foreach (var order in orders)
+            {
+                if (order.isGuestUser)
+                {
+                    var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
+                    if (checkoutInfo.Count() > 0)
+                    {
+                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
+                    }
+                }
+                else
+                {
+                    var cust = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
+                    if (cust != null)
+                    {
+                        order.UserData = cust;
+                    }
+                }
+            }
 
             return View(orders);
         }
@@ -84,22 +105,24 @@ namespace VPWebSolutions.Controllers
 
             foreach (var order in orders)
             {
-                if (order.isGuestUser)
+                
+                if(order.isGuestUser)
                 {
                     var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
                     if (checkoutInfo.Count() > 0)
                     {
-                        order.Customer = new ApplicationUser { FirstName = checkoutInfo[0].FirstName };
+                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
                     }
                 }
                 else
                 {
-                    var cust = _userManager.FindByIdAsync(order.IdCustomer);
+                    var cust = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
                     if (cust != null)
                     {
-                        order.Customer = cust.Result;
+                        order.UserData = cust;
                     }
                 }
+                
             }
 
             return View(orders);

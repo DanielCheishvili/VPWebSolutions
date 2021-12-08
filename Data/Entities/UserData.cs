@@ -10,7 +10,9 @@ namespace VPWebSolutions.Data.Entities
     {
         [Key]
         public int UserDataId { get; set; }
-        public string IdentityUserId {get; set;}
+        public string IdentityUserId { get; set; }
+        [Display(Name = "full name")]
+        public string FullName { get; set; }
         public string PrefferedAddress { get; set; }
         public List<Order> Orders;
     }

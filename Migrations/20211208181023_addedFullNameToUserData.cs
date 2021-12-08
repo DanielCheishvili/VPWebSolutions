@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VPWebSolutions.Migrations.BusinessDb
+namespace VPWebSolutions.Migrations
 {
-    public partial class fixingOrderTable : Migration
+    public partial class addedFullNameToUserData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "IdCustomer",
-                table: "Orders",
+                name: "FullName",
+                table: "UserDatas",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -16,8 +16,8 @@ namespace VPWebSolutions.Migrations.BusinessDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IdCustomer",
-                table: "Orders");
+                name: "FullName",
+                table: "UserDatas");
         }
     }
 }

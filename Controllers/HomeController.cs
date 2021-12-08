@@ -32,7 +32,7 @@ namespace VPWebSolutions.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager )
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IConfiguration configuration, UserIdentityDbContext identityDbContext, BusinessDbContext menuDbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _emailSender = emailSender;
@@ -88,14 +88,15 @@ namespace VPWebSolutions.Controllers
         {
 
             var results = _Menudb.MenuItem.ToList();
-        
+
             return View(results);
         }
         [HttpGet("Cart")]
-        public IActionResult Cart(){
-            
+        public IActionResult Cart()
+        {
+
             return View();
-            
+
         }
 
         [HttpPost]
@@ -118,7 +119,7 @@ namespace VPWebSolutions.Controllers
             {
                 matches[0].Quantity++;
             }
-            
+
 
             return RedirectToAction("Menu", "Home");
         }
@@ -127,25 +128,26 @@ namespace VPWebSolutions.Controllers
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
-            if (matches.Count > 1)
+            if (matches.Count >= 1)
             {
                 foreach (var item in matches)
                 {
-                    
+
                     CartActions.listItems.Remove(item);
                 }
             }
-            
 
-                return RedirectToAction("Cart", "Home");
+
+            return RedirectToAction("Cart", "Home");
         }
 
-        
+
         [HttpGet("Checkout")]
         public IActionResult Checkout(CheckoutModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+
                 var order = new Order
                 {
                     OrderDate = DateTime.Now,
@@ -164,8 +166,16 @@ namespace VPWebSolutions.Controllers
 
                 if (_signInManager.IsSignedIn(User))
                 {
-                    order.IdCustomer = _userManager.GetUserAsync(User).Result.Id;
+                    var userId = _userManager.GetUserAsync(User).Result.Id;
+                    var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+                    var user = userList[0];
+                    order.IdCustomer = user.UserDataId;
                     order.isGuestUser = false;
+                    if(user.Orders == null)
+                    {
+                        user.Orders = new List<Order>();
+                    }
+                    user.Orders.Add(order);
                 }
                 else
                 {
@@ -184,10 +194,11 @@ namespace VPWebSolutions.Controllers
 
                 _Menudb.SaveChanges();
 
+
                 CartActions.listItems.Clear();
                 return RedirectToAction("Index", "Home");
                 //MAKE VIEW DON"T FORGET
-                
+
             }
             return View("CheckoutPage");
         }
@@ -197,17 +208,62 @@ namespace VPWebSolutions.Controllers
             return View();
         }
 
+        [HttpGet("Order")]
+        public IActionResult Order(CheckoutModel model)
+        {
+            var order = new Order
+            {
+                OrderDate = DateTime.Now,
+                Items = CartActions.listItems,
+                Status = OrderStatus.ORDERED,
+            };
+
+            foreach (var orderItem in order.Items)
+            {
+                orderItem.Order = order;
+                orderItem.OrderFK = order.Id;
+                _Menudb.OrderItems.Add(orderItem);
+                _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
+            }
+
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = _userManager.GetUserAsync(User).Result.Id;
+                var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+                var user = userList[0];
+                order.IdCustomer = user.UserDataId;
+                order.isGuestUser = false;
+            }
+            else
+            {
+                model.Order = order;
+                model.OrderFK = order.Id;
+                _Menudb.CheckOut.Add(model);
+                order.isGuestUser = true;
+            }
+
+            _Menudb.Orders.Add(order);
+
+            _Menudb.SaveChanges();
+
+            CartActions.listItems.Clear();
+            return RedirectToAction("Index", "Home");
+        }
         public IActionResult Orders()
         {
             if (!_signInManager.IsSignedIn(User))
             {
                 RedirectToAction("Error"); //todo make this work
             }
+            var userId = _userManager.GetUserAsync(User).Result.Id;
+            var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
+            var user = userList[0];
             var orders = _Menudb.Orders
                 .OrderByDescending(o => o.OrderDate)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                .Where(o => o.IdCustomer == _userManager.GetUserAsync(User).Result.Id);
+                .Where(o => o.IdCustomer == user.UserDataId);
             return View(orders);
         }
 
@@ -231,7 +287,7 @@ namespace VPWebSolutions.Controllers
 
         public bool IsReCaptchValid()
         {
-        //https://www.c-sharpcorner.com/article/integration-of-google-recaptcha-in-websites/
+            //https://www.c-sharpcorner.com/article/integration-of-google-recaptcha-in-websites/
             var result = false;
             var captchaResponse = Request.Form["g-recaptcha-response"];
             var secretKey = _configuration["ExternalProviders:GoogleReCaptcha:SecretKey"];

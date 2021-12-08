@@ -1,12 +1,25 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VPWebSolutions.Migrations.BusinessDb
+namespace VPWebSolutions.Migrations
 {
-    public partial class Business : Migration
+    public partial class a : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdCustomer = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Contacts",
                 columns: table => new
@@ -54,6 +67,8 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 {
                     UserDataId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -108,6 +123,12 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     UserDataId = table.Column<int>(type: "int", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    IdCustomer = table.Column<int>(type: "int", nullable: false),
+                    DeliveryGuyId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isGuestUser = table.Column<bool>(type: "bit", nullable: false),
+                    OrderAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreparingStartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PreparingDoneTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ShowProfileViewModelUserDataId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -128,6 +149,36 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "CheckOut",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    OrderFK = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreditNumber = table.Column<int>(type: "int", nullable: false),
+                    Month = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    SecurityCode = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CheckOut", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CheckOut_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderItems",
                 columns: table => new
                 {
@@ -136,11 +187,18 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     MenuItem_Id = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "money", nullable: false),
-                    OrderFK = table.Column<int>(type: "int", nullable: false)
+                    OrderFK = table.Column<int>(type: "int", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderItems_MenuItem_MenuItem_Id",
                         column: x => x.MenuItem_Id,
@@ -156,9 +214,19 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CheckOut_OrderId",
+                table: "CheckOut",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_IdentityRole_ShowProfileViewModelUserDataId",
                 table: "IdentityRole",
                 column: "ShowProfileViewModelUserDataId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_CartId",
+                table: "OrderItems",
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_MenuItem_Id",
@@ -184,6 +252,9 @@ namespace VPWebSolutions.Migrations.BusinessDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CheckOut");
+
+            migrationBuilder.DropTable(
                 name: "Contacts");
 
             migrationBuilder.DropTable(
@@ -191,6 +262,9 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "MenuItem");

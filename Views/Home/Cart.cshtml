@@ -5,6 +5,9 @@
 }
 @model IEnumerable<VPWebSolutions.Data.Entities.OrderItem>
 @using VPWebSolutions.Logic
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <h1>YOUR CART</h1>
 @if (CartActions.listItems.Count <= 0)
 {
@@ -41,42 +44,55 @@ else
         <tbody>
             @foreach (var item in CartActions.listItems)
             {
-            <tr>
-                <td>
-                    <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MenuItem.Name)
-                </td>
-                <td>
-                    @if(item.MenuItem.Type == VPWebSolutions.Data.Entities.MenuItemType.Pizza)
-                    {
-                        VPWebSolutions.Data.Entities.Pizza pizza = (VPWebSolutions.Data.Entities.Pizza)item.MenuItem;
-                        <p>@pizza.Size</p>
-                    }
-                    @*@Html.DisplayFor(modelItem => item.MenuItem)*@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    <p>$@((item.MenuItem.Price*item.Quantity))</p>
-                </td>
-                <td>
-                    @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
-                    {
-                        <button class="btn btn-primary" type="submit">Remove</button>
-                    }
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItem.Name)
+                    </td>
+                    <td>
+                        @if (item.MenuItem.Type == VPWebSolutions.Data.Entities.MenuItemType.Pizza)
+                        {
+                            VPWebSolutions.Data.Entities.Pizza pizza = (VPWebSolutions.Data.Entities.Pizza)item.MenuItem;
+                            <p>@pizza.Size</p>
+                        }
+                        @*@Html.DisplayFor(modelItem => item.MenuItem)*@
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" type="submit">-</button>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                        <button class="btn btn-primary" type="submit">+</button>
+                    </td>
+                    <td>
+                        <p>$@((item.MenuItem.Price*item.Quantity))</p>
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
+                        {
+                            <button class="btn btn-primary" type="submit">Remove</button>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 
-    @using (Html.BeginForm("CheckoutPage", "Home", FormMethod.Get))
+    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
     {
-        <button class="btn btn-primary" type="submit">Checkout</button>
+        @using (Html.BeginForm("Order", "Home", FormMethod.Get))
+        {
+            <button class="btn btn-primary" type="submit">Place Order</button>
+        }
     }
+    else
+    {
+        @using (Html.BeginForm("CheckoutPage", "Home", FormMethod.Get))
+        {
+            <button class="btn btn-primary" type="submit">Checkout</button>
+        }
+    }
+
 }
 
 <style>

@@ -47,7 +47,6 @@ namespace VPWebSolutions.Models
         public string Phone { get; set; }
 
         [Required]
-        //[RegularExpression("^[0-9]{16}$", ErrorMessage = "Please enter a valid card number. (XXXX-XXXX-XXXX-XXXX)")]
         [Display(Name= "Card number")]
         public int CreditNumber { get; set; }
 
