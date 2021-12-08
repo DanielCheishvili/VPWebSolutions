@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VPWebSolutions.Data;
-using VPWebSolutions.Data.Enums;
+using VPWebSolutions.Data.Entities;
 using VPWebSolutions.Models;
 
 namespace VPWebSolutions.Controllers
@@ -90,15 +90,16 @@ namespace VPWebSolutions.Controllers
                     var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
                     if (checkoutInfo.Count() > 0)
                     {
-                        order.Customer = new ApplicationUser { FirstName = checkoutInfo[0].FirstName };
+                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
                     }
                 }
                 else
                 {
-                    var cust = _userManager.FindByIdAsync(order.IdCustomer);
+                    var custList = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).ToList();
+                    var cust = custList[0];
                     if (cust != null)
                     {
-                        order.Customer = cust.Result;
+                        order.UserData = cust;
                     }
                 }
                 
