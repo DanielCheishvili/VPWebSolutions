@@ -78,7 +78,7 @@ else
         </tbody>
     </table>
 
-    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
+    @if (SignInManager.IsSignedIn(User) && (UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee")|| UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager")))
     {
         @using (Html.BeginForm("Order", "Home", FormMethod.Get))
         {

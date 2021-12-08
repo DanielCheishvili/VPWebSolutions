@@ -79,34 +79,42 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDate)
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var oi in item.Items)
-                        {
-                            <li>
-                                @oi.Quantity @oi.MenuItem.Name
-                            </li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    @item.OrderTotal.ToString("c")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderAddress)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "OrderDetails", new { id = item.Id }, new { @class = "btn btn-primary" })
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var oi in item.Items)
+                            {
+                                <li>
+                                    @oi.Quantity @oi.MenuItem.Name
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        @item.OrderTotal.ToString("c")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderAddress)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "OrderDetails", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 }
+
+
+<style>
+    h1, th, td {
+        color: #DEC20B;
+        font-weight: bold;
+    }
+</style>
