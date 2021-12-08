@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VPWebSolutions.Data;
 
-namespace VPWebSolutions.Migrations.BusinessDb
+namespace VPWebSolutions.Migrations
 {
     [DbContext(typeof(BusinessDbContext))]
-    [Migration("20211207191813_Business")]
-    partial class Business
+    [Migration("20211208174121_a")]
+    partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,14 +100,11 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("DeliveryGuyId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdCustomer")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdCustomer")
+                        .HasColumnType("int");
 
                     b.Property<string>("OrderAddress")
                         .HasColumnType("nvarchar(max)");
@@ -140,8 +137,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ShowProfileViewModelUserDataId");
 
@@ -199,73 +194,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasKey("UserDataId");
 
                     b.ToTable("UserDatas");
-                });
-
-            modelBuilder.Entity("VPWebSolutions.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationUser");
                 });
 
             modelBuilder.Entity("VPWebSolutions.Models.CheckoutModel", b =>
@@ -441,10 +369,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             modelBuilder.Entity("VPWebSolutions.Data.Entities.Order", b =>
                 {
-                    b.HasOne("VPWebSolutions.Models.ApplicationUser", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("VPWebSolutions.Models.ShowProfileViewModel", null)
                         .WithMany("Orders")
                         .HasForeignKey("ShowProfileViewModelUserDataId");
@@ -452,8 +376,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     b.HasOne("VPWebSolutions.Data.Entities.UserData", "UserData")
                         .WithMany()
                         .HasForeignKey("UserDataId");
-
-                    b.Navigation("Customer");
 
                     b.Navigation("UserData");
                 });

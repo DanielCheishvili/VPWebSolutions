@@ -21,7 +21,7 @@ namespace VPWebSolutions.Data.Entities
         public DateTime OrderDate { get; set; }
         public ICollection<OrderItem> Items { get; set; }
         public OrderStatus Status { get; set; }
-        public ApplicationUser Customer { get; set; }
+        //public ApplicationUser Customer { get; set; }
         //TODO Need to remove Customer
 
         public int IdCustomer { get; set; }

@@ -1,42 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VPWebSolutions.Migrations.BusinessDb
+namespace VPWebSolutions.Migrations
 {
-    public partial class Business : Migration
+    public partial class a : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ApplicationUser",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
@@ -153,8 +123,7 @@ namespace VPWebSolutions.Migrations.BusinessDb
                     UserDataId = table.Column<int>(type: "int", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IdCustomer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdCustomer = table.Column<int>(type: "int", nullable: false),
                     DeliveryGuyId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     isGuestUser = table.Column<bool>(type: "bit", nullable: false),
                     OrderAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -165,12 +134,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_ApplicationUser_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_ShowProfileViewModel_ShowProfileViewModelUserDataId",
                         column: x => x.ShowProfileViewModelUserDataId,
@@ -276,11 +239,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
                 column: "OrderFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_ShowProfileViewModelUserDataId",
                 table: "Orders",
                 column: "ShowProfileViewModelUserDataId");
@@ -313,9 +271,6 @@ namespace VPWebSolutions.Migrations.BusinessDb
 
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "ApplicationUser");
 
             migrationBuilder.DropTable(
                 name: "ShowProfileViewModel");
