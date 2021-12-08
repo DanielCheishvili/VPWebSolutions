@@ -169,14 +169,7 @@ namespace VPWebSolutions.Controllers
                     var user = userList[0];
                     order.IdCustomer = user.UserDataId;
                     order.isGuestUser = false;
-
-                    if(user.Orders == null)
-                    {
-                        user.Orders = new List<Order>();
-                    }
                     user.Orders.Add(order);
-                    _Menudb.UserDatas.Update(user);
-                    //TODO fix this
                 }
                 else
                 {
