@@ -1,27 +1,21 @@
 ﻿@model IEnumerable<VPWebSolutions.Data.Entities.MenuItem>
-@using VPWebSolutions.Logic
+
 @{
     ViewData["Title"] = "Menu";
 }
 @section Scripts {
     <script type="text/javascript">
         function AddToCart(itemTypeKey) {
-            //console.log(itemTypeKey.value);
             console.log(itemTypeKey);
             $.ajax({
                 method: "POST",
                 url: "/Home/CartAdd",
                 data: { ItemId: itemTypeKey.value }
             })
-            //var cartCount = document.getElementById("cartCount");
-            //cartCount.innerText = 10;
-            //console.log(@CartActions.listItems);
-            //todo add pop up or something to let the user know the item was added sccessfully
             event.preventDefault();
         }
         function AddToCartOther(itemId) {
-            //console.log(itemTypeKey.value);
-            //console.log(itemTypeKey);
+         
             $.ajax({
                 method: "POST",
                 url: "/Home/CartAdd",
@@ -84,19 +78,15 @@
     h1 {
         font-size: 60px;
     }
-
     h4 {
         color: orange;
     }
-
     h1, h2, .p-button {
         color: #DEC20B;
     }
-
     .p-button, h1, h2, h4 {
         font-weight: bold;
     }
-
     .menuImg {
         height: 300px;
         width: 100%;

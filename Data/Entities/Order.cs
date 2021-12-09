@@ -28,5 +28,6 @@ namespace VPWebSolutions.Data.Entities
         public string OrderAddress { get; set; }
         public DateTime? PreparingStartTime { get; set; }
         public DateTime? PreparingDoneTime { get; set; }
+        public string Type { get; set; }
     }
 }

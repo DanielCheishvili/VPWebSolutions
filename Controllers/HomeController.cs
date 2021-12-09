@@ -142,8 +142,8 @@ namespace VPWebSolutions.Controllers
         }
 
 
-        [HttpGet("Checkout")]
-        public IActionResult Checkout(CheckoutModel model)
+        [HttpPost]
+        public IActionResult Checkout(CheckoutModel model,string orderType )
         {
             if (ModelState.IsValid)
             {
@@ -179,16 +179,18 @@ namespace VPWebSolutions.Controllers
                 }
                 else
                 {
-                    model.Order = order;
-                    model.OrderFK = order.Id;
-                    _Menudb.CheckOut.Add(model);
+                    
                     order.isGuestUser = true;
                 }
+                model.Order = order;
+                model.OrderFK = order.Id;
+
+                _Menudb.CheckOut.Add(model);
                 foreach (OrderItem orderItem in order.Items)
                 {
                     order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
                 }
-
+                order.Type = orderType;
                 order.OrderAddress = model.Address;
                 _Menudb.Orders.Add(order);
 
@@ -227,25 +229,16 @@ namespace VPWebSolutions.Controllers
             }
 
 
-            if (_signInManager.IsSignedIn(User))
+            _Menudb.CheckOut.Add(model);
+            foreach (OrderItem orderItem in order.Items)
             {
-                var userId = _userManager.GetUserAsync(User).Result.Id;
-                var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
-                var user = userList[0];
-                order.IdCustomer = user.UserDataId;
-                order.isGuestUser = false;
+                order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
             }
-            else
-            {
-                model.Order = order;
-                model.OrderFK = order.Id;
-                _Menudb.CheckOut.Add(model);
-                order.isGuestUser = true;
-            }
-
+            order.OrderAddress = model.Address;
             _Menudb.Orders.Add(order);
 
             _Menudb.SaveChanges();
+
 
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");

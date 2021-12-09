@@ -43,16 +43,18 @@ namespace VPWebSolutions.Controllers
                 .ThenInclude(oi => oi.MenuItem)
                 .Where(o => o.Status == OrderStatus.READY || o.Status == OrderStatus.IN_DELIVERY)
                 .Where(o => o.DeliveryGuyId == null || o.DeliveryGuyId == _userManager.GetUserAsync(User).Result.Id)
+                .Where(o => o.Type == "delivery")
                 .ToList();
 
             foreach (var order in orders)
             {
+                var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).FirstOrDefault();
                 if (order.isGuestUser)
                 {
-                    var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
-                    if (checkoutInfo.Count() > 0)
+                   
+                    if (checkoutInfo !=null)
                     {
-                        order.UserData = new UserData { PrefferedAddress = checkoutInfo[0].Address };
+                        order.UserData = new UserData { PrefferedAddress = checkoutInfo.Address };
                     }
                 }
                 else
@@ -60,6 +62,10 @@ namespace VPWebSolutions.Controllers
                     var cust = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
                     if (cust != null)
                     {
+                        if(cust.PrefferedAddress != checkoutInfo.Address)
+                        {
+                            cust.PrefferedAddress = checkoutInfo.Address;
+                        }
                         order.UserData = cust;
                     }
                 }

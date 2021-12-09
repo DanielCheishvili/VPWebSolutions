@@ -9,168 +9,228 @@
 }
 @using VPWebSolutions.Logic;
 
-
-
 <h1>Checkout Page</h1>
 <hr />
-<div class="grid-container">
-    <div class="billing">
-        <h3>Billing information</h3>
-        @using (Html.BeginForm("Checkout", "Home", FormMethod.Get))
-        {
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="grid-container-2">
-                <div class="left">
-                    @if (!SignInManager.IsSignedIn(User))
-                    {
+
+@using (Html.BeginForm("Checkout", "Home", FormMethod.Post))
+{
+    <div id="deliveryInfo">
+        <div class="grid-container">
+            <div class="delivery">
+
+                <h3>Delivery Information</h3>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="grid-container-2">
+                    <div class="left">
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="control-label"></label>
+                                <input asp-for="FirstName" class="form-control" value="" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        }
                         <div class="form-group">
-                            <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" value="" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                            <label asp-for="Address" class="control-label"></label>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {<input asp-for="Address" class="form-control" /> }
+                            else
+                            { <input asp-for="Address" class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
-                    }
-                    <div class="form-group">
-                        <label asp-for="Address" class="control-label"></label>
-                        @if (!SignInManager.IsSignedIn(User))
-                        {<input asp-for="Address" class="form-control" /> }
-                        else
-                        { <input asp-for="Address" class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        @if (!SignInManager.IsSignedIn(User))
-                        {<input asp-for="Email" class="form-control" /> }
-                        else
-                        { <input asp-for="Email" class="form-control" value="@UserManager.GetUserAsync(User).Result.Email" />}
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="right">
-                    @if (!SignInManager.IsSignedIn(User))
-                    {
                         <div class="form-group">
-                            <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
+                            <label asp-for="Email" class="control-label"></label>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {<input asp-for="Email" class="form-control" /> }
+                            else
+                            { <input asp-for="Email" class="form-control" value="@UserManager.GetUserAsync(User).Result.Email" />}
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                    }
-                    <div class="form-group">
-                        <label asp-for="PostalCode" class="control-label"></label>
-                        @if (!SignInManager.IsSignedIn(User))
-                        {<input asp-for="PostalCode" class="form-control" /> }
-                        else
-                        { <input asp-for="PostalCode" class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
-                        <span asp-validation-for="PostalCode" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Phone" class="control-label"></label>
+
+                    <div class="right">
                         @if (!SignInManager.IsSignedIn(User))
-                        {<input asp-for="Phone" class="form-control" /> }
-                        else
-                        { <input asp-for="Phone" class="form-control" value="@UserManager.GetUserAsync(User).Result.PhoneNumber" />}
-                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        {
+                            <div class="form-group">
+                                <label asp-for="LastName" class="control-label"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label asp-for="PostalCode" class="control-label"></label>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {<input asp-for="PostalCode" class="form-control" /> }
+                            else
+                            { <input asp-for="PostalCode" class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
+                            <span asp-validation-for="PostalCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Phone" class="control-label"></label>
+                            @if (!SignInManager.IsSignedIn(User))
+                            {<input asp-for="Phone" class="form-control" /> }
+                            else
+                            { <input asp-for="Phone" class="form-control" value="@UserManager.GetUserAsync(User).Result.PhoneNumber" />}
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div>
+                    <p class="p-button control-label">Method of Payment</p>
 
-            <div>
-                <p class="p-button control-label">Method of Payment</p>
+                    <label class="radio-buttons">
+                        <input value="cc" type="radio" name="checkoutType" class="form-control" id="creditCard" onclick="checkMethodPayment()" checked> Credit Card
+                    </label>
 
-                <label class="radio-buttons">
-                    <input type="radio" name="type" class="form-control" id="creditCard" onclick="checkMethodPayment()" checked> Credit Card
-                </label>
+                    <label class="radio-buttons">
+                        <input value="cash" type="radio" name="checkoutType" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
+                    </label>
 
-                <label class="radio-buttons">
-                    <input type="radio" name="type" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
-                </label>
-
-                <span class="text-danger"></span>
-            </div>
-            <div id="creditCardInfo">
-                <div class="form-group">
-                    <label asp-for="CreditNumber" class="control-label"></label>
-                    <input asp-for="CreditNumber" class="form-control" />
-                    <span asp-validation-for="CreditNumber" class="text-danger"></span>
+                    <span class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Month" class="control-label"></label>
-                    <select name="Month" id="Topic" style="width:100%;">
-                        <option value="" selected disabled hidden>Choose Month</option>
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June </option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
+                
+
+                <div id="creditCardInfo">
+                    <div class="billing">
+
+                        <h3>Billing Information</h3>
 
 
-                    </select>
-                    <span asp-validation-for="Month" class="text-danger"></span>
+                        <div class="grid-container-2" id="">
+                            <div class="left">
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">First Name</label>
+                                        <input class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label class="control-label">Address</label>
+                                    @if (!SignInManager.IsSignedIn(User))
+                                    {<input class="form-control" /> }
+                                    else
+                                    { <input class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
+                                    <span class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="right">
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name</label>
+                                        <input class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label class="control-label">Postal Code</label>
+                                    @if (!SignInManager.IsSignedIn(User))
+                                    {<input class="form-control" /> }
+                                    else
+                                    { <input class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CreditNumber" class="control-label"></label>
+                            <input asp-for="CreditNumber" class="form-control" id="ccNumber" required />
+                            <span asp-validation-for="CreditNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Month" class="control-label"></label>
+                            <select name="Month" id="ccExpiryMonth" style="width:100%;" required>
+                                <option value="" selected disabled hidden>Choose Month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June </option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+
+
+                            </select>
+                            <span asp-validation-for="Month" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Year" class="control-label"></label>
+                            <select id="ccExpiryYear" name="Year" style="width:100%;" required>
+                                <option value="" selected disabled hidden>Choose Year</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SecurityCode" class="control-label"></label>
+                            <input asp-for="SecurityCode" class="form-control" id="cvv" required />
+                            <span asp-validation-for="SecurityCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
-                <div class="form-group">
-                    <label asp-for="Year" class="control-label"></label>
-                    <select id="year" name="Year" style="width:100%;">
-                        <option>Year</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                    </select>
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SecurityCode" class="control-label"></label>
-                    <input asp-for="SecurityCode" class="form-control" />
-                    <span asp-validation-for="SecurityCode" class="text-danger"></span>
+
+                <div class="summary" id="summaryId">
+                    <h2>Summary: </h2>
+                    <ul style="list-style-type:none">
+                        @foreach (var orderItem in CartActions.listItems)
+                        {
+                            <li>
+                                @orderItem.Quantity
+                                @orderItem.MenuItem.Name
+                                @orderItem.UnitPrice.ToString("c")
+                            </li>
+                        }
+                        <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
+                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
+                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
+                    </ul>
                 </div>
             </div>
-
-
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Place your order</button>
-            </div>
-        }
+        </div>
     </div>
-    <div class="summary">
-        <h2>Summary: </h2>
-        <ul style="list-style-type:none">
-            @foreach (var orderItem in CartActions.listItems)
-            {
-                <li>
-                    @orderItem.Quantity
-                    @orderItem.MenuItem.Name
-                    @orderItem.UnitPrice.ToString("c")
-                </li>
-            }
-            <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
-            <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
-            <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
-        </ul>
+    <div class="form-group">
+        <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="pickup" value="pickup">Place your order for Pickup</button>
+        <button type="submit" name="orderType" class="btn btn-lg btn-primary" id="delivery" value="delivery">Place your order for Delivery</button>
     </div>
-</div>
+}
+
+
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <style>
-    .radio-buttons{
-        margin:0 10px 0 10px;
+    .radio-buttons {
+        margin: 0 10px 0 10px;
     }
+
     h1, h2, li, h3, label, .p-button {
         color: #DEC20B;
         font-weight: bold;
     }
+
     .grid-container {
         display: grid;
         grid-template-columns: 0.33fr 0.33fr 0.33fr;
@@ -178,10 +238,12 @@
         grid-column-gap: 20px;
         height: fit-content;
     }
+
     .billing {
         grid-column-start: 1;
         grid-column-end: span 2;
     }
+
     .summary {
         grid-column-start: 3;
         grid-column-end: 3;
@@ -194,14 +256,17 @@
         grid-column-gap: 20px;
         height: fit-content;
     }
+
     .left {
         grid-column-start: 1;
         grid-column-end: 1;
     }
+
     .right {
         grid-column-start: 2;
         grid-column-end: 2;
     }
+
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -213,12 +278,59 @@
 </style>
 
 <script>
+    deliveryOrPickup();
     function checkMethodPayment() {
         var creditCardInfo = document.getElementById("creditCardInfo");
 
         var cash = document.getElementById("cash");
+        if (cash.checked) {
+            document.getElementById("ccNumber").required = false;
+            document.getElementById("ccExpiryMonth").required = false;
+            document.getElementById("ccExpiryYear").required = false;
+            document.getElementById("cvv").required = false;
+        }
 
         creditCardInfo.style.display = cash.checked ? "none" : "block";
+    }
+    function deliveryOrPickup() {
+        var billingInfo = document.getElementById("deliveryInfo");
+        var summary = document.getElementById("summaryId");
+
+        document.getElementById("pickup").addEventListener("click", function () {
+            billingInfo.style.display = "none";
+            summary.style.display = "block";
+        });
+
+        document.getElementById("delivery").addEventListener("click", function () {
+            billingInfo.style.display = "block";
+            summary.style.display = "block";
+        });
+
+
+
+
+    }
+    function removeRequiredAttr() {
+        document.getElementById("ccNumber").required = false;
+        document.getElementById("ccExpiryMonth").required = false;
+        document.getElementById("ccExpiryYear").required = false;
+        document.getElementById("cvv").required = false;
+
+
+    }
+    function addOrderType(orderType) {
+        $.ajax({
+            method: "POST",
+            url: "/Home/Checkout",
+            data: { Type: orderType.value }
+        });
+        event.preventDefault();
+    }
+    function addRequiredAttr() {
+        document.getElementById("ccNumber").setAttribute('required');
+        document.getElementById("ccExpiryMonth").setAttribute('required');
+        document.getElementById("ccExpiryYear").setAttribute('required');
+        document.getElementById("cvv").setAttribute('required');
     }
 
 </script>
