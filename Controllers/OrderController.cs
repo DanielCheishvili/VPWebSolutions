@@ -48,10 +48,9 @@ namespace VPWebSolutions.Controllers
 
             foreach (var order in orders)
             {
-                var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).FirstOrDefault();
                 if (order.isGuestUser)
                 {
-                   
+                    var checkoutInfo = _Menudb.CheckOut.Where(co => co.Order.Id == order.Id).FirstOrDefault();
                     if (checkoutInfo !=null)
                     {
                         order.UserData = new UserData { PrefferedAddress = checkoutInfo.Address };
@@ -62,10 +61,6 @@ namespace VPWebSolutions.Controllers
                     var cust = _Menudb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
                     if (cust != null)
                     {
-                        if(cust.PrefferedAddress != checkoutInfo.Address)
-                        {
-                            cust.PrefferedAddress = checkoutInfo.Address;
-                        }
                         order.UserData = cust;
                     }
                 }

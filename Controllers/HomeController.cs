@@ -143,11 +143,10 @@ namespace VPWebSolutions.Controllers
 
 
         [HttpPost]
-        public IActionResult Checkout(CheckoutModel model,string orderType )
+        public IActionResult Checkout(CheckoutModel model, string orderType)
         {
             if (ModelState.IsValid)
             {
-
                 var order = new Order
                 {
                     OrderDate = DateTime.Now,
@@ -163,7 +162,6 @@ namespace VPWebSolutions.Controllers
                     _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
                 }
 
-
                 if (_signInManager.IsSignedIn(User))
                 {
                     var userId = _userManager.GetUserAsync(User).Result.Id;
@@ -171,7 +169,7 @@ namespace VPWebSolutions.Controllers
                     var user = userList[0];
                     order.IdCustomer = user.UserDataId;
                     order.isGuestUser = false;
-                    if(user.Orders == null)
+                    if (user.Orders == null)
                     {
                         user.Orders = new List<Order>();
                     }
@@ -179,7 +177,6 @@ namespace VPWebSolutions.Controllers
                 }
                 else
                 {
-                    
                     order.isGuestUser = true;
                 }
                 model.Order = order;
@@ -196,11 +193,9 @@ namespace VPWebSolutions.Controllers
 
                 _Menudb.SaveChanges();
 
-
                 CartActions.listItems.Clear();
                 return RedirectToAction("Index", "Home");
                 //MAKE VIEW DON"T FORGET
-
             }
             return View("CheckoutPage");
         }
@@ -228,8 +223,7 @@ namespace VPWebSolutions.Controllers
                 _Menudb.Entry(orderItem.MenuItem).State = EntityState.Unchanged;
             }
 
-
-            _Menudb.CheckOut.Add(model);
+            order.Type = "In store";
             foreach (OrderItem orderItem in order.Items)
             {
                 order.OrderTotal += orderItem.Quantity * (float)orderItem.MenuItem.Price * (float)1.15;
@@ -243,31 +237,26 @@ namespace VPWebSolutions.Controllers
             CartActions.listItems.Clear();
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult Orders()
-        {
-            if (!_signInManager.IsSignedIn(User))
-            {
-                RedirectToAction("Error"); //todo make this work
-            }
-            var userId = _userManager.GetUserAsync(User).Result.Id;
-            var userList = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).ToList();
-            var user = userList[0];
-            var orders = _Menudb.Orders
-                .OrderByDescending(o => o.OrderDate)
-                .Include(o => o.Items)
-                .ThenInclude(oi => oi.MenuItem)
-                .Where(o => o.IdCustomer == user.UserDataId);
-            return View(orders);
-        }
 
         public IActionResult OrderDetails(int id)
         {
-            var orders = _Menudb.Orders
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Error");
+            }
+            var order = _Menudb.Orders
                 .OrderBy(o => o.OrderDate)
                 .Include(o => o.Items)
-                .ThenInclude(oi => oi.MenuItem);
-            var order = orders.First(o => o.Id == id);
-            //todo block off if order does not belong to logged in user
+                .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.Id == id)
+                .FirstOrDefault();
+
+            var userId = _userManager.GetUserAsync(User).Result.Id;
+            var user = _Menudb.UserDatas.Where(u => u.IdentityUserId == userId).FirstOrDefault();
+            if(user == null || user.UserDataId != order.IdCustomer)
+            {
+                return RedirectToAction("Error");
+            }
             return View(order);
         }
 

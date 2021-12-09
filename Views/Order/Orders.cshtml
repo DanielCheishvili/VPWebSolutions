@@ -25,43 +25,49 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            <th>
+                Customer name
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var order in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => order.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => order.OrderAddress)
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var oi in order.Items)
-                        {
-                            <li>
-                                @oi.Quantity @oi.MenuItem.Name
-                            </li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => order.OrderDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => order.Status)
-                </td>
-                <td>
-                    @*@Html.ActionLink("View", "Order", new { id = order.Id }, null) |*@
-                    @using (Html.BeginForm("UpdateStatus", "Order", new { id = order.Id, redirectTo = "Orders" }, FormMethod.Post))
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => order.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.OrderAddress)
+            </td>
+            <td>
+                <ul>
+                    @foreach (var oi in order.Items)
                     {
-                        <button class="btn btn-primary" type="submit" style="background-color: #F7CE37; color: black">@String.Format("Set status to " + order.Status.Next().ToString())</button>
+                        <li>
+                            @oi.Quantity @oi.MenuItem.Name
+                        </li>
                     }
-                </td>
-            </tr>
+                </ul>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.UserData.FullName)
+            </td>
+            <td>
+                @*@Html.ActionLink("View", "Order", new { id = order.Id }, null) |*@
+                @using (Html.BeginForm("UpdateStatus", "Order", new { id = order.Id, redirectTo = "Orders" }, FormMethod.Post))
+                {
+                    <button class="btn btn-primary" type="submit" style="background-color: #F7CE37; color: black">@String.Format("Set status to " + order.Status.Next().ToString())</button>
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
