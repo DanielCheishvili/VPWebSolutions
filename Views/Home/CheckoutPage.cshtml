@@ -16,9 +16,9 @@
 {
     <div id="deliveryInfo">
         <div class="grid-container">
-            <div class="billing">
+            <div class="delivery">
 
-                <h3>Billing information</h3>
+                <h3>Delivery Information</h3>
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="grid-container-2">
@@ -76,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div>
                     <p class="p-button control-label">Method of Payment</p>
 
@@ -85,79 +84,128 @@
                     </label>
 
                     <label class="radio-buttons">
-                        <input value="cash"type="radio" name="checkoutType" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
+                        <input value="cash" type="radio" name="checkoutType" class="form-control" id="cash" onclick="checkMethodPayment()">  Cash
                     </label>
 
                     <span class="text-danger"></span>
                 </div>
+                
+
                 <div id="creditCardInfo">
-                    <div class="form-group">
-                        <label asp-for="CreditNumber" class="control-label"></label>
-                        <input asp-for="CreditNumber" class="form-control" id="ccNumber" required />
-                        <span asp-validation-for="CreditNumber" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Month" class="control-label"></label>
-                        <select name="Month" id="ccExpiryMonth" style="width:100%;" required>
-                            <option value="" selected disabled hidden>Choose Month</option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June </option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
+                    <div class="billing">
+
+                        <h3>Billing Information</h3>
 
 
-                        </select>
-                        <span asp-validation-for="Month" class="text-danger"></span>
+                        <div class="grid-container-2" id="">
+                            <div class="left">
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">First Name</label>
+                                        <input class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label class="control-label">Address</label>
+                                    @if (!SignInManager.IsSignedIn(User))
+                                    {<input class="form-control" /> }
+                                    else
+                                    { <input class="form-control" value="@UserManager.GetUserAsync(User).Result.Address" />}
+                                    <span class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="right">
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name</label>
+                                        <input class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label class="control-label">Postal Code</label>
+                                    @if (!SignInManager.IsSignedIn(User))
+                                    {<input class="form-control" /> }
+                                    else
+                                    { <input class="form-control" value="@UserManager.GetUserAsync(User).Result.PostalCode" />}
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CreditNumber" class="control-label"></label>
+                            <input asp-for="CreditNumber" class="form-control" id="ccNumber" required />
+                            <span asp-validation-for="CreditNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Month" class="control-label"></label>
+                            <select name="Month" id="ccExpiryMonth" style="width:100%;" required>
+                                <option value="" selected disabled hidden>Choose Month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June </option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+
+
+                            </select>
+                            <span asp-validation-for="Month" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Year" class="control-label"></label>
+                            <select id="ccExpiryYear" name="Year" style="width:100%;" required>
+                                <option value="" selected disabled hidden>Choose Year</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SecurityCode" class="control-label"></label>
+                            <input asp-for="SecurityCode" class="form-control" id="cvv" required />
+                            <span asp-validation-for="SecurityCode" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Year" class="control-label"></label>
-                        <select id="ccExpiryYear" name="Year" style="width:100%;" required>
-                            <option value="" selected disabled hidden>Choose Year</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                        </select>
-                        <span asp-validation-for="Year" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SecurityCode" class="control-label"></label>
-                        <input asp-for="SecurityCode" class="form-control" id="cvv" required />
-                        <span asp-validation-for="SecurityCode" class="text-danger"></span>
-                    </div>
+
+
+
+
+
                 </div>
 
-
-
-
-
-            </div>
-
-            <div class="summary" id="summaryId">
-                <h2>Summary: </h2>
-                <ul style="list-style-type:none">
-                    @foreach (var orderItem in CartActions.listItems)
-                    {
-                        <li>
-                            @orderItem.Quantity
-                            @orderItem.MenuItem.Name
-                            @orderItem.UnitPrice.ToString("c")
-                        </li>
-                    }
-                    <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
-                    <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
-                    <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
-                </ul>
+                <div class="summary" id="summaryId">
+                    <h2>Summary: </h2>
+                    <ul style="list-style-type:none">
+                        @foreach (var orderItem in CartActions.listItems)
+                        {
+                            <li>
+                                @orderItem.Quantity
+                                @orderItem.MenuItem.Name
+                                @orderItem.UnitPrice.ToString("c")
+                            </li>
+                        }
+                        <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
+                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
+                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -240,7 +288,6 @@
             document.getElementById("ccExpiryMonth").required = false;
             document.getElementById("ccExpiryYear").required = false;
             document.getElementById("cvv").required = false;
-            console.log("HI");
         }
 
         creditCardInfo.style.display = cash.checked ? "none" : "block";

@@ -6,12 +6,20 @@
 @section Scripts {
     <script type="text/javascript">
         function AddToCart(itemTypeKey) {
-            //console.log(itemTypeKey.value);
             console.log(itemTypeKey);
             $.ajax({
                 method: "POST",
                 url: "/Home/CartAdd",
                 data: { ItemId: itemTypeKey.value }
+            })
+            event.preventDefault();
+        }
+        function AddToCartOther(itemId) {
+         
+            $.ajax({
+                method: "POST",
+                url: "/Home/CartAdd",
+                data: { ItemId: itemId }
             })
             //todo add pop up or something to let the user know the item was added sccessfully
             event.preventDefault();
@@ -57,7 +65,7 @@
                         <img src="~/images/@(item.ImageId).jpg " class="menuImg" />
                         <h4>@item.Name</h4>
                         <p class="p-button">Price: @item.Price.ToString("c")</p>
-                        <button class="btn btn-primary" type="button" onclick="AddToCart(@item.Id)">Add To Cart</button>
+                        <button class="btn btn-primary" type="button" onclick="AddToCartOther(@item.Id)">Add To Cart</button>
                     </div>
                 </div>
             }
