@@ -6,7 +6,6 @@
 
 <script type="text/javascript">
     function filterFunction(dropdown) {
-        //todo TEST FOR LAST WEEK AND LAST MONTH
         var selected = dropdown.options[dropdown.selectedIndex].value
         var table = document.getElementsByClassName("table");
         var tr = table[0].getElementsByTagName("tr");
@@ -88,7 +87,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                Customer @Html.DisplayNameFor(model => model.UserData.FullName)
+                Customer name
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderAddress)

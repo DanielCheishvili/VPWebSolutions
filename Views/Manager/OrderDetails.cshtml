@@ -4,8 +4,8 @@
     ViewData["Title"] = "OrderDetails";
 }
 
-<h1>OrderDetails</h1>
-@* todo change a little bit *@
+<h1>Order Details</h1>
+@* todo maybe change a little bit *@
 <div>
     <h4>Order #@Model.Id</h4>
     <hr />
@@ -40,10 +40,10 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCustomer)
+            @Html.DisplayNameFor(model => model.UserData.FullName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdCustomer)
+            @Html.DisplayFor(model => model.UserData.FullName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DeliveryGuyId)
@@ -74,6 +74,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PreparingDoneTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
         </dd>
     </dl>
 </div>
