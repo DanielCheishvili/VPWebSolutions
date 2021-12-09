@@ -23,8 +23,7 @@ namespace VPWebSolutions.Controllers
             _userManager = userManager;
         }
         
-        [Authorize(Roles = "Manager")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Manager, Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -160,6 +159,13 @@ namespace VPWebSolutions.Controllers
                 return View(model);
             }
             return Redirect(returnUrl);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Manager, Admin")]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

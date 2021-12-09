@@ -55,7 +55,7 @@ namespace VPWebSolutions.Data
                 {
                     throw new InvalidOperationException("Could not create new user in seeder");
                 }
-                await _userManager.AddToRoleAsync(admin, Roles.Manager.ToString());
+                await _userManager.AddToRoleAsync(manager, Roles.Manager.ToString());
             }
 
             ApplicationUser deliverer = await _userManager.FindByEmailAsync("deliverer@user.com");

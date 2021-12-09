@@ -1,0 +1,83 @@
+﻿@page
+@model List<ManageUserRolesViewModel>
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="UserRoles" asp-action="Create" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="grid-container">
+                <div class="right-div">
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Address"></label>
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Province"></label>
+                        <input asp-for="Input.Province" class="form-control" />
+                        <span asp-validation-for="Input.Province" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="left-div">
+                    <div class="form-group">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PhoneNumber"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.City"></label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PostalCode"></label>
+                        <input asp-for="Input.PostalCode" class="form-control" />
+                        <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM" style="transform: scale(0.77); -webkit-transform: scale(1.16); transform-origin: 0 0; -webkit-transform-origin: 0 0;"></div>
+                <div class="recap-buttons form-group">
+                    <input type="submit" id="submitButton" value="Register" class="btn btn-primary" disabled />
+                    <input type="reset" value="Reset" class="btn btn-primary" />
+
+                </div>
+
+
+            </div>
+
+        </form>
+    </div>
+</div>

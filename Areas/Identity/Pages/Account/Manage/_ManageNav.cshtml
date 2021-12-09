@@ -13,6 +13,14 @@
     {
         <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="orderlist" asp-page="./OrderList">Orders</a></li>
     }
+    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager"))
+    {
+        <li class="nav-item"><a class="nav-link" asp-controller="UserRoles" asp-action="GetEmployeesAndManagers" asp-route-previous="">Orders</a></li>
+    }
+    @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
+    {
+        <li class="nav-item"><a class="nav-link" asp-controller="UserRoles" asp-action="GetEmployeesAndManagers" asp-route-previous="">Orders</a></li>
+    }
 
     <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
 
