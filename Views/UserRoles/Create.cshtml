@@ -1,83 +1,132 @@
-﻿@page
-@model List<ManageUserRolesViewModel>
+﻿@model VPWebSolutions.Models.EmployeeModel
+
 @{
     ViewData["Title"] = "Register";
 }
 
 <h1>@ViewData["Title"]</h1>
-
+<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="UserRoles" asp-action="Create" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="Create">
+            @*TODO FIX THIS*@
+            @*@using (Html.BeginForm())
+            {
+            <input type="hidden" name="returnUrl" value="@ViewBag.refer" />
+            }*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="grid-container">
-                <div class="right-div">
-                    <div class="form-group">
-                        <label asp-for="Input.FirstName"></label>
-                        <input asp-for="Input.FirstName" class="form-control" />
-                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="form-control" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Address"></label>
-                        <input asp-for="Input.Address" class="form-control" />
-                        <span asp-validation-for="Input.Address" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Province"></label>
-                        <input asp-for="Input.Province" class="form-control" />
-                        <span asp-validation-for="Input.Province" class="text-danger"></span>
-                    </div>
-                </div>
                 <div class="left-div">
                     <div class="form-group">
-                        <label asp-for="Input.LastName"></label>
-                        <input asp-for="Input.LastName" class="form-control" />
-                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.PhoneNumber"></label>
-                        <input asp-for="Input.PhoneNumber" class="form-control" />
-                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ConfirmPassword"></label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.City"></label>
-                        <input asp-for="Input.City" class="form-control" />
-                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.PostalCode"></label>
-                        <input asp-for="Input.PostalCode" class="form-control" />
-                        <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
                     </div>
                 </div>
-
-                <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM" style="transform: scale(0.77); -webkit-transform: scale(1.16); transform-origin: 0 0; -webkit-transform-origin: 0 0;"></div>
-                <div class="recap-buttons form-group">
-                    <input type="submit" id="submitButton" value="Register" class="btn btn-primary" disabled />
-                    <input type="reset" value="Reset" class="btn btn-primary" />
-
+                <div class="right-div">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode" class="control-label"></label>
+                        <input asp-for="PostalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Province" class="control-label"></label>
+                        <input asp-for="Province" class="form-control" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Roles"></label>
+                        @for (int i = 0; i < Model.Roles.Count; i++)
+                        {
+                        <div class="form-check m-1">
+                            <input type="hidden" asp-for="@Model.Roles[i].RoleId" />
+                            <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
+                            <input asp-for="@Model.Roles[i].Selected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.Roles[i].Selected">
+                                @Model.Roles[i].RoleName
+                            </label>
+                        </div>
+                        }
+                    </div>
                 </div>
-
-
             </div>
-
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="reset" value="Reset" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<style>
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 0.25fr 0.1fr;
+        grid-column-gap: 20px;
+        height: fit-content;
+    }
+
+    .g-recaptcha {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+        height: fit-content;
+    }
+
+    .recap-buttons {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        height: fit-content;
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    h4 {
+        font-weight: bold;
+    }
+
+    h1, h4, label {
+        color: #DEC20B;
+    }
+</style>

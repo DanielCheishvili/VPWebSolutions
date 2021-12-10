@@ -98,8 +98,7 @@ namespace VPWebSolutions.Controllers
         }
 
         
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;
@@ -118,7 +117,6 @@ namespace VPWebSolutions.Controllers
             {
                 var userRolesViewModel = new ManageUserRolesViewModel
                 {
-                    returnUrl = ViewBag.Refer,
                     RoleId = role.Id,
                     RoleName = role.Name
                 };
@@ -161,11 +159,71 @@ namespace VPWebSolutions.Controllers
             return Redirect(returnUrl);
         }
 
-        [HttpGet]
         [Authorize(Roles = "Manager, Admin")]
         public IActionResult Create()
         {
-            return View();
+            var model = new EmployeeModel();
+            model.Roles = new List<ManageUserRolesViewModel>();
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new ManageUserRolesViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+                userRolesViewModel.Selected = false;
+
+                if(userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Manager" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
+                model.Roles.Add(userRolesViewModel);
+            }
+
+
+            return View("Create", model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateEmployeeAndManager()
+        {
+            var model = new EmployeeModel();
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new ManageUserRolesViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+                userRolesViewModel.Selected = false;
+
+                if (userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
+                model.Roles.Add(userRolesViewModel);
+            }
+
+
+            return View("Create", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(EmployeeModel employee, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { 
+                    UserName = employee.Email, 
+                    Email = employee.Email, 
+                    PhoneNumber = employee.Phone, 
+                    Address = employee.Address, 
+                    PostalCode = employee.PostalCode, 
+                    City = employee.City };
+                var result = await _userManager.CreateAsync(user, employee.Password);
+                await _userManager.AddToRolesAsync(user, employee.Roles.Where(x => x.Selected).Select(y => y.RoleName));
+            }
+            return Redirect(returnUrl);
         }
     }
 }
