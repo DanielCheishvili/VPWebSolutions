@@ -21,15 +21,22 @@
     <tbody>
         @foreach (var user in Model)
         {
-            <tr>
-                <td>@user.FirstName</td>
-                <td>@user.LastName</td>
-                <td>@user.Email</td>
-                <td>@string.Join(" , ", user.Roles.ToList())</td>
-                <td>
-                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage" asp-route-previous="" asp-route-userId="@user.UserIdentityId">Manage Roles</a>
-                </td>
-            </tr>
+        <tr>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.Email</td>
+            <td>@string.Join(" , ", user.Roles.ToList())</td>
+            <td>
+                @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
+                {
+                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="ManageAdmin" asp-route-previous="" asp-route-userId="@user.UserIdentityId">Manage Roles</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="ManageManager" asp-route-previous="" asp-route-userId="@user.UserIdentityId">Manage Roles</a>
+                }
+            </td>
+        </tr>
         }
     </tbody>
     <td>
