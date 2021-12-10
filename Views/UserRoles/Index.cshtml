@@ -1,4 +1,7 @@
 ﻿@using VPWebSolutions.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model List<VPWebSolutions.Models.UserRolesViewModel>
 @{
     ViewData["Title"] = "Index";
@@ -30,6 +33,13 @@
         }
     </tbody>
     <td>
-        <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Create" asp-route-previous="">Create New Employee</a>
+        @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
+        {
+            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployeeAndManager" asp-route-previous="">Create New Employee</a>
+        }
+        else
+        {
+            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployee" asp-route-previous="">Create New Employee</a>
+        }
     </td>
 </table>

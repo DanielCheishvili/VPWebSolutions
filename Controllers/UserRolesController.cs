@@ -160,7 +160,7 @@ namespace VPWebSolutions.Controllers
         }
 
         [Authorize(Roles = "Manager, Admin")]
-        public IActionResult Create()
+        public IActionResult CreateEmployee()
         {
             var model = new EmployeeModel();
             model.Roles = new List<ManageUserRolesViewModel>();
@@ -188,6 +188,7 @@ namespace VPWebSolutions.Controllers
         public IActionResult CreateEmployeeAndManager()
         {
             var model = new EmployeeModel();
+            model.Roles = new List<ManageUserRolesViewModel>();
             foreach (var role in _roleManager.Roles)
             {
                 var userRolesViewModel = new ManageUserRolesViewModel
