@@ -46,22 +46,18 @@ namespace VPWebSolutions.Models
         [Display(Name = "Phone Number")]
         public string Phone { get; set; }
 
-        [Required]
         [Display(Name= "Card number")]
-        public int CreditNumber { get; set; }
+        public int? CreditNumber { get; set; }
 
-        [Required]
         [Display(Name ="Expiration Month")]
         public string Month { get; set; }
 
-        [Required]
         [Display(Name = "Expiration Year")]
         public int Year { get; set; }
 
-        [Required]
         [Display(Name = "Security Code")]
         [RegularExpression("^[0-9]{3}$", ErrorMessage = "Please enter a valid CVV (XXX)")]
-        public int SecurityCode { get; set; }
+        public int? SecurityCode { get; set; }
 
  
     }
