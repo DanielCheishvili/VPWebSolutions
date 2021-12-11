@@ -280,38 +280,27 @@
 </style>
 
 <script>
-    deliveryOrPickup();
     function checkMethodPayment() {
         var creditCardInfo = document.getElementById("creditCardInfo");
 
         var cash = document.getElementById("cash");
+        var cc = document.getElementById("creditCard");
         if (cash.checked) {
             document.getElementById("ccNumber").required = false;
             document.getElementById("ccExpiryMonth").required = false;
             document.getElementById("ccExpiryYear").required = false;
             document.getElementById("cvv").required = false;
         }
+        if (cc.checked) {
+            document.getElementById("ccNumber").required = true;
+            document.getElementById("ccExpiryMonth").required = true;
+            document.getElementById("ccExpiryYear").required = true;
+            document.getElementById("cvv").required = true;
+        }
 
         creditCardInfo.style.display = cash.checked ? "none" : "block";
     }
-    function deliveryOrPickup() {
-        var billingInfo = document.getElementById("deliveryInfo");
-        var summary = document.getElementById("summaryId");
 
-        document.getElementById("pickup").addEventListener("click", function () {
-            billingInfo.style.display = "none";
-            summary.style.display = "block";
-        });
-
-        document.getElementById("delivery").addEventListener("click", function () {
-            billingInfo.style.display = "block";
-            summary.style.display = "block";
-        });
-
-
-
-
-    }
     function removeRequiredAttr() {
         document.getElementById("ccNumber").required = false;
         document.getElementById("ccExpiryMonth").required = false;
