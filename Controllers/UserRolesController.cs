@@ -221,6 +221,7 @@ namespace VPWebSolutions.Controllers
                 model.Roles.Add(userRolesViewModel);
             }
 
+            ViewBag.refer = "ManageManager";
 
             return View("Create", model);
         }
@@ -246,6 +247,7 @@ namespace VPWebSolutions.Controllers
                 model.Roles.Add(userRolesViewModel);
             }
 
+            ViewBag.refer = "ManageAdmin";
 
             return View("Create", model);
         }
@@ -265,7 +267,7 @@ namespace VPWebSolutions.Controllers
                 var result = await _userManager.CreateAsync(user, employee.Password);
                 await _userManager.AddToRolesAsync(user, employee.Roles.Where(x => x.Selected).Select(y => y.RoleName));
             }
-            return Redirect(returnUrl);
+            return RedirectToAction(actionName:"Index", controllerName:"Home");
         }
     }
 }

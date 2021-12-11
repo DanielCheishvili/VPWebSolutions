@@ -42,11 +42,11 @@
     <td>
         @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
         {
-            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployeeAndManager" asp-route-previous="">Create New Employee</a>
+            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployeeAndManager" asp-route-previous="ManageAdmin">Create New Employee</a>
         }
         else
         {
-            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployee" asp-route-previous="">Create New Employee</a>
+            <a class="btn btn-primary" asp-controller="UserRoles" asp-action="CreateEmployee" asp-route-previous="ManageManager">Create New Employee</a>
         }
     </td>
 </table>
