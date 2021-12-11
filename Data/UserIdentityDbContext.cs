@@ -23,5 +23,7 @@ namespace VPWebSolutions.Data
             base.OnModelCreating(builder);
         }
 
+        public DbSet<VPWebSolutions.Models.EmployeeModel> EmployeeModel { get; set; }
+
     }
 }

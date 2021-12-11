@@ -23,8 +23,7 @@ namespace VPWebSolutions.Controllers
             _userManager = userManager;
         }
         
-        [Authorize(Roles = "Manager")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Manager, Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -99,9 +98,8 @@ namespace VPWebSolutions.Controllers
         }
 
         
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Manager")]
-        public async Task<IActionResult> Manage(string userId)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ManageAdmin(string userId)
         {
             ViewBag.userId = userId;
             var user = await _userManager.FindByIdAsync(userId);
@@ -119,7 +117,6 @@ namespace VPWebSolutions.Controllers
             {
                 var userRolesViewModel = new ManageUserRolesViewModel
                 {
-                    returnUrl = ViewBag.Refer,
                     RoleId = role.Id,
                     RoleName = role.Name
                 };
@@ -131,11 +128,52 @@ namespace VPWebSolutions.Controllers
                 {
                     userRolesViewModel.Selected = false;
                 }
+                if (userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
                 model.Add(userRolesViewModel);
             }
+            return View("Manage", model);
+        }
 
+        [Authorize(Roles = "Admin, Manager")]
+        public async Task<IActionResult> ManageManager(string userId)
+        {
+            ViewBag.userId = userId;
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                return View("NotFound");
+            }
 
-            return View(model);
+            ViewBag.UserName = user.UserName;
+            ViewBag.Refer = Request.Headers["Referer"].ToString();
+
+            var model = new List<ManageUserRolesViewModel>();
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new ManageUserRolesViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRolesViewModel.Selected = true;
+                }
+                else
+                {
+                    userRolesViewModel.Selected = false;
+                }
+                if(userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Manager" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
+                model.Add(userRolesViewModel);
+            }
+            return View("Manage", model);
         }
 
         [HttpPost]
@@ -144,7 +182,7 @@ namespace VPWebSolutions.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View();
+                return Redirect(returnUrl);
             }
             var roles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.RemoveFromRolesAsync(user, roles);
@@ -160,6 +198,76 @@ namespace VPWebSolutions.Controllers
                 return View(model);
             }
             return Redirect(returnUrl);
+        }
+
+        [Authorize(Roles = "Manager, Admin")]
+        public IActionResult CreateEmployee()
+        {
+            var model = new EmployeeModel();
+            model.Roles = new List<ManageUserRolesViewModel>();
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new ManageUserRolesViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+                userRolesViewModel.Selected = false;
+
+                if(userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Manager" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
+                model.Roles.Add(userRolesViewModel);
+            }
+
+            ViewBag.refer = "ManageManager";
+
+            return View("Create", model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateEmployeeAndManager()
+        {
+            var model = new EmployeeModel();
+            model.Roles = new List<ManageUserRolesViewModel>();
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new ManageUserRolesViewModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+                userRolesViewModel.Selected = false;
+
+                if (userRolesViewModel.RoleName == "Admin" || userRolesViewModel.RoleName == "Customer")
+                {
+                    continue;
+                }
+                model.Roles.Add(userRolesViewModel);
+            }
+
+            ViewBag.refer = "ManageAdmin";
+
+            return View("Create", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(EmployeeModel employee, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { 
+                    UserName = employee.Email, 
+                    Email = employee.Email, 
+                    PhoneNumber = employee.Phone, 
+                    Address = employee.Address, 
+                    PostalCode = employee.PostalCode, 
+                    City = employee.City };
+                var result = await _userManager.CreateAsync(user, employee.Password);
+                await _userManager.AddToRolesAsync(user, employee.Roles.Where(x => x.Selected).Select(y => y.RoleName));
+            }
+            return RedirectToAction(actionName:"Index", controllerName:"Home");
         }
     }
 }
