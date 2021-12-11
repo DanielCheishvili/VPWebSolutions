@@ -125,6 +125,40 @@ namespace VPWebSolutions.Controllers
         }
 
         [HttpPost]
+        public IActionResult CartQuantityPlus(int ItemId)
+        {
+            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
+            if (matches.Count >= 1)
+            {
+                foreach (var item in matches)
+                {
+                    item.Quantity++;
+                    //CartActions.listItems;
+                }
+            }
+
+
+            return RedirectToAction("Cart", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult CartQuantityMinus(int ItemId)
+        {
+            var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();
+            if (matches.Count >= 1)
+            {
+                foreach (var item in matches)
+                {
+                    item.Quantity--;
+                    //CartActions.listItems;
+                }
+            }
+
+
+            return RedirectToAction("Cart", "Home");
+        }
+
+        [HttpPost]
         public IActionResult CartRemove(int ItemId)
         {
             var matches = CartActions.listItems.Where(p => p.MenuItem.Id == ItemId).ToList();

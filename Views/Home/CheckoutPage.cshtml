@@ -16,6 +16,7 @@
 {
     <div id="deliveryInfo">
         <div class="grid-container">
+            
             <div class="delivery">
 
                 <h3>Delivery Information</h3>
@@ -89,7 +90,7 @@
 
                     <span class="text-danger"></span>
                 </div>
-                
+
 
                 <div id="creditCardInfo">
                     <div class="billing">
@@ -189,7 +190,7 @@
 
 
                 </div>
-
+            </div>
                 <div class="summary" id="summaryId">
                     <h2>Summary: </h2>
                     <ul style="list-style-type:none">
@@ -198,7 +199,8 @@
                             <li>
                                 @orderItem.Quantity
                                 @orderItem.MenuItem.Name
-                                @orderItem.UnitPrice.ToString("c")
+                                @(orderItem.UnitPrice.ToString("c"))/Item
+                                Item Total: @((orderItem.UnitPrice * orderItem.Quantity).ToString("c"))
                             </li>
                         }
                         <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
@@ -206,7 +208,7 @@
                         <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
                     </ul>
                 </div>
-            </div>
+            
         </div>
     </div>
     <div class="form-group">
