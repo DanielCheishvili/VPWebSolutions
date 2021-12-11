@@ -23,7 +23,7 @@
                         Total sold: @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
                     <td>
-                        @*Total Revenue: @Html.DisplayFor(modelItem => item.Quantity * item.UnitPrice)*@
+                        Total Revenue: @((item.Quantity*item.UnitPrice).ToString("c"))
                     </td>
                 }
             </tr>
