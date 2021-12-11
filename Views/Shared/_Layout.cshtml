@@ -20,7 +20,7 @@
                     @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Deliverer"))
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Cook"))
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager"))
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -86,7 +86,7 @@
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -115,7 +115,7 @@
                     else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -136,7 +136,8 @@
                     else
                     {
                         <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaBros</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png" height="75" width="75" /></a>
+
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
