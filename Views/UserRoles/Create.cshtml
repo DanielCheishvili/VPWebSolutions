@@ -1,0 +1,132 @@
+﻿@model VPWebSolutions.Models.EmployeeModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="grid-container">
+                <div class="left-div">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="right-div">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode" class="control-label"></label>
+                        <input asp-for="PostalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Province" class="control-label"></label>
+                        <input asp-for="Province" class="form-control" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Roles"></label>
+                        @for (int i = 0; i < Model.Roles.Count; i++)
+                        {
+                        <div class="form-check m-1">
+                            <input type="hidden" asp-for="@Model.Roles[i].RoleId" />
+                            <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
+                            <input asp-for="@Model.Roles[i].Selected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.Roles[i].Selected">
+                                @Model.Roles[i].RoleName
+                            </label>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    <input type="hidden" name="returnUrl" value="@ViewBag.refer" />
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="reset" value="Reset" class="btn btn-primary" />
+                }
+            </div>
+            <p>refer @ViewBag</p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<style>
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 0.25fr 0.1fr;
+        grid-column-gap: 20px;
+        height: fit-content;
+    }
+
+    .g-recaptcha {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+        height: fit-content;
+    }
+
+    .recap-buttons {
+        grid-column-start: 1;
+        grid-column-end: span 2;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        height: fit-content;
+    }
+
+    h1 {
+        font-weight: bold;
+        font-size: 50px;
+    }
+
+    h4 {
+        font-weight: bold;
+    }
+
+    h1, h4, label {
+        color: #DEC20B;
+    }
+</style>

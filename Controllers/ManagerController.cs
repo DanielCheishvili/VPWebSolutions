@@ -113,6 +113,23 @@ namespace VPWebSolutions.Controllers
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem);
             var order = orders.First(o => o.Id == id);
+
+            if (order.isGuestUser)
+            {
+                var checkoutInfo = _menuDb.CheckOut.Where(co => co.Order.Id == order.Id).ToList();
+                if (checkoutInfo.Count() > 0)
+                {
+                    order.UserData = new UserData { FullName = checkoutInfo[0].FirstName + " " + checkoutInfo[0].LastName };
+                }
+            }
+            else
+            {
+                var cust = _menuDb.UserDatas.Where(u => u.UserDataId == order.IdCustomer).FirstOrDefault();
+                if (cust != null)
+                {
+                    order.UserData = cust;
+                }
+            }
             return View(order);
         }
     }

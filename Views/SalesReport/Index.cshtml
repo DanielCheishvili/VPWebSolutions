@@ -1,0 +1,31 @@
+﻿@model SalesReportModel
+
+    @{
+    ViewData["Title"] = "Orders";
+    }
+    @using VPWebSolutions.Data
+
+    <h1>Orders</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Total Orders: @Html.DisplayFor(model => model.Orders.Count)</td>
+            </tr>
+            <tr>
+                <td>Top Selling Products</td>
+                @foreach (var item in Model.Items)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItem.Name)
+                    </td>
+                    <td>
+                        Total sold: @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        Total Revenue: @((item.Quantity*item.UnitPrice).ToString("c"))
+                    </td>
+                }
+            </tr>
+            </tbody>
+        </table>
