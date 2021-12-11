@@ -182,7 +182,7 @@ namespace VPWebSolutions.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View();
+                return Redirect(returnUrl);
             }
             var roles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.RemoveFromRolesAsync(user, roles);
