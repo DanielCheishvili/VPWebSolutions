@@ -11,6 +11,7 @@
 <h1>YOUR CART</h1>
 @if (CartActions.listItems.Count <= 0)
 {
+    <!--Domino's Cart Message-->
     <p class="p-button">Your cart is currently empty, but your stomach doesn't have to be. Add some items and come back here to checkout.</p>
     @using (Html.BeginForm("Menu", "Home", FormMethod.Get))
     {
