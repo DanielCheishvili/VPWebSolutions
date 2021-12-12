@@ -13,5 +13,12 @@
 <div>
     <h3>Thank you @Model.FirstName @Model.LastName</h3>
     <hr />
-    <p>A copy has been sent to @Model.Email</p>
+    <p class="message">A copy has been sent to @Model.Email</p>
 </div>
+
+<style>
+    h1, h3, .message {
+        color: #DEC20B;
+        font-weight: bold;
+    }
+</style>

@@ -77,7 +77,9 @@
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div data-callback="captchaVerify" class="g-recaptcha" data-sitekey="6LdZCxEdAAAAACZfBlPZpGb7vhSt5pwpKzRoi9DM" style="transform: scale(0.77); -webkit-transform: scale(1.16); transform-origin: 0 0; -webkit-transform-origin: 0 0;"></div>
+            <br/>
             <p id="recapctcha-error" style="color:#dc3545;">@ViewData["ErrorMessage"]</p>
+           
             <div class="form-group">
                 <input id="submit-form" type="submit" value="Send" class="btn btn-primary" disabled />
                 <input type="reset" value="Reset" class="btn btn-primary" />
