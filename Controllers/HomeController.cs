@@ -235,10 +235,21 @@ namespace VPWebSolutions.Controllers
                 _Menudb.SaveChanges();
 
                 CartActions.listItems.Clear();
-                return RedirectToAction("Index", "Home");
-                //MAKE VIEW DON"T FORGET
+                return RedirectToAction("OrderConfirmation", "Home", new { id = order.Id });
             }
             return View("CheckoutPage");
+        }
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            var order = _Menudb.Orders
+                .OrderBy(o => o.OrderDate)
+                .Include(o => o.Items)
+                .ThenInclude(oi => oi.MenuItem)
+                .Where(o => o.Id == id)
+                .FirstOrDefault();
+
+            return View(order);
         }
 
         public IActionResult CheckoutPage()

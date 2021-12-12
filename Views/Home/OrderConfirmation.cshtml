@@ -4,24 +4,12 @@
     ViewData["Title"] = "OrderConfirmation";
 }
 
-<h1>Order Confirmation</h1>
+<h1>Thank you for ordering !</h1>
 
 <div>
     <h4>Your order</h4>
     <hr />
     <dl class="row">
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>*@
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerId)
-        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OrderDate)
         </dt>
@@ -32,7 +20,6 @@
             @Html.DisplayNameFor(model => model.Items)
         </dt>
         <dd class="col-sm-10">
-            @*@Html.DisplayFor(model => model.Items.)*@
             <ul style="list-style-type:none; list-style:none; padding-left:0;">
                 @foreach (var oi in Model.Items)
                 {
@@ -43,14 +30,31 @@
             </ul>
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderTotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.OrderTotal.ToString("c")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderAddress)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class = "btn btn-primary">Back to home page</a>
 </div>
