@@ -24,6 +24,12 @@
             //todo add pop up or something to let the user know the item was added sccessfully
             event.preventDefault();
         }
+        function cartCountUpdate() {
+            console.log("CART COUNT")
+            
+            $('#cartCount').load(document.URL + ' #cartCount');
+            event.preventDefault();
+        }
     </script>
 }
 <h1>Menu</h1>
@@ -48,7 +54,7 @@
 
                             }
                         </select>
-                        <button class="btn btn-primary" type="button" onclick="AddToCart(@(myDictionary.Value[0].ImageId))">Add To Cart</button>
+                        <button class="btn btn-primary" type="button" onclick="AddToCart(@(myDictionary.Value[0].ImageId)); cartCountUpdate()">Add To Cart</button>
 
                     </div>
                 </div>
@@ -65,7 +71,7 @@
                         <img src="~/images/@(item.ImageId).jpg " class="menuImg" />
                         <h4>@item.Name</h4>
                         <p class="p-button">Price: @item.Price.ToString("c")</p>
-                        <button class="btn btn-primary" type="button" onclick="AddToCartOther(@item.Id)">Add To Cart</button>
+                        <button class="btn btn-primary" type="button" onclick="AddToCartOther(@item.Id); cartCountUpdate()">Add To Cart</button>
                     </div>
                 </div>
             }

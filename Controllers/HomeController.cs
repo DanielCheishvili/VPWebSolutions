@@ -175,6 +175,13 @@ namespace VPWebSolutions.Controllers
             return RedirectToAction("Cart", "Home");
         }
 
+        [HttpPost]
+        public IActionResult CartCount()
+        {
+            CartActions.listItems.Count();
+
+            return RedirectToAction("Menu", "Home");
+        }
 
         [HttpPost]
         public IActionResult Checkout(CheckoutModel model, string orderType)

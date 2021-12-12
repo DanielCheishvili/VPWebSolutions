@@ -33,6 +33,8 @@ namespace VPWebSolutions.Data
 
                 var burgers = new List<Burger>();
 
+                var deals = new List<Deals>();
+
                 var cheesePizzaS = new Pizza()
                 {
                     Price = 11.99,
@@ -244,7 +246,20 @@ namespace VPWebSolutions.Data
                     Type = MenuItemType.Fries
                 };
 
-
+                var deal1 = new Deals()
+                {
+                    Price = 31.50,
+                    Name = "Special 2",
+                    ImageId = "2P2D1F",
+                    Type = MenuItemType.Deal
+                };
+                var deal2 = new Deals()
+                {
+                    Price = 17.50,
+                    Name = "Special 1",
+                    ImageId = "1P1D1F",
+                    Type = MenuItemType.Deal
+                };
 
 
                 #endregion
@@ -282,10 +297,14 @@ namespace VPWebSolutions.Data
                 fries.Add(hashbrown);
                 fries.Add(rings);
 
+                deals.Add(deal1);
+                deals.Add(deal2);
+
                 _db.Pizzas.AddRange(pizzas);
                 _db.Burgers.AddRange(burgers);
                 _db.Drinks.AddRange(drinks);
                 _db.Fries.AddRange(fries);
+                _db.Deals.AddRange(deals);
                 #endregion
                 _db.SaveChanges();
             }

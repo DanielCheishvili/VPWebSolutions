@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 <h1>YOUR CART</h1>
 @if (CartActions.listItems.Count <= 0)
 {
@@ -20,7 +21,7 @@ else
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.MenuItem.ImageId)
+
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.MenuItem.Name)
@@ -43,7 +44,7 @@ else
             {
                 <tr>
                     <td>
-                        <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" />
+                        <img src="~/images/@(item.MenuItem.ImageId).jpg" class="menuImg" height="100" width="100" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MenuItem.Name)
@@ -55,16 +56,23 @@ else
                             <p>@pizza.Size</p> } @*@Html.DisplayFor(modelItem => item.MenuItem)*@
                     </td>
                     <td>
-                        @using (Html.BeginForm("CartQuantityMinus", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
-                        {
-                            <button class="btn btn-primary" type="submit">-</button>
-                        }
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                        @using (Html.BeginForm("CartQuantityPlus", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
-                        {
-                            <button class="btn btn-primary" type="submit">+</button>
-                        }
-                        </td>
+                        <div style="display:inline-block">
+                            @using (Html.BeginForm("CartQuantityMinus", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
+                            {
+                                <button class="btn btn-primary" type="submit">-</button>
+                            }
+                        </div>
+                        <div style="display:inline-block">
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </div>
+                        <div style="display:inline-block">
+                            @using (Html.BeginForm("CartQuantityPlus", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
+                            {
+                                <button class="btn btn-primary" type="submit">+</button>
+                            }
+                        </div>
+
+                    </td>
                     <td>
                         <p>$@((item.MenuItem.Price*item.Quantity))</p>
                     </td>

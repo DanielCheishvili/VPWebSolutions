@@ -10,6 +10,7 @@ namespace VPWebSolutions.Data.Entities
         Fries,
         Burger,
         Drink,
+        Deal,
     }
     public abstract class MenuItem
     {

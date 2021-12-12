@@ -3,6 +3,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @using VPWebSolutions.Logic
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -79,7 +80,7 @@
                                 </ul>
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+                                <a class="nav-link" id="cartCount" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px">(@CartActions.listItems.Count())</a>
                             </div>
                         </div>
                     }
@@ -108,7 +109,7 @@
                                 </ul>
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+                                <a class="nav-link" id="cartCount" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px">(@CartActions.listItems.Count())</a>
                             </div>
                         </div>
                     }
@@ -129,7 +130,7 @@
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
                                 <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+                                <a class="nav-link" id="cartCount" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px">(@CartActions.listItems.Count())</a>
                             </div>
                         </div>
                     }
@@ -168,7 +169,7 @@
                                 <partial name="_LoginPartial" />
                                 <button id="language-change" onclick="changeLanguage()">FR</button>
                                 <!--https://www.flaticon.com/premium-icon/shopping-cart_2838895?term=cart&page=1&position=1&page=1&position=1&related_id=2838895&origin=tag-->
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px"><p id="cartCount">@CartActions.listItems.Count()</p></a>
+                                <a class="nav-link" id="cartCount" asp-area="" asp-controller="Home" asp-action="Cart"><img class="cart-icon" src="~/images/cart-icon.png" style="height:50px">(@CartActions.listItems.Count())</a>
 
                             </div>
                         </div>

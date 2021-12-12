@@ -20,6 +20,7 @@ namespace VPWebSolutions.Data
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Fries> Fries { get; set; }
         public DbSet<Burger> Burgers { get; set; }
+        public DbSet<Deals> Deals { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ContactModel> Contacts { get; set; }
