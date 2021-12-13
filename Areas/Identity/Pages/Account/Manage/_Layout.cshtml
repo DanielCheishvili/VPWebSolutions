@@ -15,10 +15,10 @@
     <h4>Change your account settings</h4>
     <hr />
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" id="divColor">
             <partial name="_ManageNav" />
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" id="divColor">
             @RenderBody()
         </div>
     </div>
@@ -29,7 +29,7 @@
 }
 
 <style>
-    h2, h4, .col-md-3, .col-md-9 {
+    h2, h4, #divColor {
         color: #DEC20B;
         font-weight: bold;
     }
