@@ -204,7 +204,7 @@ namespace VPWebSolutions.Data
                 var gingerAle = new Drink()
                 {
                     Price = 2.00,
-                    Name = "Gingel-Ale",
+                    Name = "Ginger-Ale",
                     ImageId = "gingerale",
                     Type = MenuItemType.Drink
                 };

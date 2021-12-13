@@ -196,16 +196,16 @@
                     <ul style="list-style-type:none">
                         @foreach (var orderItem in CartActions.listItems)
                         {
-                            <li>
-                                @orderItem.Quantity
-                                @orderItem.MenuItem.Name
-                                @(orderItem.UnitPrice.ToString("c"))/Item
-                                Item Total: @((orderItem.UnitPrice * orderItem.Quantity).ToString("c"))
-                            </li>
+                        <li class="summaryInformation">
+                            @orderItem.Quantity X @(orderItem.UnitPrice.ToString("c"))
+                            @orderItem.MenuItem.Name
+                            =  @((orderItem.UnitPrice * orderItem.Quantity).ToString("c"))
+                        </li>
                         }
-                        <li>Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
-                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
-                        <li>Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
+                        <hr style="border-color:black;"/>
+                        <li class="money">Subtotal: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity).ToString("c")</li>
+                        <li class="money">Taxes: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 0.15).ToString("c")</li>
+                        <li class="money">Total: @CartActions.listItems.Sum(oi => oi.UnitPrice * oi.Quantity * 1.15).ToString("c")</li>
                     </ul>
                 </div>
             
@@ -257,6 +257,12 @@
         grid-template-rows: 1fr;
         grid-column-gap: 20px;
         height: fit-content;
+    }
+    .summaryInformation{
+        font-size: 18px;
+    }
+    .money{
+        font-size:25px;
     }
 
     .left {
