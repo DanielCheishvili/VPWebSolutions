@@ -149,7 +149,11 @@ namespace VPWebSolutions.Controllers
             {
                 foreach (var item in matches)
                 {
-                    item.Quantity--;
+                    if(item.Quantity > 1)
+                    {
+                        item.Quantity--;
+                    }
+                    
                     //CartActions.listItems;
                 }
             }
