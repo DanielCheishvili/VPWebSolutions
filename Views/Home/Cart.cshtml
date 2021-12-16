@@ -75,7 +75,7 @@ else
 
                     </td>
                     <td>
-                        <p>$@((item.MenuItem.Price*item.Quantity))</p>
+                        <p>@((item.MenuItem.Price*item.Quantity).ToString("c"))</p>
                     </td>
                     <td>
                         @using (Html.BeginForm("CartRemove", "Home", new { ItemId = item.MenuItem.Id }, FormMethod.Post))
