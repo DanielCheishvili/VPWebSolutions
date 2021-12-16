@@ -213,11 +213,39 @@
                         </div>
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
                             <h6 class="text-uppercase fw-bold mb-2">Pages</h6>
-                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
-                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="About">About Us</a></p>
-                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></p>
-                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
-                            <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Career">Careers</a></p>
+                            @if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Deliverer"))
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Order" asp-action="Orders">Orders</a></p>
+                            }
+                            else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Cook"))
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Order" asp-action="OrdersToCook">Orders To Cook</a></p>
+                            }
+                            else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager"))
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Manager" asp-action="Orders">View Orders</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="UserRoles" asp-action="GetEmployees">Manage Employees</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                            }
+                            else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Admin"))
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="SalesReport" asp-action="Index">Sales Report</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Manager" asp-action="Orders">View Orders</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="UserRoles" asp-action="GetEmployeesAndManagers">Manage Employees</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                            }
+                            else if (SignInManager.IsSignedIn(User) && UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee"))
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                            }
+                            else
+                            {
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="About">About Us</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a></p>
+                                <p class="my-0"><a class="text-reset" asp-area="" asp-controller="Home" asp-action="Career">Careers</a></p>
+                            }
                         </div>
                         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
                             <h6 class="text-uppercase fw-bold mb-2">
