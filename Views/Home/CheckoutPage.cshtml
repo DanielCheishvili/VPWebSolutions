@@ -286,6 +286,7 @@
 </style>
 
 <script>
+    //ccValidation();
     function checkMethodPayment() {
         var creditCardInfo = document.getElementById("creditCardInfo");
 
@@ -329,5 +330,22 @@
         document.getElementById("ccExpiryYear").setAttribute('required');
         document.getElementById("cvv").setAttribute('required');
     }
+    function ccValidation() {
+        var visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+        var cc = document.getElementById("ccNumber");
+        var ccValid = document.getElementById("ccValid");
+
+        if (visaRegEx.test(cc)) {
+            ccValid.innerHTML = "Hello";
+          
+        }
+        else {
+            ccValid.style.color = "red";
+            ccValid.innerHTML = "Please enter a valid credit card number"
+        }
+
+    }
+   
+    
 
 </script>

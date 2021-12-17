@@ -235,7 +235,7 @@ namespace VPWebSolutions.Data
                 {
                     Price = 3.50,
                     Name = "Hashbrown",
-                    ImageId = "fries",
+                    ImageId = "hashbrown",
                     Type = MenuItemType.Fries
                 };
                 var rings = new Fries()

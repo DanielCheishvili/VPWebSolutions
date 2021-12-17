@@ -47,7 +47,8 @@ namespace VPWebSolutions.Models
         public string Phone { get; set; }
 
         [Display(Name= "Card number")]
-        public int? CreditNumber { get; set; }
+        [RegularExpression("^(?:4[0-9]{12}(?:[0-9]{3})?)$", ErrorMessage = "Please enter a valid Visa number (XXX)")]
+        public long? CreditNumber { get; set; }
 
         [Display(Name ="Expiration Month")]
         public string Month { get; set; }
