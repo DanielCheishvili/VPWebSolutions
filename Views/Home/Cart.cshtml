@@ -41,6 +41,7 @@ else
             </tr>
         </thead>
         <tbody>
+
             @foreach (var item in CartActions.listItems)
             {
                 <tr>
@@ -87,7 +88,8 @@ else
             }
         </tbody>
     </table>
-
+    <h5>Total before Taxes: @((CartActions.total).ToString("c"))</h5>
+    
     @if (SignInManager.IsSignedIn(User) && (UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Employee") || UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.Contains("Manager")))
     {
         @using (Html.BeginForm("Order", "Home", FormMethod.Get))
@@ -100,7 +102,7 @@ else
             <button class="btn btn-primary" type="submit">Checkout</button>}}}
 
 <style>
-    .p-button, h1, th, td {
+    .p-button, h1, th, td, h5 {
         color: #DEC20B;
         font-weight: bold;
     }

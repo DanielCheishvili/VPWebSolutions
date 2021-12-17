@@ -120,7 +120,12 @@ namespace VPWebSolutions.Controllers
                 matches[0].Quantity++;
             }
 
-
+            double total = 0;
+            foreach( var item in CartActions.listItems)
+            {
+                total += item.UnitPrice * item.Quantity;
+            }
+            CartActions.total = total;
             return RedirectToAction("Menu", "Home");
         }
 
@@ -137,7 +142,12 @@ namespace VPWebSolutions.Controllers
                 }
             }
 
-
+            double total = 0;
+            foreach (var item in CartActions.listItems)
+            {
+                total += item.UnitPrice * item.Quantity;
+            }
+            CartActions.total = total;
             return RedirectToAction("Cart", "Home");
         }
 
@@ -158,7 +168,12 @@ namespace VPWebSolutions.Controllers
                 }
             }
 
-
+            double total = 0;
+            foreach (var item in CartActions.listItems)
+            {
+                total += item.UnitPrice * item.Quantity;
+            }
+            CartActions.total = total;
             return RedirectToAction("Cart", "Home");
         }
 
@@ -175,7 +190,12 @@ namespace VPWebSolutions.Controllers
                 }
             }
 
-
+            double total = 0;
+            foreach (var item in CartActions.listItems)
+            {
+                total += item.UnitPrice * item.Quantity;
+            }
+            CartActions.total = total;
             return RedirectToAction("Cart", "Home");
         }
 
